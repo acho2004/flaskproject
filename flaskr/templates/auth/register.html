@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %} Register {% endblock %}
+
+{% block content %}
+  <div class="portal" >
+    <form method="post">
+      <br><br><br><br><br><br><br><br><br> 
+      <div class="smallbox" style = "position:relative; left:45%; top:20%;">
+        <label for="username" style = "position:relative; left:20%">Username</label>
+        <input name="username" id="username" required style = "position:relative; left:20%">
+        <label for="password" style = "position:relative; left:20%">Password</label>
+        <input type="password" name="password" id="password" required style = "position:relative; left:20%"> 
+        <br>
+        <input type="submit" value="Register" style = "position:relative; left:20%">
+      </div>  
+      <br><br><br><br><br><br><br><br><br><br>
+    </form>
+  </div>
+{% endblock %}

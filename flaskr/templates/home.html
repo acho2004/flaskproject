@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %} Home {% endblock %}
+
+{% block content %}
+<div>
+    <h1>HOME PAGE!</h1>
+    <a href="{{ url_for('questionaire.selftest') }}">Self Test</a>
+    <a href="{{ url_for('questionaire.peertest') }}">Peer Test</a>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <title>{% block title %} {% endblock %}</title>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <header>
+        
+
+
+    </header>
+    <body>
+        <div class="menu">
+            <a href="/" style="position:relative; left:10px">MBTI Testing</a>
+            {% if g.user %}
+
+            <a style = "float:right" href="{{ url_for('auth.logout') }}">Logout</a>
+            <a style = "float:right" href="{{ url_for('questionaire.profile') }}">{{ g.user['username'] }}</a>
+            {% else %}
+            <a style = "float:right" href="{{ url_for('auth.register') }}">Register</a>
+            <a style = "float:right" href="{{ url_for('auth.login') }}">Login</a>
+            {% endif %}
+            {% block additional%}
+
+            {% endblock %}
+        </div>
+        
+        {% for message in get_flashed_messages() %}
+        <div class="flash">{{ message }}</div>
+        {% endfor %}
+        {% block content %} {% endblock %}
+    </body>
+</html>

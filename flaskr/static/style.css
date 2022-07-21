@@ -1,0 +1,71 @@
+html {
+    font-size: 20px; 
+    font-family: sans-serif;
+    min-width:300px;
+    background-color: rgb(244, 244, 244);
+  }
+
+h1{
+    font-size: 1.5rem;
+    width: 100%;
+    margin:auto;
+    padding:0px;
+    box-sizing: border-box;
+    word-wrap: break-word;
+}
+
+div{
+    border: 5px solid black;
+}
+
+
+
+a{margin:1px;}
+nav ul  {display: block; padding: 0.5rem; color: grey;}
+
+.menu{overflow:hidden; background: black; }
+
+
+.menu a{
+    font-size:1.5rem; text-decoration:none; color:white;
+    text-align: center;
+    width: 200px;
+
+}
+
+.portal {
+    overflow:hidden;
+    border:5px solid black;
+}
+
+.smallbox{
+    box-sizing: border-box;
+    overflow:hidden;
+    border:5px solid rgb(101, 101, 101);
+    width: 10%;
+    min-width: 200px;
+}
+
+.portal label {
+    display:flex;
+    flex-direction: row;
+}
+
+.testResults article{
+    border:5px solid black;
+}
+
+.testResults h1{
+    border:0px;
+    text-decoration:underline;
+}
+
+.questionaire div{
+    border:3px solid black;
+    width:220px;
+}
+
+.seperator hr{
+    height: 10px;
+    background-color: black;
+}
