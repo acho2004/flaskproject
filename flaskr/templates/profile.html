@@ -14,7 +14,8 @@
     {% for stest in peerassessments %}
         {% if g.user['username'] == stest['target_username'] %}
             <article class="testResults">
-                <a href= {{"/results/peer/" + stest['route']}}>Peer Assessment by {{stest['username']}} on {{ stest['created'].strftime('%Y-%m-%d') }}</a>
+                {% if stest['new_tag'] == 1 %} <h1>NEW!</h1> {% endif %}
+                <a href= {{"/results/peer/" + stest['route']}}> Peer Assessment by {{stest['username']}} on {{ stest['created'].strftime('%Y-%m-%d') }}</a>
             </article>
             <hr>
         {% endif %}
@@ -26,7 +27,8 @@
     {% for stest in selfassessments %}
         {% if g.user['id'] == stest['author_id'] %}
             <article class="testResults">
-                <a href= {{"/results/self/" + stest['route']}}>Self Assessment on {{ stest['created'].strftime('%Y-%m-%d') }}</a>
+                {% if stest['new_tag'] == 1 %} <h1>NEW!</h1> {% endif %}
+                <a href= {{"/results/self/" + stest['route']}}> Self Assessment on {{ stest['created'].strftime('%Y-%m-%d') }}</a>
             </article>
             <hr>
         {% endif %}
