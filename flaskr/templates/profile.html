@@ -14,7 +14,7 @@
     {% for stest in peerassessments %}
         {% if g.user['username'] == stest['target_username'] %}
             <article class="testResults">
-                <h1>Peer Assessment on {{ stest['created'].strftime('%Y-%m-%d') }} by {{stest['username']}}</h1>
+                <h1>Peer Assessment on {{ stest['created'].strftime('%Y-%m-%d') }} by {{stest['username']}}, route {{stest['route']}}</h1>
                 {% for i in range (1,21) %}
                     {% if stest['q' + i|string] == 0 %}
                         <h2>Question {{i}}: Yes</h2>
@@ -29,7 +29,6 @@
                         <h2>Question {{i}}: So</h2>
                     {% endif %}
                 {% endfor %}
-
             </article>
             <hr>
         {% endif %}
@@ -41,7 +40,7 @@
     {% for stest in selfassessments %}
         {% if g.user['id'] == stest['author_id'] %}
             <article class="testResults">
-                <h1>Self Assessment on {{ stest['created'].strftime('%Y-%m-%d') }}</h1>
+                <h1>Self Assessment on {{ stest['created'].strftime('%Y-%m-%d') }}, route {{stest['route']}}</h1>
                 {% for i in range (1,21) %}
                     {% if stest['q' + i|string] == 0 %}
                         <h2>Question {{i}}: Yes</h2>
