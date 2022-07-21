@@ -21,7 +21,7 @@ def display_spost(title: str):
         'SELECT * FROM stest WHERE route = ?', (title,)
     ).fetchone()
     if route is None:
-        return("Result Not Found.")
+        abort(404)
     else:
         return render_template('sresults.html', route=route)
 
@@ -33,7 +33,7 @@ def display_ppost(title: str):
         'SELECT * FROM ptest WHERE route = ?', (title,)
     ).fetchone()
     if route is None:
-        return("Result Not Found.")
+        abort(404)
     else:
         return render_template('presults.html', route=route)
 

@@ -4,8 +4,10 @@
 
 {% block content %}
 <div>
-    <h1>HOME PAGE!</h1>
-    <a href="{{ url_for('questionaire.selftest') }}">Self Test</a>
-    <a href="{{ url_for('questionaire.peertest') }}">Peer Test</a>
+    <h1>Welcome to the MBTI Tester!</h1>
+    <article class="testResults">
+        <a href="{{ url_for('questionaire.selftest') }}">Self Test</a><br>
+        <a href="{{ url_for('questionaire.peertest') }}">Peer Test</a>
+    </article>
 </div>
 {% endblock %}

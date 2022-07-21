@@ -3,14 +3,14 @@
 {% block title %} Profile {% endblock %}
 
 {% block additional %}
-<a style = "float:right" href="#peer">Peer Results</a>
 <a id="top" style = "float:right" href="#self">Self Results</a>
+<a style = "float:right" href="#peer">Peer Results</a>
 {% endblock %}
 
 
 
 {% block content %}
-    <h1 id="peer"></h1>
+    <hr><h1 id="peer">Peer Results</h1><hr>
     {% for stest in peerassessments %}
         {% if g.user['username'] == stest['target_username'] %}
             <article class="testResults">
@@ -20,9 +20,9 @@
         {% endif %}
     {% endfor %}
     <a href="#top">Back to the Top</a>
+    <hr>
 
-
-    <h1 id="self"></h1>
+    <h1 id="self">Self Results</h1><hr>
     {% for stest in selfassessments %}
         {% if g.user['id'] == stest['author_id'] %}
             <article class="testResults">
