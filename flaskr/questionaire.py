@@ -14,6 +14,17 @@ from flaskr.db import get_db
 
 bp = Blueprint('questionaire', __name__)
 
+@bp.route("/results/self/<string:title>")
+def display_spost(title: str):
+    db = get_db()
+    route = db.execute(
+        'SELECT * FROM stest WHERE route = ?', (title,)
+    ).fetchone()
+    if route is None:
+        return("Result Not Found.")
+    else:
+        return render_template('results.html', route=route)
+
 
 @bp.route('/profile')
 def profile():
@@ -73,14 +84,14 @@ def selftest():
                 db.execute(
                     'INSERT INTO stest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, author_id, route)'
                     ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                    (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, g.user['id'], ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10)))
+                    (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, g.user['id'], ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24)))
                 )
                 db.commit()
             except db.IntegrityError:
                 db.execute(
                     'INSERT INTO stest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, author_id, route)'
                     ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                    (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, g.user['id'], ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10)))
+                    (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, g.user['id'], ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24)))
                 )
                 db.commit()
             return redirect(url_for('questionaire.profile'))
@@ -128,7 +139,7 @@ def peertest():
                 db.execute(
                     'INSERT INTO ptest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, author_id, target_username, route)'
                     ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                    (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, g.user['id'], target_username, ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10)))
+                    (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, g.user['id'], target_username, ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24)))
                 )
                 db.commit()
             except db.IntegrityError:
@@ -137,7 +148,7 @@ def peertest():
                     ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                     (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20,
                      g.user['id'], target_username,
-                     ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10)))
+                     ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24)))
                 )
                 db.commit()
             return redirect(url_for('questionaire.profile'))
