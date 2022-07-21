@@ -65,6 +65,12 @@ nav ul  {display: block; padding: 0.5rem; color: grey;}
     width:220px;
 }
 
+.testResults a{
+    font-size:1.5rem;
+    text-decoration:none;
+    color:black;
+}
+
 .seperator hr{
     height: 10px;
     background-color: black;

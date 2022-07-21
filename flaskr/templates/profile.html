@@ -3,8 +3,8 @@
 {% block title %} Profile {% endblock %}
 
 {% block additional %}
-<a style = "float:right" href="#peer">Peer Review</a>
-<a id="top" style = "float:right" href="#self">Self Review</a>
+<a style = "float:right" href="#peer">Peer Results</a>
+<a id="top" style = "float:right" href="#self">Self Results</a>
 {% endblock %}
 
 
@@ -14,21 +14,7 @@
     {% for stest in peerassessments %}
         {% if g.user['username'] == stest['target_username'] %}
             <article class="testResults">
-                <h1>Peer Assessment on {{ stest['created'].strftime('%Y-%m-%d') }} by {{stest['username']}}, route {{stest['route']}}</h1>
-                {% for i in range (1,21) %}
-                    {% if stest['q' + i|string] == 0 %}
-                        <h2>Question {{i}}: Yes</h2>
-                    {% endif %}
-                    {% if stest['q' + i|string] == 1 %}
-                        <h2>Question {{i}}: No</h2>
-                    {% endif %}
-                    {% if stest['q' + i|string] == 2 %}
-                        <h2>Question {{i}}: Maybe</h2>
-                    {% endif %}
-                    {% if stest['q' + i|string] == 3 %}
-                        <h2>Question {{i}}: So</h2>
-                    {% endif %}
-                {% endfor %}
+                <a href= {{"/results/peer/" + stest['route']}}>Peer Assessment by {{stest['username']}} on {{ stest['created'].strftime('%Y-%m-%d') }}</a>
             </article>
             <hr>
         {% endif %}
@@ -40,22 +26,7 @@
     {% for stest in selfassessments %}
         {% if g.user['id'] == stest['author_id'] %}
             <article class="testResults">
-                <h1>Self Assessment on {{ stest['created'].strftime('%Y-%m-%d') }}, route {{stest['route']}}</h1>
-                {% for i in range (1,21) %}
-                    {% if stest['q' + i|string] == 0 %}
-                        <h2>Question {{i}}: Yes</h2>
-                    {% endif %}
-                    {% if stest['q' + i|string] == 1 %}
-                        <h2>Question {{i}}: No</h2>
-                    {% endif %}
-                    {% if stest['q' + i|string] == 2 %}
-                        <h2>Question {{i}}: Maybe</h2>
-                    {% endif %}
-                    {% if stest['q' + i|string] == 3 %}
-                        <h2>Question {{i}}: So</h2>
-                    {% endif %}
-                {% endfor %}
-
+                <a href= {{"/results/self/" + stest['route']}}>Self Assessment on {{ stest['created'].strftime('%Y-%m-%d') }}</a>
             </article>
             <hr>
         {% endif %}
