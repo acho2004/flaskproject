@@ -22,8 +22,14 @@ def display_spost(title: str):
     ).fetchone()
     if route is None:
         abort(404)
-    else:
-        return render_template('sresults.html', route=route)
+    if not(g.user is None) and route['author_id'] == g.user['id']:
+        db.execute(
+            'UPDATE stest SET new_tag = ?'
+            ' WHERE id = ?',
+            (0, route['id'])
+        )
+        db.commit()
+    return render_template('sresults.html', route=route)
 
 
 @bp.route("/results/peer/<string:title>")
@@ -34,8 +40,21 @@ def display_ppost(title: str):
     ).fetchone()
     if route is None:
         abort(404)
-    else:
-        return render_template('presults.html', route=route)
+    if not (g.user is None) and route['target_username'] == g.user['username']:
+        db.execute(
+            'UPDATE ptest SET new_tagp = ?'
+            ' WHERE id = ?',
+            (0, route['id'])
+        )
+        db.commit()
+    if not (g.user is None) and route['username'] == g.user['username']:
+        db.execute(
+            'UPDATE ptest SET new_tags = ?'
+            ' WHERE id = ?',
+            (0, route['id'])
+        )
+        db.commit()
+    return render_template('presults.html', route=route)
 
 
 @bp.route('/profile')
@@ -49,7 +68,7 @@ def profile():
         ' ORDER BY created DESC'
     ).fetchall()
     peerassessments = db.execute(
-        'SELECT p.id, created, author_id, u.username, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, target_username, route, new_tag'
+        'SELECT p.id, created, author_id, u.username, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, target_username, route, new_tagp, new_tags'
         ' FROM ptest p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
@@ -144,23 +163,26 @@ def peertest():
         if not q1 or not q2 or not q3 or not q4 or not q5 or not q6 or not q7 or not q8 or not q9 or not q10 or not q11 or not q12 or not q13 or not q14 or not q15 or not q16 or not q17 or not q18 or not q19 or not q20 or not target_username:
             error = 'All questions are required.'
 
+        if target_username == g.user['username']:
+            error = "You can't submit a form for yourself."
+
         if error is not None:
             flash(error)
         else:
             try:
                 db.execute(
-                    'INSERT INTO ptest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, author_id, username, target_username, route, new_tag)'
-                    ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                    (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, g.user['id'], g.user['username'], target_username, ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24)), 1)
+                    'INSERT INTO ptest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, author_id, username, target_username, route, new_tags, new_tagp)'
+                    ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                    (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, g.user['id'], g.user['username'], target_username, ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24)), 1, 1)
                 )
                 db.commit()
             except db.IntegrityError:
                 db.execute(
-                    'INSERT INTO ptest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, author_id, username, target_username, route, new_tag)'
-                    ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                    'INSERT INTO ptest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, author_id, username, target_username, route, new_tags, new_tagp)'
+                    ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                     (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20,
                      g.user['id'], g.user['username'], target_username,
-                     ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24)), 1)
+                     ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24)), 1, 1)
                 )
                 db.commit()
             return redirect(url_for('questionaire.profile'))

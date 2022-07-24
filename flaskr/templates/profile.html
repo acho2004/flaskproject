@@ -10,12 +10,25 @@
 
 
 {% block content %}
-    <hr><h1 id="peer">Peer Results</h1><hr>
+    <hr><h1 id="peer">Peer Results for You</h1><hr>
     {% for stest in peerassessments %}
         {% if g.user['username'] == stest['target_username'] %}
             <article class="testResults">
-                {% if stest['new_tag'] == 1 %} <h1>NEW!</h1> {% endif %}
+                {% if stest['new_tagp'] == 1 %} <h1>NEW!</h1> {% endif %}
                 <a href= {{"/results/peer/" + stest['route']}}> Peer Assessment by {{stest['username']}} on {{ stest['created'].strftime('%Y-%m-%d') }}</a>
+            </article>
+            <hr>
+        {% endif %}
+    {% endfor %}
+    <a href="#top">Back to the Top</a>
+    <hr>
+
+    <hr><h1 id="peer">Peer Results by You</h1><hr>
+    {% for stest in peerassessments %}
+        {% if g.user['username'] == stest['username'] %}
+            <article class="testResults">
+                {% if stest['new_tags'] == 1 %} <h1>NEW!</h1> {% endif %}
+                <a href= {{"/results/peer/" + stest['route']}}> Peer Assessment for {{stest['target_username']}} on {{ stest['created'].strftime('%Y-%m-%d') }}</a>
             </article>
             <hr>
         {% endif %}
