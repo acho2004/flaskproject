@@ -6,16 +6,16 @@
         <h1>Peer Assessment by {{route['username']}} for {{route['target_username']}} on {{ route['created'].strftime('%Y-%m-%d') }}</h1>
         {% for i in range (1,21) %}
             {% if route['q' + i|string] == 0 %}
-                <h2>Question {{i}}: Yes</h2>
+                <h2>Question {{i}}: Agree</h2>
             {% endif %}
             {% if route['q' + i|string] == 1 %}
-                <h2>Question {{i}}: No</h2>
+                <h2>Question {{i}}: Slightly Agree</h2>
             {% endif %}
             {% if route['q' + i|string] == 2 %}
-                <h2>Question {{i}}: Maybe</h2>
+                <h2>Question {{i}}: Slightly Disagree</h2>
             {% endif %}
             {% if route['q' + i|string] == 3 %}
-                <h2>Question {{i}}: So</h2>
+                <h2>Question {{i}}: Disagree</h2>
             {% endif %}
         {% endfor %}
 

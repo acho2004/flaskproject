@@ -9,7 +9,7 @@
     <h1>Test for:</h1>
     <input required type="text" name="target_username">
     {% for i in range (1,21) %}
-        <h1>Question {{i}}</h1><div><input required type="radio" id={{"cYes" + i|string}} name={{"q" + i|string}} value=0><label for={{"cYes" + i|string}}>Yes</label><input required type="radio" id={{"cNo" + i|string}} name={{"q" + i|string}} value=1><label for={{"cNo" + i|string}}>No</label><input required type="radio" id={{"cMaybe" + i|string}} name={{"q" + i|string}} value=2><label for={{"cMaybe" + i|string}}>Maybe</label><input required type="radio" id={{"cSo" + i|string}} name={{"q" + i|string}} value=3><label for={{"cSo" + i|string}}>So</label></div><br>
+        <h1>Question {{i}}</h1><div><input required type="radio" id={{"cAgree" + i|string}} name={{"q" + i|string}} value=0><label for={{"cAgree" + i|string}}>Agree</label><input required type="radio" id={{"cSAgree" + i|string}} name={{"q" + i|string}} value=1><label for={{"cSAgree" + i|string}}>Slightly Agree</label><input required type="radio" id={{"cSDAgree" + i|string}} name={{"q" + i|string}} value=2><label for={{"cSDAgree" + i|string}}>Slightly Disagree</label><input required type="radio" id={{"cDAgree" + i|string}} name={{"q" + i|string}} value=3><label for={{"cDAgree" + i|string}}>Disagree</label></div><br>
     {% endfor %}
     <input type="submit" value="Submit">
 
