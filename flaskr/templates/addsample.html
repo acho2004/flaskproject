@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %} Sample Adding {% endblock %}
+
+{% block content %}
+<form method="post" class = "questionaire">
+    <label for="mbti">MBTI</label><input type="text" id="mbti" name="MBTI" required maxlength="4" minlength="4" pattern="([I|E][N|S][F|T][J|P])">
+    {% for i in range (1,21) %}
+        <h1>Question {{i}}</h1><div><input required type="radio" id={{"cAgree" + i|string}} name={{"q" + i|string}} value=0><label for={{"cAgree" + i|string}}>Agree</label><input required type="radio" id={{"cSAgree" + i|string}} name={{"q" + i|string}} value=1><label for={{"cSAgree" + i|string}}>Slightly Agree</label><input required type="radio" id={{"cSDAgree" + i|string}} name={{"q" + i|string}} value=2><label for={{"cSDAgree" + i|string}}>Slightly Disagree</label><input required type="radio" id={{"cDAgree" + i|string}} name={{"q" + i|string}} value=3><label for={{"cDAgree" + i|string}}>Disagree</label></div><br>
+    {% endfor %}
+    <input type="submit" value="Submit">
+
+</form>
+{% endblock %}

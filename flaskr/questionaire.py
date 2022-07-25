@@ -187,3 +187,61 @@ def peertest():
             return redirect(url_for('questionaire.profile'))
 
     return render_template('/peertest.html')
+
+
+
+
+
+
+@bp.route('/addsample', methods=('GET', 'POST'))
+@login_required
+def addsample():
+    if g.user is None:
+        return redirect(url_for('auth.login'))
+    if request.method == 'POST':
+        obtainedUnique = False
+        mbti = request.form['MBTI']
+        q1 = request.form['q1']
+        q2 = request.form['q2']
+        q3 = request.form['q3']
+        q4 = request.form['q4']
+        q5 = request.form['q5']
+        q6 = request.form['q6']
+        q7 = request.form['q7']
+        q8 = request.form['q8']
+        q9 = request.form['q9']
+        q10 = request.form['q10']
+        q11 = request.form['q11']
+        q12 = request.form['q12']
+        q13 = request.form['q13']
+        q14 = request.form['q14']
+        q15 = request.form['q15']
+        q16 = request.form['q16']
+        q17 = request.form['q17']
+        q18 = request.form['q18']
+        q19 = request.form['q19']
+        q20 = request.form['q20']
+
+        error = None
+        db = get_db()
+        if not q1 or not q2 or not q3 or not q4 or not q5 or not q6 or not q7 or not q8 or not q9 or not q10 or not q11 or not q12 or not q13 or not q14 or not q15 or not q16 or not q17 or not q18 or not q19 or not q20 or not mbti:
+            error = 'All questions are required.'
+
+        if error is not None:
+            flash(error)
+        else:
+            while (not obtainedUnique):
+                try:
+                    db.execute(
+                        'INSERT INTO samples (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, author_id, username, route, real_MBTI)'
+                        ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                        (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20,
+                         g.user['id'], g.user['username'], ''.join(
+                            random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24)), mbti)
+                    )
+                    db.commit()
+                    obtainedUnique = True
+                except db.IntegrityError:
+                    obtainedUnique = False
+            return redirect(url_for('questionaire.profile'))
+    return render_template('/addsample.html')

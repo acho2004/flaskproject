@@ -79,3 +79,9 @@ nav ul  {display: block; padding: 0.5rem; color: grey;}
 .trendgraph div{
     border: 0px;
 }
+
+
+.regtag div {
+  white-space: nowrap;
+  overflow: hidden;
+}
