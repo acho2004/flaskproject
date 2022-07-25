@@ -83,6 +83,7 @@ def selftest():
     if g.user is None:
         return redirect(url_for('auth.login'))
     if request.method == 'POST':
+        obtainedUnique = False
         q1 = request.form['q1']
         q2 = request.form['q2']
         q3 = request.form['q3']
@@ -111,22 +112,20 @@ def selftest():
         if error is not None:
             flash(error)
         else:
-            try:
-                db.execute(
-                    'INSERT INTO stest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, author_id, username, route, new_tag)'
-                    ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                    (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, g.user['id'], g.user['username'], ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24)), 1)
-                )
-                db.commit()
-            except db.IntegrityError:
-                db.execute(
-                    'INSERT INTO stest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, author_id, username, route, new_tag)'
-                    ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                    (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, g.user['id'], g.user['username'], ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24)), 1)
-                )
-                db.commit()
+            while (not obtainedUnique):
+                try:
+                    db.execute(
+                        'INSERT INTO stest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, author_id, username, route, new_tag)'
+                        ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                        (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20,
+                         g.user['id'], g.user['username'], ''.join(
+                            random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24)), 1)
+                    )
+                    db.commit()
+                    obtainedUnique = True
+                except db.IntegrityError:
+                    obtainedUnique = False
             return redirect(url_for('questionaire.profile'))
-
     return render_template('/selftest.html')
 
 
@@ -137,6 +136,7 @@ def peertest():
     if g.user is None:
         return redirect(url_for('auth.login'))
     if request.method == 'POST':
+        obtainedUnique = False
         q1 = request.form['q1']
         q2 = request.form['q2']
         q3 = request.form['q3']
@@ -169,22 +169,21 @@ def peertest():
         if error is not None:
             flash(error)
         else:
-            try:
-                db.execute(
-                    'INSERT INTO ptest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, author_id, username, target_username, route, new_tags, new_tagp)'
-                    ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                    (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, g.user['id'], g.user['username'], target_username, ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24)), 1, 1)
-                )
-                db.commit()
-            except db.IntegrityError:
-                db.execute(
-                    'INSERT INTO ptest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, author_id, username, target_username, route, new_tags, new_tagp)'
-                    ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                    (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20,
-                     g.user['id'], g.user['username'], target_username,
-                     ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24)), 1, 1)
-                )
-                db.commit()
+            while (not obtainedUnique):
+                try:
+                    db.execute(
+                        'INSERT INTO ptest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, author_id, username, target_username, route, new_tags, new_tagp)'
+                        ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                        (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20,
+                         g.user['id'], g.user['username'], target_username, ''.join(
+                            random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24)), 1,
+                         1)
+                    )
+                    db.commit()
+                    obtainedUnique = True
+                except db.IntegrityError:
+                    obtainedUnique = False
+
             return redirect(url_for('questionaire.profile'))
 
     return render_template('/peertest.html')
