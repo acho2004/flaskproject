@@ -75,3 +75,7 @@ nav ul  {display: block; padding: 0.5rem; color: grey;}
     height: 10px;
     background-color: black;
 }
+
+.trendgraph div{
+    border: 0px;
+}
