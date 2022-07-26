@@ -31,13 +31,6 @@ def display_spost(title: str):
             (0, route['id'])
         )
         db.commit()
-    if route['guess_MBTI_EI'] == "":
-        db.execute(
-            'UPDATE stest SET guess_MBTI_EI = ?, guess_MBTI_SN = ?, guess_MBTI_TF = ?, guess_MBTI_JP = ?'
-            ' WHERE id = ?',
-            (sguesser(title)[0], sguesser(title)[1], sguesser(title)[2], sguesser(title)[3], route['id'])
-        )
-        db.commit()
     return render_template('sresults.html', route=route)
 
 
@@ -63,13 +56,6 @@ def display_ppost(title: str):
             (0, route['id'])
         )
         db.commit()
-    if route['guess_MBTI_EI'] == "":
-        db.execute(
-            'UPDATE ptest SET guess_MBTI_EI = ?, guess_MBTI_SN = ?, guess_MBTI_TF = ?, guess_MBTI_JP = ?'
-            ' WHERE id = ?',
-            (pguesser(title)[0], pguesser(title)[1], pguesser(title)[2], pguesser(title)[3], route['id'])
-        )
-        db.commit()
     return render_template('presults.html', route=route)
 
 
@@ -79,12 +65,12 @@ def profile():
         return redirect(url_for('auth.login'))
     db = get_db()
     selfassessments = db.execute(
-        'SELECT p.id, created, author_id, u.username, route, new_tag'
+        'SELECT p.id, created, author_id, u.username, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
         ' FROM stest p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
     peerassessments = db.execute(
-        'SELECT p.id, created, author_id, u.username, target_username, route, new_tagp, new_tags'
+        'SELECT p.id, created, author_id, u.username, target_username, route, new_tagp, new_tags, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
         ' FROM ptest p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
@@ -127,7 +113,7 @@ def selftest():
         q23 = request.form['q23']
         q24 = request.form['q24']
         q25 = request.form['q25']
-
+        x = ""
         error = None
         db = get_db()
         if not q1 or not q2 or not q3 or not q4 or not q5 or not q6 or not q7 or not q8 or not q9 or not q10 or not q11 or not q12 or not q13 or not q14 or not q15 or not q16 or not q17 or not q18 or not q19 or not q20 or not q21 or not q22 or not q23 or not q24 or not q25:
@@ -138,17 +124,23 @@ def selftest():
         else:
             while (not obtainedUnique):
                 try:
+                    x = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24))
                     db.execute(
                         'INSERT INTO stest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, author_id, username, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
                         ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                         (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21,q22,q23,q24,q25,
-                         g.user['id'], g.user['username'], ''.join(
-                            random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24)), 1, "", "", "", "")
+                         g.user['id'], g.user['username'], x, 1, -999, -999, -999, -999)
                     )
                     db.commit()
                     obtainedUnique = True
                 except db.IntegrityError:
                     obtainedUnique = False
+            db.execute(
+                'UPDATE stest SET guess_MBTI_EI = ?, guess_MBTI_SN = ?, guess_MBTI_TF = ?, guess_MBTI_JP = ?'
+                ' WHERE route = ?',
+                (sguesser(x)[0], sguesser(x)[1], sguesser(x)[2], sguesser(x)[3], x)
+            )
+            db.commit()
             return redirect(url_for('questionaire.profile'))
     return render_template('/selftest.html')
 
@@ -187,6 +179,8 @@ def peertest():
         q24 = request.form['q24']
         q25 = request.form['q25']
 
+        x = ""
+
         target_username = request.form['target_username']
         error = None
         db = get_db()
@@ -201,19 +195,24 @@ def peertest():
         else:
             while (not obtainedUnique):
                 try:
+                    x = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24))
                     db.execute(
                         'INSERT INTO ptest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, author_id, username, target_username, route, new_tags, new_tagp, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
                         ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                         (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25,
-                         g.user['id'], g.user['username'], target_username, ''.join(
-                            random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24)), 1,
-                         1, "", "", "", "")
+                         g.user['id'], g.user['username'], target_username, x, 1,
+                         1, -999, -999, -999, -999)
                     )
                     db.commit()
                     obtainedUnique = True
                 except db.IntegrityError:
                     obtainedUnique = False
-
+            db.execute(
+                'UPDATE ptest SET guess_MBTI_EI = ?, guess_MBTI_SN = ?, guess_MBTI_TF = ?, guess_MBTI_JP = ?'
+                ' WHERE route = ?',
+                (pguesser(x)[0], pguesser(x)[1], pguesser(x)[2], pguesser(x)[3], x)
+            )
+            db.commit()
             return redirect(url_for('questionaire.profile'))
 
     return render_template('/peertest.html')

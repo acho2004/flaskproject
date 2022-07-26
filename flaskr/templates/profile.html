@@ -57,25 +57,23 @@
 
         <script>
             var EIVals = []
-            var testCounter = []
-            var counter = 0
+            var testDate = []
         </script>
         {% for stest in selfassessments|reverse %}
             {% if g.user['id'] == stest['author_id'] %}
-                <script>counter = counter + 1; testCounter.push(counter);EIVals.push({{stest['guess_MBTI_EI']}})</script>
+                <script>testDate.push({{stest['created'].strftime('%Y-%m-%d')}}); EIVals.push({{stest['guess_MBTI_EI']}}); </script>
             {% endif %}
         {% endfor %}
         <script>
             EITREND = document.getElementById('EItrend');
             var traceEI = {
-                x: testCounter,
+                x: testDate,
                 y: EIVals,
                 mode: 'markers',
-                marker: {size : 12},
                 type: 'scatter'
             };
             var data = [traceEI];
-            Plotly.newPlot( EITREND, data);
+            Plotly.newPlot(EITREND, data);
         </script>
     </div>
     <br><br><br>
