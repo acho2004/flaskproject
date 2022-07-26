@@ -14,6 +14,8 @@ from flaskr.db import get_db
 
 bp = Blueprint('questionaire', __name__)
 
+
+
 @bp.route("/results/self/<string:title>")
 def display_spost(title: str):
     db = get_db()
@@ -27,6 +29,13 @@ def display_spost(title: str):
             'UPDATE stest SET new_tag = ?'
             ' WHERE id = ?',
             (0, route['id'])
+        )
+        db.commit()
+    if route['guess_MBTI_EI'] == "":
+        db.execute(
+            'UPDATE stest SET guess_MBTI_EI = ?, guess_MBTI_SN = ?, guess_MBTI_TF = ?, guess_MBTI_JP = ?'
+            ' WHERE id = ?',
+            (sguesser(title)[0], sguesser(title)[1], sguesser(title)[2], sguesser(title)[3], route['id'])
         )
         db.commit()
     return render_template('sresults.html', route=route)
@@ -54,6 +63,13 @@ def display_ppost(title: str):
             (0, route['id'])
         )
         db.commit()
+    if route['guess_MBTI_EI'] == "":
+        db.execute(
+            'UPDATE ptest SET guess_MBTI_EI = ?, guess_MBTI_SN = ?, guess_MBTI_TF = ?, guess_MBTI_JP = ?'
+            ' WHERE id = ?',
+            (pguesser(title)[0], pguesser(title)[1], pguesser(title)[2], pguesser(title)[3], route['id'])
+        )
+        db.commit()
     return render_template('presults.html', route=route)
 
 
@@ -63,12 +79,12 @@ def profile():
         return redirect(url_for('auth.login'))
     db = get_db()
     selfassessments = db.execute(
-        'SELECT p.id, created, author_id, u.username, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, route, new_tag'
+        'SELECT p.id, created, author_id, u.username, route, new_tag'
         ' FROM stest p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
     peerassessments = db.execute(
-        'SELECT p.id, created, author_id, u.username, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, target_username, route, new_tagp, new_tags'
+        'SELECT p.id, created, author_id, u.username, target_username, route, new_tagp, new_tags'
         ' FROM ptest p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
@@ -123,11 +139,11 @@ def selftest():
             while (not obtainedUnique):
                 try:
                     db.execute(
-                        'INSERT INTO stest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, author_id, username, route, new_tag, guess_MBTI)'
-                        ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                        'INSERT INTO stest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, author_id, username, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
+                        ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                         (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21,q22,q23,q24,q25,
                          g.user['id'], g.user['username'], ''.join(
-                            random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24)), 1, "")
+                            random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24)), 1, "", "", "", "")
                     )
                     db.commit()
                     obtainedUnique = True
@@ -186,12 +202,12 @@ def peertest():
             while (not obtainedUnique):
                 try:
                     db.execute(
-                        'INSERT INTO ptest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, author_id, username, target_username, route, new_tags, new_tagp, guess_MBTI)'
-                        ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,)',
+                        'INSERT INTO ptest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, author_id, username, target_username, route, new_tags, new_tagp, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
+                        ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                         (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25,
                          g.user['id'], g.user['username'], target_username, ''.join(
                             random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24)), 1,
-                         1, "")
+                         1, "", "", "", "")
                     )
                     db.commit()
                     obtainedUnique = True
@@ -263,3 +279,135 @@ def addsample():
                     obtainedUnique = False
             return redirect(url_for('questionaire.profile'))
     return render_template('/addsample.html')
+
+
+def sguesser(title):
+    db = get_db()
+    route = db.execute(
+        'SELECT * FROM stest WHERE route = ?', (title,)
+    ).fetchone()
+
+    EImeter = -2 * (route['q3'] - 3) + 2 * (route['q15'] - 3) + 2 * (route['q20'] - 3) + (route['q23'] - 3) - (route['q24'] - 3)
+    SNmeter = 2 * (route['q2'] - 3) - (route['q5'] - 3) + 2 * (route['q19'] - 3)
+    TFmeter = 2 * (route['q21'] - 3)
+    JPmeter = 2 * (route['q1'] - 3) - (route['q7'] - 3) - 2 * (route['q16'] - 3) + (route['q17'] - 3) - (route['q18'] - 3)
+    if route['q4'] - 3 > 0:
+        TFmeter -= (route['q4'] - 3)
+    else:
+        TFmeter -= 2 * (route['q4'] - 3)
+
+    if route['q6'] - 3 > 0:
+        EImeter -= (route['q6'] - 3)
+    else:
+        EImeter -= 2 * (route['q6'] - 3)
+
+    if route['q8'] - 3 > 0:
+        JPmeter += (route['q8'] - 3)
+    else:
+        JPmeter += 2 * (route['q8'] - 3)
+
+    if route['q9'] - 3 > 0:
+        EImeter -= (route['q9'] - 3)
+    else:
+        EImeter -= 2 * (route['q9'] - 3)
+
+    if route['q10'] - 3 > 0:
+        JPmeter -= (route['q10'] - 3)
+    else:
+        JPmeter -= 2 * (route['q10'] - 3)
+
+    if route['q11'] - 3 > 0:
+        SNmeter -= 2 * (route['q11'] - 3)
+    else:
+        SNmeter -= (route['q11'] - 3)
+
+    if route['q12'] - 3 > 0:
+        EImeter += (route['q12'] - 3)
+    else:
+        EImeter += 2 * (route['q12'] - 3)
+
+    if route['q13'] - 3 > 0:
+        TFmeter += 2 * (route['q13'] - 3)
+    else:
+        TFmeter += (route['q13'] - 3)
+
+    if not (route['q14'] - 3 > 0):
+        SNmeter -= (route['q14'] - 3)
+
+    if route['q22'] - 3 > 0:
+        SNmeter += 2 * (route['q22'] - 3)
+    else:
+        SNmeter += (route['q22'] - 3)
+
+    if route['q25'] == 0:
+        SNmeter += 2
+    else:
+        SNmeter -= 4
+
+    return [EImeter, SNmeter, TFmeter, JPmeter]
+
+
+def pguesser(title):
+    db = get_db()
+    route = db.execute(
+        'SELECT * FROM ptest WHERE route = ?', (title,)
+    ).fetchone()
+
+    EImeter = -2 * (route['q3'] - 3) + 2 * (route['q15'] - 3) + 2 * (route['q20'] - 3) + (route['q23'] - 3) - (route['q24'] - 3)
+    SNmeter = 2 * (route['q2'] - 3) - (route['q5'] - 3) + 2 * (route['q19'] - 3)
+    TFmeter = 2 * (route['q21'] - 3)
+    JPmeter = 2 * (route['q1'] - 3) - (route['q7'] - 3) - 2 * (route['q16'] - 3) + (route['q17'] - 3) - (route['q18'] - 3)
+    if route['q4'] - 3 > 0:
+        TFmeter -= (route['q4'] - 3)
+    else:
+        TFmeter -= 2 * (route['q4'] - 3)
+
+    if route['q6'] - 3 > 0:
+        EImeter -= (route['q6'] - 3)
+    else:
+        EImeter -= 2 * (route['q6'] - 3)
+
+    if route['q8'] - 3 > 0:
+        JPmeter += (route['q8'] - 3)
+    else:
+        JPmeter += 2 * (route['q8'] - 3)
+
+    if route['q9'] - 3 > 0:
+        EImeter -= (route['q9'] - 3)
+    else:
+        EImeter -= 2 * (route['q9'] - 3)
+
+    if route['q10'] - 3 > 0:
+        JPmeter -= (route['q10'] - 3)
+    else:
+        JPmeter -= 2 * (route['q10'] - 3)
+
+    if route['q11'] - 3 > 0:
+        SNmeter -= 2 * (route['q11'] - 3)
+    else:
+        SNmeter -= (route['q11'] - 3)
+
+    if route['q12'] - 3 > 0:
+        EImeter += (route['q12'] - 3)
+    else:
+        EImeter += 2 * (route['q12'] - 3)
+
+    if route['q13'] - 3 > 0:
+        TFmeter += 2 * (route['q13'] - 3)
+    else:
+        TFmeter += (route['q13'] - 3)
+
+    if not (route['q14'] - 3 > 0):
+        SNmeter -= (route['q14'] - 3)
+
+    if route['q22'] - 3 > 0:
+        SNmeter += 2 * (route['q22'] - 3)
+    else:
+        SNmeter += (route['q22'] - 3)
+
+    if route['q25'] == 0:
+        SNmeter += 2
+    else:
+        SNmeter -= 4
+
+    return [EImeter, SNmeter, TFmeter, JPmeter]

@@ -53,29 +53,21 @@
 
     <h1 id="trend">Trend Graph</h1><hr>
     <h1>Self Result Trend</h1>
-    <div id="tester" style="width:600px;height:250px;" class="trendgraph">
+    <div id="EItrend" style="width:600px;height:250px;" class="trendgraph">
 
         <script>
-            var testResults = []
+            var EIVals = []
             var testCounter = []
-            var testAvg = 0
             var counter = 0
         </script>
         {% for stest in selfassessments|reverse %}
             {% if g.user['id'] == stest['author_id'] %}
-                <script>counter = counter + 1; testCounter.push(counter)</script>
-                {% for i in range (1,25) %}
-                    <script>testAvg = testAvg + {{stest['q' + i|string]}}</script>
-                {% endfor %}
-                <script>testResults.push(testAvg / 25 - 3); testAvg = 0</script>
+                <script>counter = counter + 1; testCounter.push(counter); EIVals.push({{stest['guess_MBTI_EI'}})</script>
             {% endif %}
         {% endfor %}
         <script>
-            TESTER = document.getElementById('tester');
-            Plotly.newPlot( TESTER, [{
-            x: testCounter,
-            y: testResults }], {
-            margin: { t: 0 } } );
+            EITREND = document.getElementById('EItrend');
+            Plotly.newPlot( EITREND, [{ x: testCounter, y: EIVals }], {margin: { t: 0 } }, {mode:markers} );
         </script>
     </div>
     <br><br><br>
