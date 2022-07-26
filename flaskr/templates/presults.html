@@ -12,9 +12,12 @@
                 <h2>Question {{i}}: Slightly Agree</h2>
             {% endif %}
             {% if route['q' + i|string] == 2 %}
-                <h2>Question {{i}}: Slightly Disagree</h2>
+                <h2>Question {{i}}: Neither Agree Nor Disagree</h2>
             {% endif %}
             {% if route['q' + i|string] == 3 %}
+                <h2>Question {{i}}: Slightly Disagree</h2>
+            {% endif %}
+            {% if route['q' + i|string] == 4 %}
                 <h2>Question {{i}}: Disagree</h2>
             {% endif %}
         {% endfor %}

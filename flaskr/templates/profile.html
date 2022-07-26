@@ -64,10 +64,10 @@
         {% for stest in selfassessments|reverse %}
             {% if g.user['id'] == stest['author_id'] %}
                 <script>counter = counter + 1; testCounter.push(counter)</script>
-                {% for i in range (1,21) %}
+                {% for i in range (1,25) %}
                     <script>testAvg = testAvg + {{stest['q' + i|string]}}</script>
                 {% endfor %}
-                <script>testResults.push(testAvg / 20 - 1.5); testAvg = 0</script>
+                <script>testResults.push(testAvg / 25 - 3); testAvg = 0</script>
             {% endif %}
         {% endfor %}
         <script>

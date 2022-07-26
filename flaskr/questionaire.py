@@ -77,6 +77,8 @@ def profile():
                            peerassessments=list(map(lambda row: dict(row), peerassessments)))
 
 
+
+
 @bp.route('/selftest', methods=('GET', 'POST'))
 @login_required
 def selftest():
@@ -104,9 +106,15 @@ def selftest():
         q18 = request.form['q18']
         q19 = request.form['q19']
         q20 = request.form['q20']
+        q21 = request.form['q21']
+        q22 = request.form['q22']
+        q23 = request.form['q23']
+        q24 = request.form['q24']
+        q25 = request.form['q25']
+
         error = None
         db = get_db()
-        if not q1 or not q2 or not q3 or not q4 or not q5 or not q6 or not q7 or not q8 or not q9 or not q10 or not q11 or not q12 or not q13 or not q14 or not q15 or not q16 or not q17 or not q18 or not q19 or not q20:
+        if not q1 or not q2 or not q3 or not q4 or not q5 or not q6 or not q7 or not q8 or not q9 or not q10 or not q11 or not q12 or not q13 or not q14 or not q15 or not q16 or not q17 or not q18 or not q19 or not q20 or not q21 or not q22 or not q23 or not q24 or not q25:
             error = 'All questions are required.'
 
         if error is not None:
@@ -115,11 +123,11 @@ def selftest():
             while (not obtainedUnique):
                 try:
                     db.execute(
-                        'INSERT INTO stest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, author_id, username, route, new_tag)'
-                        ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                        (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20,
+                        'INSERT INTO stest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, author_id, username, route, new_tag, guess_MBTI)'
+                        ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                        (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21,q22,q23,q24,q25,
                          g.user['id'], g.user['username'], ''.join(
-                            random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24)), 1)
+                            random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24)), 1, "")
                     )
                     db.commit()
                     obtainedUnique = True
@@ -157,10 +165,16 @@ def peertest():
         q18 = request.form['q18']
         q19 = request.form['q19']
         q20 = request.form['q20']
+        q21 = request.form['q21']
+        q22 = request.form['q22']
+        q23 = request.form['q23']
+        q24 = request.form['q24']
+        q25 = request.form['q25']
+
         target_username = request.form['target_username']
         error = None
         db = get_db()
-        if not q1 or not q2 or not q3 or not q4 or not q5 or not q6 or not q7 or not q8 or not q9 or not q10 or not q11 or not q12 or not q13 or not q14 or not q15 or not q16 or not q17 or not q18 or not q19 or not q20 or not target_username:
+        if not q1 or not q2 or not q3 or not q4 or not q5 or not q6 or not q7 or not q8 or not q9 or not q10 or not q11 or not q12 or not q13 or not q14 or not q15 or not q16 or not q17 or not q18 or not q19 or not q20 or not q21 or not q22 or not q23 or not q24 or not q25 or not target_username:
             error = 'All questions are required.'
 
         if target_username == g.user['username']:
@@ -172,12 +186,12 @@ def peertest():
             while (not obtainedUnique):
                 try:
                     db.execute(
-                        'INSERT INTO ptest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, author_id, username, target_username, route, new_tags, new_tagp)'
-                        ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                        (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20,
+                        'INSERT INTO ptest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, author_id, username, target_username, route, new_tags, new_tagp, guess_MBTI)'
+                        ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,)',
+                        (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25,
                          g.user['id'], g.user['username'], target_username, ''.join(
                             random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24)), 1,
-                         1)
+                         1, "")
                     )
                     db.commit()
                     obtainedUnique = True
@@ -221,10 +235,14 @@ def addsample():
         q18 = request.form['q18']
         q19 = request.form['q19']
         q20 = request.form['q20']
-
+        q21 = request.form['q21']
+        q22 = request.form['q22']
+        q23 = request.form['q23']
+        q24 = request.form['q24']
+        q25 = request.form['q25']
         error = None
         db = get_db()
-        if not q1 or not q2 or not q3 or not q4 or not q5 or not q6 or not q7 or not q8 or not q9 or not q10 or not q11 or not q12 or not q13 or not q14 or not q15 or not q16 or not q17 or not q18 or not q19 or not q20 or not mbti:
+        if not q1 or not q2 or not q3 or not q4 or not q5 or not q6 or not q7 or not q8 or not q9 or not q10 or not q11 or not q12 or not q13 or not q14 or not q15 or not q16 or not q17 or not q18 or not q19 or not q20 or not q21 or not q22 or not q23 or not q24 or not q25 or not mbti:
             error = 'All questions are required.'
 
         if error is not None:
@@ -233,9 +251,9 @@ def addsample():
             while (not obtainedUnique):
                 try:
                     db.execute(
-                        'INSERT INTO samples (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, author_id, username, route, real_MBTI)'
-                        ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                        (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20,
+                        'INSERT INTO samples (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, author_id, username, route, real_MBTI)'
+                        ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                        (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25,
                          g.user['id'], g.user['username'], ''.join(
                             random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24)), mbti)
                     )

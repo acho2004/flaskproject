@@ -6,17 +6,27 @@
         <h1>Self Assessment by {{route['username']}} on {{ route['created'].strftime('%Y-%m-%d') }}</h1>
         {% for i in range (1,21) %}
             {% if route['q' + i|string] == 0 %}
-                <h2>Question {{i}}: Agree</h2>
+                <h2>Question {{i}}: 매우 동의</h2>
             {% endif %}
             {% if route['q' + i|string] == 1 %}
-                <h2>Question {{i}}: Slightly Agree</h2>
+                <h2>Question {{i}}: 동의</h2>
             {% endif %}
             {% if route['q' + i|string] == 2 %}
-                <h2>Question {{i}}: Slightly Disagree</h2>
+                <h2>Question {{i}}: 약간 동의</h2>
             {% endif %}
             {% if route['q' + i|string] == 3 %}
-                <h2>Question {{i}}: Disagree</h2>
+                <h2>Question {{i}}: 중립</h2>
             {% endif %}
+            {% if route['q' + i|string] == 4 %}
+                <h2>Question {{i}}: 약간 부정</h2>
+            {% endif %}
+            {% if route['q' + i|string] == 5 %}
+                <h2>Question {{i}}: 부정</h2>
+            {% endif %}
+            {% if route['q' + i|string] == 6 %}
+                <h2>Question {{i}}: 매우 부정</h2>
+            {% endif %}
+
         {% endfor %}
 
     </article>
