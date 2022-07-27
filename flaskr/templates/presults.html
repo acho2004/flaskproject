@@ -3,7 +3,7 @@
 {% block title %} Results {% endblock %}
 {% block content %}
     <article class="testResults">
-        <h1>Peer Assessment by {{route['username']}} for {{route['target_username']}} on {{ route['created'].strftime('%Y-%m-%d') }}</h1>
+        <h1>Peer Assessment by {{route['username']}} for {{route['target_username']}} on {{ route['created'].strftime('%Y-%m-%d %H:%M:%S') }}</h1>
         {% for i in range (1,25) %}
             {% if route['q' + i|string] == 0 %}
                 <h2>Question {{i}}: 매우 동의</h2>

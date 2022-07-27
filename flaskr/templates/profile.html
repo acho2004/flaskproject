@@ -16,7 +16,7 @@
         {% if g.user['username'] == stest['target_username'] %}
             <article class="testResults">
                 {% if stest['new_tagp'] == 1 %} <h1>NEW!</h1> {% endif %}
-                <a href= {{"/results/peer/" + stest['route']}}> Peer Assessment by {{stest['username']}} on {{ stest['created'].strftime('%Y-%m-%d') }}</a>
+                <a href= {{"/results/peer/" + stest['route']}}> Peer Assessment by {{stest['username']}} on {{ stest['created'].strftime('%Y-%m-%d %H:%M:%S') }}</a>
             </article>
             <hr>
         {% endif %}
@@ -29,7 +29,7 @@
         {% if g.user['username'] == stest['username'] %}
             <article class="testResults">
                 {% if stest['new_tags'] == 1 %} <h1>NEW!</h1> {% endif %}
-                <a href= {{"/results/peer/" + stest['route']}}> Peer Assessment for {{stest['target_username']}} on {{ stest['created'].strftime('%Y-%m-%d') }}</a>
+                <a href= {{"/results/peer/" + stest['route']}}> Peer Assessment for {{stest['target_username']}} on {{ stest['created'].strftime('%Y-%m-%d %H:%M:%S') }}</a>
             </article>
             <hr>
         {% endif %}
@@ -42,7 +42,7 @@
         {% if g.user['id'] == stest['author_id'] %}
             <article class="testResults">
                 {% if stest['new_tag'] == 1 %} <h1>NEW!</h1> {% endif %}
-                <a href= {{"/results/self/" + stest['route']}}> Self Assessment on {{ stest['created'].strftime('%Y-%m-%d') }}</a>
+                <a href= {{"/results/self/" + stest['route']}}> Self Assessment on {{ stest['created'].strftime('%Y-%m-%d %H:%M:%S') }}</a>
             </article>
             <hr>
         {% endif %}
@@ -61,7 +61,7 @@
         </script>
         {% for stest in selfassessments|reverse %}
             {% if g.user['id'] == stest['author_id'] %}
-                <script>testDate.push({{stest['created'].strftime('%Y-%m-%d')}}); EIVals.push({{stest['guess_MBTI_EI']}}); </script>
+                <script>testDate.push("{{stest['created'].strftime('%Y-%m-%d %H:%M:%S')}}"); EIVals.push({{stest['guess_MBTI_EI']}}); </script>
             {% endif %}
         {% endfor %}
         <script>
@@ -69,13 +69,78 @@
             var traceEI = {
                 x: testDate,
                 y: EIVals,
-                mode: 'markers',
                 type: 'scatter'
             };
             var data = [traceEI];
             Plotly.newPlot(EITREND, data);
         </script>
     </div>
+    <div id="SNtrend" style="width:600px;height:250px;" class="trendgraph">
+
+        <script>
+            var SNVals = []
+            var testDate = []
+        </script>
+        {% for stest in selfassessments|reverse %}
+            {% if g.user['id'] == stest['author_id'] %}
+                <script>testDate.push("{{stest['created'].strftime('%Y-%m-%d %H:%M:%S')}}"); SNVals.push({{stest['guess_MBTI_SN']}}); </script>
+            {% endif %}
+        {% endfor %}
+        <script>
+            SNTREND = document.getElementById('SNtrend');
+            var traceSN = {
+                x: testDate,
+                y: SNVals,
+                type: 'scatter'
+            };
+            var data = [traceSN];
+            Plotly.newPlot(SNTREND, data);
+        </script>
+    </div>
+    <div id="TFtrend" style="width:600px;height:250px;" class="trendgraph">
+        <script>
+            var TFVals = []
+            var testDate = []
+        </script>
+        {% for stest in selfassessments|reverse %}
+            {% if g.user['id'] == stest['author_id'] %}
+                <script>testDate.push("{{stest['created'].strftime('%Y-%m-%d %H:%M:%S')}}"); TFVals.push({{stest['guess_MBTI_TF']}}); </script>
+            {% endif %}
+        {% endfor %}
+        <script>
+            TFTREND = document.getElementById('TFtrend');
+            var traceTF = {
+                x: testDate,
+                y: TFVals,
+                type: 'scatter'
+            };
+            var data = [traceTF];
+            Plotly.newPlot(TFTREND, data);
+        </script>
+    </div>
+    <div id="JPtrend" style="width:600px;height:250px;" class="trendgraph">
+        <script>
+            var JPVals = []
+            var testDate = []
+        </script>
+        {% for stest in selfassessments|reverse %}
+            {% if g.user['id'] == stest['author_id'] %}
+                <script>testDate.push("{{stest['created'].strftime('%Y-%m-%d %H:%M:%S')}}"); JPVals.push({{stest['guess_MBTI_JP']}}); </script>
+            {% endif %}
+        {% endfor %}
+        <script>
+            JPTREND = document.getElementById('JPtrend');
+            var traceJP = {
+                x: testDate,
+                y: JPVals,
+                type: 'scatter'
+            };
+            var data = [traceJP];
+            Plotly.newPlot(JPTREND, data);
+        </script>
+    </div>
+
+    <a href="#top">Back to the Top</a>
     <br><br><br>
 
 
