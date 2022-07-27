@@ -14,9 +14,6 @@ h1{
     word-wrap: break-word;
 }
 
-div{
-    border: 5px solid black;
-}
 
 
 
@@ -85,6 +82,9 @@ nav ul  {display: block; padding: 0.5rem; color: grey;}
     border: 0px;
 }
 
+.trendgraph{
+    border: 0px;
+}
 
 .regtag div {
   white-space: nowrap;

@@ -113,10 +113,18 @@ def selftest():
         q23 = request.form['q23']
         q24 = request.form['q24']
         q25 = request.form['q25']
+        q26 = request.form['q26']
+        q27 = request.form['q27']
+        q28 = request.form['q28']
+        q29 = request.form['q29']
+        q30 = request.form['q30']
+        q31 = request.form['q31']
+        q32 = request.form['q32']
+
         x = ""
         error = None
         db = get_db()
-        if not q1 or not q2 or not q3 or not q4 or not q5 or not q6 or not q7 or not q8 or not q9 or not q10 or not q11 or not q12 or not q13 or not q14 or not q15 or not q16 or not q17 or not q18 or not q19 or not q20 or not q21 or not q22 or not q23 or not q24 or not q25:
+        if not q1 or not q2 or not q3 or not q4 or not q5 or not q6 or not q7 or not q8 or not q9 or not q10 or not q11 or not q12 or not q13 or not q14 or not q15 or not q16 or not q17 or not q18 or not q19 or not q20 or not q21 or not q22 or not q23 or not q24 or not q25 or not q26 or not q27 or not q28 or not q29 or not q30 or not q31 or not q32:
             error = 'All questions are required.'
 
         if error is not None:
@@ -126,9 +134,9 @@ def selftest():
                 try:
                     x = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24))
                     db.execute(
-                        'INSERT INTO stest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, author_id, username, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
-                        ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                        (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21,q22,q23,q24,q25,
+                        'INSERT INTO stest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, q26, q27, q28, q29, q30, q31, q32, author_id, username, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
+                        ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                        (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, q26, q27, q28, q29, q30, q31, q32,
                          g.user['id'], g.user['username'], x, 1, -999, -999, -999, -999)
                     )
                     db.commit()
@@ -178,13 +186,20 @@ def peertest():
         q23 = request.form['q23']
         q24 = request.form['q24']
         q25 = request.form['q25']
+        q26 = request.form['q26']
+        q27 = request.form['q27']
+        q28 = request.form['q28']
+        q29 = request.form['q29']
+        q30 = request.form['q30']
+        q31 = request.form['q31']
+        q32 = request.form['q32']
 
         x = ""
 
         target_username = request.form['target_username']
         error = None
         db = get_db()
-        if not q1 or not q2 or not q3 or not q4 or not q5 or not q6 or not q7 or not q8 or not q9 or not q10 or not q11 or not q12 or not q13 or not q14 or not q15 or not q16 or not q17 or not q18 or not q19 or not q20 or not q21 or not q22 or not q23 or not q24 or not q25 or not target_username:
+        if not q1 or not q2 or not q3 or not q4 or not q5 or not q6 or not q7 or not q8 or not q9 or not q10 or not q11 or not q12 or not q13 or not q14 or not q15 or not q16 or not q17 or not q18 or not q19 or not q20 or not q21 or not q22 or not q23 or not q24 or not q25 or not q26 or not q27 or not q28 or not q29 or not q30 or not q31 or not q32 or not target_username:
             error = 'All questions are required.'
 
         if target_username == g.user['username']:
@@ -197,9 +212,9 @@ def peertest():
                 try:
                     x = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24))
                     db.execute(
-                        'INSERT INTO ptest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, author_id, username, target_username, route, new_tags, new_tagp, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
-                        ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                        (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25,
+                        'INSERT INTO ptest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, q26, q27, q28, q29, q30, q31, q32, author_id, username, target_username, route, new_tags, new_tagp, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
+                        ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? , ?, ?, ?, ?, ?)',
+                        (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, q26, q27, q28, q29, q30, q31, q32,
                          g.user['id'], g.user['username'], target_username, x, 1,
                          1, -999, -999, -999, -999)
                     )
@@ -253,15 +268,22 @@ def addsample():
         q22 = random.randrange(0, 7)
         q23 = random.randrange(0, 7)
         q24 = random.randrange(0, 7)
-        q25 = random.randrange(0, 2)
+        q25 = random.randrange(0, 7)
+        q26 = random.randrange(0, 7)
+        q27 = random.randrange(0, 7)
+        q28 = random.randrange(0, 7)
+        q29 = random.randrange(0, 7)
+        q30 = random.randrange(0, 7)
+        q31 = random.randrange(0, 7)
+        q32 = random.randrange(0, 2)
         db = get_db()
         x = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24))
         while (not obtainedUnique):
             try:
                 db.execute(
-                    'INSERT INTO stest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, author_id, username, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
-                    ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                    (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25,
+                    'INSERT INTO stest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, q26, q27, q28, q29, q30, q31, q32, author_id, username, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
+                    ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                    (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, q26, q27, q28, q29, q30, q31, q32,
                      g.user['id'], g.user['username'], x, 1, -999, -999, -999, -999 )
                 )
                 db.commit()
@@ -274,7 +296,6 @@ def addsample():
             (sguesser(x)[0], sguesser(x)[1], sguesser(x)[2], sguesser(x)[3], x)
         )
         db.commit()
-        return redirect(url_for('questionaire.profile'))
     return render_template('/addsample.html')
 
 
@@ -284,10 +305,10 @@ def sguesser(title):
         'SELECT * FROM stest WHERE route = ?', (title,)
     ).fetchone()
 
-    EImeter = -2 * (route['q3'] - 3) + 2 * (route['q15'] - 3) + 2 * (route['q20'] - 3) + (route['q23'] - 3) - (route['q24'] - 3)
-    SNmeter = 2 * (route['q2'] - 3) - (route['q5'] - 3) + 2 * (route['q19'] - 3)
-    TFmeter = 2 * (route['q21'] - 3)
-    JPmeter = 2 * (route['q1'] - 3) - (route['q7'] - 3) - 2 * (route['q16'] - 3) + (route['q17'] - 3) - (route['q18'] - 3)
+    EImeter = -2 * (route['q3'] - 3) + 2 * (route['q15'] - 3) + 2 * (route['q20'] - 3) + (route['q23'] - 3) - (route['q24'] - 3) - (route['q30'] - 3)
+    SNmeter = 2 * (route['q2'] - 3) - (route['q5'] - 3) + 2 * (route['q19'] - 3) + (route['q26'] - 3) - (route['q28'] - 3)
+    TFmeter = 2 * (route['q21'] - 3) + (route['q27'] - 3) - (route['q29'] - 3) - 2 * (route['q31'] - 3)
+    JPmeter = 2 * (route['q1'] - 3) - (route['q7'] - 3) - 2 * (route['q16'] - 3) + (route['q17'] - 3) - (route['q18'] - 3) + (route['q25'] - 3)
     if route['q4'] - 3 > 0:
         TFmeter -= (route['q4'] - 3)
     else:
@@ -336,7 +357,7 @@ def sguesser(title):
     else:
         SNmeter += (route['q22'] - 3)
 
-    if route['q25'] == 0:
+    if route['q32'] == 0:
         SNmeter += 2
     else:
         SNmeter -= 4
@@ -350,10 +371,10 @@ def pguesser(title):
         'SELECT * FROM ptest WHERE route = ?', (title,)
     ).fetchone()
 
-    EImeter = -2 * (route['q3'] - 3) + 2 * (route['q15'] - 3) + 2 * (route['q20'] - 3) + (route['q23'] - 3) - (route['q24'] - 3)
-    SNmeter = 2 * (route['q2'] - 3) - (route['q5'] - 3) + 2 * (route['q19'] - 3)
-    TFmeter = 2 * (route['q21'] - 3)
-    JPmeter = 2 * (route['q1'] - 3) - (route['q7'] - 3) - 2 * (route['q16'] - 3) + (route['q17'] - 3) - (route['q18'] - 3)
+    EImeter = -2 * (route['q3'] - 3) + 2 * (route['q15'] - 3) + 2 * (route['q20'] - 3) + (route['q23'] - 3) - (route['q24'] - 3) - (route['q30'] - 3)
+    SNmeter = 2 * (route['q2'] - 3) - (route['q5'] - 3) + 2 * (route['q19'] - 3) + (route['q26'] - 3) - (route['q28'] - 3)
+    TFmeter = 2 * (route['q21'] - 3) + (route['q27'] - 3) - (route['q29'] - 3) - 2 * (route['q31'] - 3)
+    JPmeter = 2 * (route['q1'] - 3) - (route['q7'] - 3) - 2 * (route['q16'] - 3) + (route['q17'] - 3) - (route['q18'] - 3) + (route['q25'] - 3)
     if route['q4'] - 3 > 0:
         TFmeter -= (route['q4'] - 3)
     else:
@@ -402,7 +423,7 @@ def pguesser(title):
     else:
         SNmeter += (route['q22'] - 3)
 
-    if route['q25'] == 0:
+    if route['q32'] == 0:
         SNmeter += 2
     else:
         SNmeter -= 4

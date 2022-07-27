@@ -42,7 +42,7 @@
         {% if g.user['id'] == stest['author_id'] %}
             <article class="testResults">
                 {% if stest['new_tag'] == 1 %} <h1>NEW!</h1> {% endif %}
-                <a href= {{"/results/self/" + stest['route']}}> Self Assessment on {{ stest['created'].strftime('%Y-%m-%d %H:%M:%S') }}</a>
+                <a href= {{"/results/self/" + stest['route']}}> Self Assessment on {{ stest['created'].strftime('%Y-%m-%d %H:%M:%S') }} UTC</a>
             </article>
             <hr>
         {% endif %}
@@ -58,6 +58,10 @@
         <script>
             var EIVals = []
             var testDate = []
+            var layout = {
+                title: 'EI Graph (+: E, -: I)',
+                showlegend: false
+            };
         </script>
         {% for stest in selfassessments|reverse %}
             {% if g.user['id'] == stest['author_id'] %}
@@ -72,7 +76,7 @@
                 type: 'scatter'
             };
             var data = [traceEI];
-            Plotly.newPlot(EITREND, data);
+            Plotly.newPlot(EITREND, data, layout, {displaylogo: false, displayModeBar: false});
         </script>
     </div>
     <div id="SNtrend" style="width:600px;height:250px;" class="trendgraph">
@@ -80,6 +84,10 @@
         <script>
             var SNVals = []
             var testDate = []
+            var layout = {
+                title: 'SN Graph (+: S, -: N)',
+                showlegend: false
+            };
         </script>
         {% for stest in selfassessments|reverse %}
             {% if g.user['id'] == stest['author_id'] %}
@@ -94,13 +102,17 @@
                 type: 'scatter'
             };
             var data = [traceSN];
-            Plotly.newPlot(SNTREND, data);
+            Plotly.newPlot(SNTREND, data, layout, {displaylogo: false, displayModeBar: false});
         </script>
     </div>
     <div id="TFtrend" style="width:600px;height:250px;" class="trendgraph">
         <script>
             var TFVals = []
             var testDate = []
+            var layout = {
+                title: 'TF Graph (+: T, -: F)',
+                showlegend: false
+            };
         </script>
         {% for stest in selfassessments|reverse %}
             {% if g.user['id'] == stest['author_id'] %}
@@ -115,13 +127,17 @@
                 type: 'scatter'
             };
             var data = [traceTF];
-            Plotly.newPlot(TFTREND, data);
+            Plotly.newPlot(TFTREND, data, layout, {displaylogo: false, displayModeBar: false} );
         </script>
     </div>
     <div id="JPtrend" style="width:600px;height:250px;" class="trendgraph">
         <script>
             var JPVals = []
             var testDate = []
+            var layout = {
+                title: 'JP Graph (+: J, -: P)',
+                showlegend: false
+            };
         </script>
         {% for stest in selfassessments|reverse %}
             {% if g.user['id'] == stest['author_id'] %}
@@ -136,7 +152,7 @@
                 type: 'scatter'
             };
             var data = [traceJP];
-            Plotly.newPlot(JPTREND, data);
+            Plotly.newPlot(JPTREND, data, layout, {displaylogo: false, displayModeBar: false});
         </script>
     </div>
 
