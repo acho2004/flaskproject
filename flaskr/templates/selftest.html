@@ -9,7 +9,7 @@
         <div><input required type="radio" id={{"cStrAgree" + i|string}} name={{"q" + i|string}} value=0><label for={{"cStrAgree" + i|string}}>매우 동의</label><input required type="radio" id={{"cAgree" + i|string}} name={{"q" + i|string}} value=1><label for={{"cAgree" + i|string}}>동의</label><input required type="radio" id={{"cSAgree" + i|string}} name={{"q" + i|string}} value=2><label for={{"cSAgree" + i|string}}>약간 동의</label><input required type="radio" id={{"cNANDA" + i|string}} name={{"q" + i|string}} value=3><label for={{"cNANDA" + i|string}}>중립</label><input required type="radio" id={{"cSDAgree" + i|string}} name={{"q" + i|string}} value=4><label for={{"cSDAgree" + i|string}}>약간 부정</label><input required type="radio" id={{"cDAgree" + i|string}} name={{"q" + i|string}} value=5><label for={{"cDAgree" + i|string}}>부정</label><input required type="radio" id={{"cStrDAgree" + i|string}} name={{"q" + i|string}} value=6><label for={{"cStrDAgree" + i|string}}>매우 부정</label></div><br>
     {% endfor %}
     <h1>Question 32</h1><h2 id="question32"></h2>
-    <div style="width:100px"><input required type="radio" id="cAgree32" name="q32" value=0><label for="cAgree32">1.</label><input required type="radio" id="cSAgree32" name="q32" value=1><label for="cSAgree32">2.</label></div><br>
+    <div style="width:80px"><input required type="radio" id="cAgree32" name="q32" value=0><label for="cAgree32">1.</label><input required type="radio" id="cSAgree32" name="q32" value=1><label for="cSAgree32">2.</label></div><br>
     <input type="submit" value="Submit">
 </form>
 
@@ -44,7 +44,7 @@
     document.getElementById("question28").innerHTML = "나는 나와 다른 의견을 가진 사람이 어떤 이유를 가지고 있는지 자주 생각 한다.";
     document.getElementById("question29").innerHTML = "나는 나와 다른 배경에서 온 사람을 쉽게 이해 할 수 있다.";
     document.getElementById("question30").innerHTML = "나는 혼자서 할수 있는 일이 편하다.";
-    document.getElementById("question31").innerHTML = "나는 아무리 좋은 기회가 오더라도 다른 사람이 그 기회를 더욱 더 필요시 한다면 기회를 포기 하겠다.";
+    document.getElementById("question31").innerHTML = "나는 아무리 좋은 기회가 오더라도 그 기회가 다른 사람에게 더욱 큰 도움이 될 수 있다 판단 하면 쉽게 포기 할 후 있다.";
     document.getElementById("question32").innerHTML = "둘중에 어떤것을 더 중요시 하는지 선택 하십시오. 1) 나는 눈에 띄지 않기 위하여 평범하게 살려고 노력하는 사람이 좋다. 2) 나는 눈에 띄든 말든 상관 없이 사는 사람이 좋다.";
 </script>
 {% endblock %}
