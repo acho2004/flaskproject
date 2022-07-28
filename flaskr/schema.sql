@@ -11,7 +11,7 @@ CREATE TABLE user (
 CREATE TABLE stest (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   author_id INTEGER NOT NULL,
-  created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  created TIMESTAMP NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%S', 'now', '+9 hours')),
   route TEXT UNIQUE NOT NULL,
   username TEXT NOT NULL,
   new_tag INTEGER NOT NULL,
@@ -69,7 +69,7 @@ CREATE TABLE ptest (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   author_id INTEGER NOT NULL,
   target_username TEXT NOT NULL,
-  created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  created TIMESTAMP NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%S', 'now', '+9 hours')),
   route TEXT UNIQUE NOT NULL,
   username TEXT NOT NULL,
   new_tagp INTEGER NOT NULL,
