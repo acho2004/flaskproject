@@ -16,7 +16,7 @@
     {% for stest in peerassessments %}
         {% if g.user['username'] == stest['target_username'] %}
             <article class="testResults">
-                <a href= {{"/results/peer/" + stest['route']}}> {% if stest['new_tagp'] == 1 %} <span style="color:blue; text-decoration:underline">NEW!</span> {% endif %} {{stest['username']}} 가 나를 위하여 {{ stest['created'].strftime('%Y-%m-%d %I:%M:%S %p') }}  에 본 테스트</a>
+                <a href= {{"/results/peer/" + stest['route']}}> {% if stest['new_tagp'] == 1 %} <span style="color:blue; text-decoration:underline">NEW!</span> {% endif %} {{stest['username']}}가 나를 위하여 {{ stest['created'].strftime('%Y-%m-%d %I:%M:%S %p') }}에 본 테스트</a>
             </article>
             <hr>
         {% endif %}
@@ -27,7 +27,7 @@
     {% for stest in peerassessments %}
         {% if g.user['username'] == stest['username'] %}
             <article class="testResults">
-                <a href= {{"/results/peer/" + stest['route']}}> {% if stest['new_tags'] == 1 %} <span style="color:blue; text-decoration:underline">NEW!</span> {% endif %} {{stest['target_username']}} 를 위하여 {{ stest['created'].strftime('%Y-%m-%d %I:%M:%S %p') }}  에 본 테스트</a>
+                <a href= {{"/results/peer/" + stest['route']}}> {% if stest['new_tags'] == 1 %} <span style="color:blue; text-decoration:underline">NEW!</span> {% endif %} {{stest['target_username']}} 를 위하여 {{ stest['created'].strftime('%Y-%m-%d %I:%M:%S %p') }}에 본 테스트</a>
             </article>
             <hr>
         {% endif %}
@@ -39,7 +39,7 @@
     {% for stest in selfassessments %}
         {% if g.user['id'] == stest['author_id'] %}
             <article class="testResults">
-                <a href= {{"/results/self/" + stest['route']}}> {% if stest['new_tag'] == 1 %} <span style="color:blue; text-decoration:underline">NEW!</span> {% endif %} {{ stest['created'].strftime('%Y-%m-%d %I:%M:%S %p') }}  에 본 셀프 테스트</a>
+                <a href= {{"/results/self/" + stest['route']}}> {% if stest['new_tag'] == 1 %} <span style="color:blue; text-decoration:underline">NEW!</span> {% endif %} {{ stest['created'].strftime('%Y-%m-%d %I:%M:%S %p') }}에 본 셀프 테스트</a>
             </article>
             <hr>
         {% endif %}

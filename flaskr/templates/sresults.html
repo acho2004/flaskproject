@@ -4,7 +4,7 @@
 {% block content %}
 <div class="portal">
     <article class="testResults">
-        <h1 style="padding-top:15px">{{route['username']}} 가 {{ route['created'].strftime('%Y-%m-%d %I:%M:%S %p') }} 에 본 셀프 테스트</h1>
+        <h1 style="padding-top:15px">{{route['username']}}가 {{ route['created'].strftime('%Y-%m-%d %I:%M:%S %p') }}에 본 셀프 테스트</h1>
         {% for i in range (1,39) %}
             {% if route['q' + i|string] == 0 %}
                 <h2>Question {{i}}: 매우 동의</h2>
