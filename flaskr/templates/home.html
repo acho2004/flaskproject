@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %} Home {% endblock %}
+{% block title %} 홈 {% endblock %}
 
 {% block content %}
 <div style="border: 5px solid black">
     <h1 style="padding:15px;">MBTI Comparer 사용법</h1>
     <h2 style="padding-left:15px; width:700px;">로그인 후 셀프 테스트를 사용 하여 자신의 MBTI를 알아내고, 다른 사람들에게 타깃 테스트를 통해 평가 해 달라고 하세요. 시험 결과를 받은후 프로필에서 자신의 MBTI와 상대방한테 어떤 MBTI로 보이는지 비교를 할 수 있어요.</h2>
     <article class="testResults">
-        <a href="{{ url_for('questionaire.selftest') }}">셀프 테스트 <--</a><br>
-        <a href="{{ url_for('questionaire.peertest') }}">타깃 테스트 <--</a>
+        <a href="{{ url_for('questionaire.selftest') }}">셀프 테스트 <-- 클릭!</a><br>
+        <a href="{{ url_for('questionaire.peertest') }}">타깃 테스트 <-- 클릭!</a>
     </article>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
