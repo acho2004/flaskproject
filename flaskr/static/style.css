@@ -90,3 +90,6 @@ nav ul  {display: block; padding: 0.5rem; color: grey;}
   white-space: nowrap;
   overflow: hidden;
 }
+h2{
+    font-size: 1rem;
+}

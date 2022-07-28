@@ -4,7 +4,7 @@
 {% block content %}
     <article class="testResults">
         <h1>Self Assessment by {{route['username']}} on {{ route['created'].strftime('%Y-%m-%d %H:%M:%S') }} UTC</h1>
-        {% for i in range (1,32) %}
+        {% for i in range (1,39) %}
             {% if route['q' + i|string] == 0 %}
                 <h2>Question {{i}}: 매우 동의</h2>
             {% endif %}
@@ -27,7 +27,7 @@
                 <h2>Question {{i}}: 매우 부정</h2>
             {% endif %}
         {% endfor %}
-        <h2>Question 32: {{route['q32'] + 1}}</h2>
+        <h2>Question 39: {{route['q39'] + 1}}</h2>
 
         <h1>
             EI: {{route['guess_MBTI_EI']}}

@@ -7,14 +7,14 @@
     </head>
     <body>
         <div class="menu">
-            <a href="/" style="position:relative; left:10px">MBTI Testing</a>
+            <a href="/" style="position:relative; left:10px">MBTI Comparer</a>
             {% if g.user %}
 
-            <a style = "float:right" href="{{ url_for('auth.logout') }}">Logout</a>
-            <a style = "float:right" href="{{ url_for('questionaire.profile') }}">{{ g.user['username'] }}</a>
+            <a style = "float:right" href="{{ url_for('auth.logout') }}">로그아웃</a>
+            <a style = "float:right" href="{{ url_for('questionaire.profile') }}">{{ g.user['username'] }}의 프로필</a>
             {% else %}
-            <a style = "float:right" href="{{ url_for('auth.register') }}">Register</a>
-            <a style = "float:right" href="{{ url_for('auth.login') }}">Login</a>
+            <a style = "float:right" href="{{ url_for('auth.register') }}">계정 생성</a>
+            <a style = "float:right" href="{{ url_for('auth.login') }}">로그인</a>
             {% endif %}
             {% block additional%}
 
