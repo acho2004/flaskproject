@@ -6,11 +6,11 @@
         <script src="https://cdn.plot.ly/plotly-2.12.1.min.js"></script>
     </head>
     <body>
-        <div class="menu">
+        <div class="menu" style="padding-top:5px">
             <a href="/" style="position:relative; left:10px">MBTI Comparer</a>
             {% if g.user %}
 
-            <a style = "float:right" href="{{ url_for('auth.logout') }}">로그아웃</a>
+            <a style = "float:right; padding-right:5px" href="{{ url_for('auth.logout') }}">로그아웃</a>
             <a style = "float:right" href="{{ url_for('questionaire.profile') }}">프로필</a>
             {% else %}
             <a style = "float:right" href="{{ url_for('auth.register') }}">계정 생성</a>
