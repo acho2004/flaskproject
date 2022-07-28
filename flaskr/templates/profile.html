@@ -11,7 +11,8 @@
 
 
 {% block content %}
-    <hr><h1 id="peerSelf">나에게 온 타깃 테스트 결과</h1><hr>
+<div class="portal">
+    <h1 id="peerSelf" style="position:relative; left:10px; padding-top:15px">나에게 온 타깃 테스트 결과</h1><hr>
     {% for stest in peerassessments %}
         {% if g.user['username'] == stest['target_username'] %}
             <article class="testResults">
@@ -21,10 +22,9 @@
             <hr>
         {% endif %}
     {% endfor %}
-    <a href="#top">Back to the Top</a>
-    <hr>
+    <a href="#top" style="position:relative; left:10px">Back to the Top</a>
 
-    <hr><h1 id="selfPeer">내가 본 타깃 테스트 결과</h1><hr>
+    <hr><h1 id="selfPeer" style="position:relative; left:10px">내가 본 타깃 테스트 결과</h1><hr>
     {% for stest in peerassessments %}
         {% if g.user['username'] == stest['username'] %}
             <article class="testResults">
@@ -34,10 +34,10 @@
             <hr>
         {% endif %}
     {% endfor %}
-    <a href="#top">Back to the Top</a>
+    <a href="#top" style="position:relative; left:10px">Back to the Top</a>
     <hr>
 
-    <h1 id="self">셀프 테스트 결과</h1><hr>
+    <h1 id="self" style="position:relative; left:10px">셀프 테스트 결과</h1><hr>
     {% for stest in selfassessments %}
         {% if g.user['id'] == stest['author_id'] %}
             <article class="testResults">
@@ -48,12 +48,12 @@
         {% endif %}
     {% endfor %}
 
-    <a href="#top">Back to the Top</a>
+    <a href="#top" style="position:relative; left:10px">Back to the Top</a>
     <hr>
 
-    <h1 id="trend">트랜드 그래프</h1><hr>
+    <h1 id="trend" style="position:relative; left:10px">트랜드 그래프</h1><hr>
 
-    <div id="EItrend" style="width:600px;height:250px;" class="trendgraph">
+    <div class="ah" id="EItrend" style="width:600px;height:250px;position:relative; left:15px;" class="trendgraph">
 
         <script>
             var EIValself = []
@@ -93,7 +93,7 @@
         </script>
     </div>
 
-    <div id="SNtrend" style="width:600px;height:250px;" class="trendgraph">
+    <div class="ah" id="SNtrend" style="width:600px;height:250px;position:relative; left:15px;" class="trendgraph">
 
         <script>
             var SNValself = []
@@ -133,7 +133,7 @@
         </script>
     </div>
 
-    <div id="TFtrend" style="width:600px;height:250px;" class="trendgraph">
+    <div class="ah" id="TFtrend" style="width:600px;height:250px;position:relative; left:15px;" class="trendgraph">
 
         <script>
             var TFValself = []
@@ -173,7 +173,7 @@
         </script>
     </div>
 
-    <div id="JPtrend" style="width:600px;height:250px;" class="trendgraph">
+    <div class="ah" id="JPtrend" style="width:600px;height:250px;position:relative; left:15px;" class="trendgraph">
 
         <script>
             var JPValself = []
@@ -215,9 +215,9 @@
 
 
 
-    <a href="#top">Back to the Top</a>
+    <a href="#top" style="position:relative; left:10px">Back to the Top</a>
     <br><br><br>
-
+</div>
 
 
 {% endblock %}

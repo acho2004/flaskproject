@@ -2,6 +2,7 @@
 
 {% block title %} Results {% endblock %}
 {% block content %}
+<div class="portal">
     <article class="testResults">
         <h1>{{ route['created'].strftime('%Y-%m-%d %H:%M:%S') }} UTC 에 {{route['username']}}가 {{route['target_username']}} 를 위하여 본 타깃 테스트 </h1>
         {% for i in range (1,39) %}
@@ -67,4 +68,5 @@
         <h2>주관식 질문 5:</h2> <h2>{{route['sresp5']}}</h2>
 
     </article>
+</div>
 {% endblock %}

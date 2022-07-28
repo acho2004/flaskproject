@@ -59,7 +59,10 @@ nav ul  {display: block; padding: 0.5rem; color: grey;}
     text-decoration:underline;
     padding-left:15px;
 }
-
+.testResults h2{
+    border:0px;
+    padding-left:15px;
+}
 .questionaire h2{
     border:0px;
     font-size:1rem;
