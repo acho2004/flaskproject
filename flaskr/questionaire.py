@@ -92,50 +92,16 @@ def selftest():
     if request.method == 'POST':
 
         obtainedUnique = False
-        q1 = request.form['q1']
-        q2 = request.form['q2']
-        q3 = request.form['q3']
-        q4 = request.form['q4']
-        q5 = request.form['q5']
-        q6 = request.form['q6']
-        q7 = request.form['q7']
-        q8 = request.form['q8']
-        q9 = request.form['q9']
-        q10 = request.form['q10']
-        q11 = request.form['q11']
-        q12 = request.form['q12']
-        q13 = request.form['q13']
-        q14 = request.form['q14']
-        q15 = request.form['q15']
-        q16 = request.form['q16']
-        q17 = request.form['q17']
-        q18 = request.form['q18']
-        q19 = request.form['q19']
-        q20 = request.form['q20']
-        q21 = request.form['q21']
-        q22 = request.form['q22']
-        q23 = request.form['q23']
-        q24 = request.form['q24']
-        q25 = request.form['q25']
-        q26 = request.form['q26']
-        q27 = request.form['q27']
-        q28 = request.form['q28']
-        q29 = request.form['q29']
-        q30 = request.form['q30']
-        q31 = request.form['q31']
-        q32 = request.form['q32']
-        q33 = request.form['q33']
-        q34 = request.form['q34']
-        q35 = request.form['q35']
-        q36 = request.form['q36']
-        q37 = request.form['q37']
-        q38 = request.form['q38']
-        q39 = request.form['q39']
+        questions = []
+        for i in range(1,40):
+            questions.push(request.form["q" + str(i)])
+
         x = ""
         error = None
         db = get_db()
-        if not q1 or not q2 or not q3 or not q4 or not q5 or not q6 or not q7 or not q8 or not q9 or not q10 or not q11 or not q12 or not q13 or not q14 or not q15 or not q16 or not q17 or not q18 or not q19 or not q20 or not q21 or not q22 or not q23 or not q24 or not q25 or not q26 or not q27 or not q28 or not q29 or not q30 or not q31 or not q32 or not q33 or not q34 or not q35 or not q36 or not q37 or not q38 or not q39 :
-            error = 'All questions are required.'
+        for i in range(1,40):
+            if not questions[i]:
+                error = 'All questions are required.'
 
         if error is not None:
             flash(error)
@@ -174,45 +140,10 @@ def peertest():
         return redirect(url_for('auth.login'))
     if request.method == 'POST':
         obtainedUnique = False
-        q1 = request.form['q1']
-        q2 = request.form['q2']
-        q3 = request.form['q3']
-        q4 = request.form['q4']
-        q5 = request.form['q5']
-        q6 = request.form['q6']
-        q7 = request.form['q7']
-        q8 = request.form['q8']
-        q9 = request.form['q9']
-        q10 = request.form['q10']
-        q11 = request.form['q11']
-        q12 = request.form['q12']
-        q13 = request.form['q13']
-        q14 = request.form['q14']
-        q15 = request.form['q15']
-        q16 = request.form['q16']
-        q17 = request.form['q17']
-        q18 = request.form['q18']
-        q19 = request.form['q19']
-        q20 = request.form['q20']
-        q21 = request.form['q21']
-        q22 = request.form['q22']
-        q23 = request.form['q23']
-        q24 = request.form['q24']
-        q25 = request.form['q25']
-        q26 = request.form['q26']
-        q27 = request.form['q27']
-        q28 = request.form['q28']
-        q29 = request.form['q29']
-        q30 = request.form['q30']
-        q31 = request.form['q31']
-        q32 = request.form['q32']
-        q33 = request.form['q33']
-        q34 = request.form['q34']
-        q35 = request.form['q35']
-        q36 = request.form['q36']
-        q37 = request.form['q37']
-        q38 = request.form['q38']
-        q39 = request.form['q39']
+        questions = []
+        for i in range (1,40):
+            questions.push(request.form["q" + str(i)])
+
 
         sresp1 = request.form['sresp1']
         sresp2 = request.form['sresp2']
@@ -224,7 +155,12 @@ def peertest():
         target_username = request.form['target_username']
         error = None
         db = get_db()
-        if not q1 or not q2 or not q3 or not q4 or not q5 or not q6 or not q7 or not q8 or not q9 or not q10 or not q11 or not q12 or not q13 or not q14 or not q15 or not q16 or not q17 or not q18 or not q19 or not q20 or not q21 or not q22 or not q23 or not q24 or not q25 or not q26 or not q27 or not q28 or not q29 or not q30 or not q31 or not q32 or not q33 or not q34 or not q35 or not q36 or not q37 or not q38 or not q39 or not sresp1 or not sresp2 or not sresp3 or not sresp4 or not sresp5 or not target_username:
+
+        for i in range(1,40):
+            if not questions[i]:
+                error = 'All questions are required.'
+
+        if not sresp1 or not sresp2 or not sresp3 or not sresp4 or not sresp5 or not target_username:
             error = 'All questions are required.'
 
         if target_username == g.user['username']:
@@ -236,13 +172,18 @@ def peertest():
             while (not obtainedUnique):
                 try:
                     x = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24))
-                    db.execute(
-                        'INSERT INTO ptest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, q26, q27, q28, q29, q30, q31, q32, q33, q34, q35, q36, q37, q38, q39, sresp1, sresp2, sresp3, sresp4, sresp5, author_id, username, target_username, route, new_tags, new_tagp, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
-                        ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? , ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                        (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, q26, q27, q28, q29, q30, q31, q32, q33, q34, q35, q36, q37, q38, q39, sresp1, sresp2, sresp3, sresp4, sresp5,
-                         g.user['id'], g.user['username'], target_username, x, 1,
-                         1, -999, -999, -999, -999)
-                    )
+
+                    query = "INSERT INTO ptest ("
+                    query2 = "VALUES ("
+                    counter = 1
+                    for item in questions:
+                        query += 'q' + counter + ', '
+                        query2 += item + ', '
+
+                    query += 'sresp1, sresp2, sresp3, sresp4, sresp5, author_id, username, target_username, route, new_tags, new_tagp, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
+                    query2 += "sresp1, sresp2, sresp3, sresp4, sresp5, g.user['id'], g.user['username'], target_username, x, 1, 1, -999, -999, -999, -999)"
+                    query += query2
+                    db.execute(query)
                     db.commit()
                     obtainedUnique = True
                 except db.IntegrityError:
