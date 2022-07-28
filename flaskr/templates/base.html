@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
-    <title>{% block title %} {% endblock %}</title>
+
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <head>
+        <title>{% block title %} {% endblock %}</title>
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
         <script src="https://cdn.plot.ly/plotly-2.12.1.min.js"></script>
     </head>
+
     <body>
         <div class="menu" style="padding-top:5px">
             <a href="/" style="position:relative; left:10px">MBTI Comparer</a>
