@@ -11,7 +11,7 @@
             {% if g.user %}
 
             <a style = "float:right" href="{{ url_for('auth.logout') }}">로그아웃</a>
-            <a style = "float:right" href="{{ url_for('questionaire.profile') }}">{{ g.user['username'] }}의 프로필</a>
+            <a style = "float:right" href="{{ url_for('questionaire.profile') }}">프로필</a>
             {% else %}
             <a style = "float:right" href="{{ url_for('auth.register') }}">계정 생성</a>
             <a style = "float:right" href="{{ url_for('auth.login') }}">로그인</a>

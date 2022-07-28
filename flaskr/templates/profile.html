@@ -3,9 +3,9 @@
 {% block title %} Profile {% endblock %}
 
 {% block additional %}
-<a style = "float:right" href="#trend">트랜드 보기</a>
-<a id="top" style = "float:right" href="#self">셀프 결과 보기</a>
-<a style = "float:right" href="#peerSelf">타깃 결과 보기</a>
+<a style = "float:right" href="#trend">트랜드</a>
+<a id="top" style = "float:right" href="#self">셀프 결과</a>
+<a style = "float:right" href="#peerSelf">타깃 결과</a>
 {% endblock %}
 
 
@@ -56,105 +56,164 @@
     <div id="EItrend" style="width:600px;height:250px;" class="trendgraph">
 
         <script>
-            var EIVals = []
-            var testDate = []
+            var EIValself = []
+            var testDateself = []
+            var EIValpeer = []
+            var testDatepeer = []
             var layout = {
-                title: 'EI Graph (+: E, -: I)',
-                showlegend: false
+                title: 'EI 그래프 (+: E, -: I)',
             };
         </script>
         {% for stest in selfassessments|reverse %}
             {% if g.user['id'] == stest['author_id'] %}
-                <script>testDate.push("{{stest['created'].strftime('%Y-%m-%d %H:%M:%S')}}"); EIVals.push({{stest['guess_MBTI_EI']}}); </script>
+                <script>testDateself.push("{{stest['created'].strftime('%Y-%m-%d %H:%M:%S')}}"); EIValself.push({{stest['guess_MBTI_EI']}});</script>
+            {% endif %}
+        {% endfor %}
+        {% for ptest in peerassessments|reverse %}
+            {% if g.user['username'] == ptest['target_username'] %}
+                <script>testDatepeer.push("{{ptest['created'].strftime('%Y-%m-%d %H:%M:%S')}}"); EIValpeer.push({{ptest['guess_MBTI_EI']}}); </script>
             {% endif %}
         {% endfor %}
         <script>
             EITREND = document.getElementById('EItrend');
-            var traceEI = {
-                x: testDate,
-                y: EIVals,
-                type: 'scatter'
+            var traceEIself = {
+                x: testDateself,
+                y: EIValself,
+                type: 'scatter',
+                name: '셀프'
             };
-            var data = [traceEI];
+            var traceEIpeer = {
+                x: testDatepeer,
+                y: EIValpeer,
+                type: 'scatter',
+                name: '타깃'
+            };
+            var data = [traceEIself, traceEIpeer];
             Plotly.newPlot(EITREND, data, layout, {displaylogo: false, displayModeBar: false});
         </script>
     </div>
+
     <div id="SNtrend" style="width:600px;height:250px;" class="trendgraph">
 
         <script>
-            var SNVals = []
-            var testDate = []
+            var SNValself = []
+            var testDateself = []
+            var SNValpeer = []
+            var testDatepeer = []
             var layout = {
-                title: 'SN Graph (+: S, -: N)',
-                showlegend: false
+                title: 'SN 그래프 (+: S, -: N)',
             };
         </script>
         {% for stest in selfassessments|reverse %}
             {% if g.user['id'] == stest['author_id'] %}
-                <script>testDate.push("{{stest['created'].strftime('%Y-%m-%d %H:%M:%S')}}"); SNVals.push({{stest['guess_MBTI_SN']}}); </script>
+                <script>testDateself.push("{{stest['created'].strftime('%Y-%m-%d %H:%M:%S')}}"); SNValself.push({{stest['guess_MBTI_SN']}});</script>
+            {% endif %}
+        {% endfor %}
+        {% for ptest in peerassessments|reverse %}
+            {% if g.user['username'] == ptest['target_username'] %}
+                <script>testDatepeer.push("{{ptest['created'].strftime('%Y-%m-%d %H:%M:%S')}}"); SNValpeer.push({{ptest['guess_MBTI_SN']}}); </script>
             {% endif %}
         {% endfor %}
         <script>
             SNTREND = document.getElementById('SNtrend');
-            var traceSN = {
-                x: testDate,
-                y: SNVals,
-                type: 'scatter'
+            var traceSNself = {
+                x: testDateself,
+                y: SNValself,
+                type: 'scatter',
+                name: '셀프'
             };
-            var data = [traceSN];
+            var traceSNpeer = {
+                x: testDatepeer,
+                y: SNValpeer,
+                type: 'scatter',
+                name: '타깃'
+            };
+            var data = [traceSNself, traceSNpeer];
             Plotly.newPlot(SNTREND, data, layout, {displaylogo: false, displayModeBar: false});
         </script>
     </div>
+
     <div id="TFtrend" style="width:600px;height:250px;" class="trendgraph">
+
         <script>
-            var TFVals = []
-            var testDate = []
+            var TFValself = []
+            var testDateself = []
+            var TFValpeer = []
+            var testDatepeer = []
             var layout = {
-                title: 'TF Graph (+: T, -: F)',
-                showlegend: false
+                title: 'TF 그래프 (+: T, -: F)',
             };
         </script>
         {% for stest in selfassessments|reverse %}
             {% if g.user['id'] == stest['author_id'] %}
-                <script>testDate.push("{{stest['created'].strftime('%Y-%m-%d %H:%M:%S')}}"); TFVals.push({{stest['guess_MBTI_TF']}}); </script>
+                <script>testDateself.push("{{stest['created'].strftime('%Y-%m-%d %H:%M:%S')}}"); TFValself.push({{stest['guess_MBTI_TF']}});</script>
+            {% endif %}
+        {% endfor %}
+        {% for ptest in peerassessments|reverse %}
+            {% if g.user['username'] == ptest['target_username'] %}
+                <script>testDatepeer.push("{{ptest['created'].strftime('%Y-%m-%d %H:%M:%S')}}"); TFValpeer.push({{ptest['guess_MBTI_TF']}}); </script>
             {% endif %}
         {% endfor %}
         <script>
             TFTREND = document.getElementById('TFtrend');
-            var traceTF = {
-                x: testDate,
-                y: TFVals,
-                type: 'scatter'
+            var traceTFself = {
+                x: testDateself,
+                y: TFValself,
+                type: 'scatter',
+                name: '셀프'
             };
-            var data = [traceTF];
-            Plotly.newPlot(TFTREND, data, layout, {displaylogo: false, displayModeBar: false} );
+            var traceTFpeer = {
+                x: testDatepeer,
+                y: TFValpeer,
+                type: 'scatter',
+                name: '타깃'
+            };
+            var data = [traceTFself, traceTFpeer];
+            Plotly.newPlot(TFTREND, data, layout, {displaylogo: false, displayModeBar: false});
         </script>
     </div>
+
     <div id="JPtrend" style="width:600px;height:250px;" class="trendgraph">
+
         <script>
-            var JPVals = []
-            var testDate = []
+            var JPValself = []
+            var testDateself = []
+            var JPValpeer = []
+            var testDatepeer = []
             var layout = {
-                title: 'JP Graph (+: J, -: P)',
-                showlegend: false
+                title: 'JP 그래프 (+: J, -: P)',
             };
         </script>
         {% for stest in selfassessments|reverse %}
             {% if g.user['id'] == stest['author_id'] %}
-                <script>testDate.push("{{stest['created'].strftime('%Y-%m-%d %H:%M:%S')}}"); JPVals.push({{stest['guess_MBTI_JP']}}); </script>
+                <script>testDateself.push("{{stest['created'].strftime('%Y-%m-%d %H:%M:%S')}}"); JPValself.push({{stest['guess_MBTI_JP']}});</script>
+            {% endif %}
+        {% endfor %}
+        {% for ptest in peerassessments|reverse %}
+            {% if g.user['username'] == ptest['target_username'] %}
+                <script>testDatepeer.push("{{ptest['created'].strftime('%Y-%m-%d %H:%M:%S')}}"); JPValpeer.push({{ptest['guess_MBTI_JP']}}); </script>
             {% endif %}
         {% endfor %}
         <script>
             JPTREND = document.getElementById('JPtrend');
-            var traceJP = {
-                x: testDate,
-                y: JPVals,
-                type: 'scatter'
+            var traceJPself = {
+                x: testDateself,
+                y: JPValself,
+                type: 'scatter',
+                name: '셀프'
             };
-            var data = [traceJP];
+            var traceJPpeer = {
+                x: testDatepeer,
+                y: JPValpeer,
+                type: 'scatter',
+                name: '타깃'
+            };
+            var data = [traceJPself, traceJPpeer];
             Plotly.newPlot(JPTREND, data, layout, {displaylogo: false, displayModeBar: false});
         </script>
     </div>
+
+
 
     <a href="#top">Back to the Top</a>
     <br><br><br>
