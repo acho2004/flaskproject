@@ -18,6 +18,9 @@ bp = Blueprint('questionaire', __name__)
 
 @bp.route("/results/self/<string:title>")
 def display_spost(title: str):
+    '''
+    hello this is docstring title : {fdsafasdfsff}f
+    '''
     db = get_db()
     route = db.execute(
         'SELECT * FROM stest WHERE route = ?', (title,)
@@ -87,6 +90,7 @@ def selftest():
     if g.user is None:
         return redirect(url_for('auth.login'))
     if request.method == 'POST':
+
         obtainedUnique = False
         q1 = request.form['q1']
         q2 = request.form['q2']
@@ -140,6 +144,9 @@ def selftest():
                 try:
                     x = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24))
                     db.execute(
+                        f''' insert into table values ('{q1}')
+                        
+                        '''
                         'INSERT INTO stest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, q26, q27, q28, q29, q30, q31, q32, q33, q34, q35, q36, q37, q38, q39, author_id, username, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
                         ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                         (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, q26, q27, q28, q29, q30, q31, q32, q33, q34, q35, q36, q37, q38, q39,
@@ -454,3 +461,5 @@ def pguesser(title):
         SNmeter -= 4
 
     return [EImeter, SNmeter, TFmeter, JPmeter]
+
+

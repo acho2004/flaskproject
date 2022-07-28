@@ -5,7 +5,7 @@ from flask import render_template
 
 def create_app(test_config=None):
     # create and configure the app
-    app = Flask(__name__, instance_relative_config=True)
+    app = Flask(__name__, instance_relative_config=True, static_folder='flaskr/static',static_url_path='')
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
@@ -27,7 +27,7 @@ def create_app(test_config=None):
     # a simple page that says hello
     @app.route('/')
     def hello():
-        return render_template('home.html')
+        return render_template('index.html')
 
     from . import db
     db.init_app(app)

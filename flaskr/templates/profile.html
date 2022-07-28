@@ -12,7 +12,7 @@
 
 {% block content %}
 <div class="portal">
-    <h1 id="peerSelf" style="position:relative; left:10px; padding-top:15px; padding-left:5px">나에게 온 타깃 테스트 결과</h1><hr>
+    <h1 id="peerSelf" style="position:relative; left:10px; padding-top:15px; padding-left:5px">너가 바라보는 나</h1><hr>
     {% for stest in peerassessments %}
         {% if g.user['username'] == stest['target_username'] %}
             <article class="testResults">
@@ -23,7 +23,7 @@
     {% endfor %}
     <a href="#top" style="position:relative; left:10px; padding-left:5px">Back to the Top</a>
 
-    <hr><h1 id="selfPeer" style="position:relative; left:10px; padding-left:5px">내가 본 타깃 테스트 결과</h1><hr>
+    <hr><h1 id="selfPeer" style="position:relative; left:10px; padding-left:5px">내가 바라보는 너</h1><hr>
     {% for stest in peerassessments %}
         {% if g.user['username'] == stest['username'] %}
             <article class="testResults">
