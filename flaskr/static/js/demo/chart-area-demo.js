@@ -27,14 +27,12 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   return s.join(dec);
 }
 
-
-
 // Area Chart Example
 var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun5555", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    labels: ['8/1-8/7', '8/8-8/14', '8/15-8/21', '8/21-8/31'],
     datasets: [{
       label: "Earnings",
       lineTension: 0.3,
@@ -48,7 +46,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-      data: [0, 70000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000],
+      data: [0,0,0,0],
     }],
   },
   options: {
@@ -120,22 +118,6 @@ var myLineChart = new Chart(ctx, {
 });
 
 
-
-/*
-const xhttp = new XMLHttpRequest();
-
-xhttp.onload = function() {
-    window.alert(this.responseText);
-}
-
-
-
-xhttp.open("GET", "/selectdb");
-xhttp.send();
-*/
-
-getLearningDayCount();
-
 function getLearningDayCount(){
     let result = []
     $.ajax({
@@ -146,9 +128,40 @@ function getLearningDayCount(){
         , success: function (listData) {
             console.log(listData);
 
+            console.log(listData[0]['created'].substring(8,10));
+            var EI1 = 0, EI8 = 0,EI15 = 0, EI22 = 0, E1c = 0, E8c = 0, E15c = 0, E22c = 0;
+            var holder = "";
+
+            for (var i = 0; i < Object.keys(listData).length; i++){
+                holder = listData[i]['created'].substring(8,10);
+                console.log(holder);
+                if(listData[i]['author_id'] != ){
+                    continue;
+                }
+                if (parseInt(holder) <= 7){
+                    EI1 += listData[i]['guess_MBTI_EI'];
+                    E1c++;
+                } else if (parseInt(holder) <= 14){
+                    EI8 += listData[i]['guess_MBTI_EI'];
+                    E8c++;
+                }else if (parseInt(holder) <= 21){
+                    EI15 += listData[i]['guess_MBTI_EI'];
+                    E15c++;
+                }else{
+                    EI22 += listData[i]['guess_MBTI_EI'];
+                    E22c++;
+                }
+            }
+            if(E1c != 0)EI1 /= E1c;
+            if(E8c != 0)EI8 /= E8c;
+            if(E15c != 0)EI15 /= E15c;
+            if(E22c != 0)EI22 /= E22c;
             myLineChart.reset();
-//            myLineChart.data.datasets.data = [0, 1, 5, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 200];
-            myLineChart.data.labels = ['Jan2222', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec1'];
+            myLineChart.data.datasets[0].data = [EI1, EI8, EI15, EI22];
+            myLineChart.data.labels = ['8/1-8/7', '8/8-8/14', '8/15-8/21', '8/22-8/31'];
+
+
+
             myLineChart.update();
         }
         , error: function (request,status,error) {
@@ -157,4 +170,16 @@ function getLearningDayCount(){
     });
 
     return result;
+}
+
+window.onload = function(){
+    getLearningDayCount()
+
+
+
+
+
+
+
+
 }

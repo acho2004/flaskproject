@@ -106,12 +106,12 @@ def selftest():
         obtainedUnique = False
         questions = []
         for i in range(1,40):
-            questions.push(request.form["q" + str(i)])
+            questions.append(request.form["q" + str(i)])
 
         x = ""
         error = None
         db = get_db()
-        for i in range(1,40):
+        for i in range(0,39):
             if not questions[i]:
                 error = 'All questions are required.'
 
@@ -121,15 +121,18 @@ def selftest():
             while (not obtainedUnique):
                 try:
                     x = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24))
-                    db.execute(
-                        f''' insert into table values ('{q1}')
-                        
-                        '''
-                        'INSERT INTO stest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, q26, q27, q28, q29, q30, q31, q32, q33, q34, q35, q36, q37, q38, q39, author_id, username, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
-                        ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                        (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, q26, q27, q28, q29, q30, q31, q32, q33, q34, q35, q36, q37, q38, q39,
-                         g.user['id'], g.user['username'], x, 1, -999, -999, -999, -999)
-                    )
+                    query = "INSERT INTO stest ("
+                    query2 = "VALUES ("
+                    counter = 1
+                    for item in questions:
+                        query += 'q' + str(counter) + ', '
+                        query2 += "'"  + item + "' ,"
+                        counter += 1
+
+                    query += 'author_id, username, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
+                    query2 += "'" + str(g.user['id']) + "', '" + g.user['username'] + "', '" + x + "', '1', '-999', '-999', '-999', '-999')"
+                    query += query2
+                    db.execute(query)
                     db.commit()
                     obtainedUnique = True
                 except db.IntegrityError:
@@ -154,7 +157,7 @@ def peertest():
         obtainedUnique = False
         questions = []
         for i in range (1,40):
-            questions.push(request.form["q" + str(i)])
+            questions.append(request.form["q" + str(i)])
 
 
         sresp1 = request.form['sresp1']
@@ -168,7 +171,7 @@ def peertest():
         error = None
         db = get_db()
 
-        for i in range(1,40):
+        for i in range(0,39):
             if not questions[i]:
                 error = 'All questions are required.'
 
@@ -189,15 +192,17 @@ def peertest():
                     query2 = "VALUES ("
                     counter = 1
                     for item in questions:
-                        query += 'q' + counter + ', '
-                        query2 += item + ', '
+                        query += 'q' + str(counter) + ', '
+                        query2 += "'"  + item + "' ,"
+                        counter += 1
 
                     query += 'sresp1, sresp2, sresp3, sresp4, sresp5, author_id, username, target_username, route, new_tags, new_tagp, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
-                    query2 += "sresp1, sresp2, sresp3, sresp4, sresp5, g.user['id'], g.user['username'], target_username, x, 1, 1, -999, -999, -999, -999)"
+                    query2 += "'" +sresp1 + "', '" + sresp2 + "', '" + sresp3 + "', '" + sresp4 + "', '" + sresp5 + "', '" + str(g.user['id']) + "', '" + g.user['username'] + "', '" + target_username + "', '" + x + "', '1', '1', '-999', '-999', '-999', '-999')"
                     query += query2
                     db.execute(query)
                     db.commit()
                     obtainedUnique = True
+
                 except db.IntegrityError:
                     obtainedUnique = False
             db.execute(
@@ -222,55 +227,27 @@ def addsample():
         return redirect(url_for('auth.login'))
     if request.method == 'POST':
         obtainedUnique = False
-        q1 = random.randrange(0, 7)
-        q2 = random.randrange(0, 7)
-        q3 = random.randrange(0, 7)
-        q4 = random.randrange(0, 7)
-        q5 = random.randrange(0, 7)
-        q6 = random.randrange(0, 7)
-        q7 = random.randrange(0, 7)
-        q8 = random.randrange(0, 7)
-        q9 = random.randrange(0, 7)
-        q10 = random.randrange(0, 7)
-        q11 = random.randrange(0, 7)
-        q12 = random.randrange(0, 7)
-        q13 = random.randrange(0, 7)
-        q14 = random.randrange(0, 7)
-        q15 = random.randrange(0, 7)
-        q16 = random.randrange(0, 7)
-        q17 = random.randrange(0, 7)
-        q18 = random.randrange(0, 7)
-        q19 = random.randrange(0, 7)
-        q20 = random.randrange(0, 7)
-        q21 = random.randrange(0, 7)
-        q22 = random.randrange(0, 7)
-        q23 = random.randrange(0, 7)
-        q24 = random.randrange(0, 7)
-        q25 = random.randrange(0, 7)
-        q26 = random.randrange(0, 7)
-        q27 = random.randrange(0, 7)
-        q28 = random.randrange(0, 7)
-        q29 = random.randrange(0, 7)
-        q30 = random.randrange(0, 7)
-        q31 = random.randrange(0, 7)
-        q32 = random.randrange(0, 2)
-        q33 = random.randrange(0, 7)
-        q34 = random.randrange(0, 7)
-        q35 = random.randrange(0, 7)
-        q36 = random.randrange(0, 7)
-        q37 = random.randrange(0, 7)
-        q38 = random.randrange(0, 7)
-        q39 = random.randrange(0, 7)
+        questions = []
+        for i in range (0,38):
+            questions.append(random.randrange(0, 7))
+        questions.append(random.randrange(0, 2))
         db = get_db()
-        x = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24))
         while (not obtainedUnique):
             try:
-                db.execute(
-                    'INSERT INTO stest (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, q26, q27, q28, q29, q30, q31, q32, q33, q34, q35, q36, q37, q38, q39, author_id, username, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
-                    ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                    (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, q26, q27, q28, q29, q30, q31, q32, q33, q34, q35, q36, q37, q38, q39,
-                     g.user['id'], g.user['username'], x, 1, -999, -999, -999, -999 )
-                )
+                x = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24))
+                query = "INSERT INTO stest ("
+                query2 = "VALUES ("
+                counter = 1
+                for item in questions:
+                    query += 'q' + str(counter) + ', '
+                    query2 += "'" + str(item) + "' ,"
+                    counter += 1
+
+                query += 'author_id, username, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
+                query2 += "'" + str(g.user['id']) + "', '" + g.user[
+                    'username'] + "', '" + x + "', '1', '-999', '-999', '-999', '-999')"
+                query += query2
+                db.execute(query)
                 db.commit()
                 obtainedUnique = True
             except db.IntegrityError:
@@ -294,58 +271,19 @@ def sguesser(title):
     SNmeter = 2 * (route['q2'] - 3) - (route['q5'] - 3) + 2 * (route['q19'] - 3) + (route['q26'] - 3) - (route['q28'] - 3)
     TFmeter = 2 * (route['q21'] - 3) + (route['q27'] - 3) - (route['q29'] - 3) - 2 * (route['q31'] - 3) - (route['q33'] - 3) + (route['q34'] - 3) - (route['q35'] - 3)
     JPmeter = 2 * (route['q1'] - 3) - (route['q7'] - 3) - 2 * (route['q16'] - 3) + (route['q17'] - 3) - (route['q18'] - 3) + (route['q25'] - 3) + (route['q32'] - 3) + (route['q37'] - 3)
-    if route['q4'] - 3 > 0:
-        TFmeter -= (route['q4'] - 3)
-    else:
-        TFmeter -= 2 * (route['q4'] - 3)
-
-    if route['q6'] - 3 > 0:
-        EImeter -= (route['q6'] - 3)
-    else:
-        EImeter -= 2 * (route['q6'] - 3)
-
-    if route['q8'] - 3 > 0:
-        JPmeter += (route['q8'] - 3)
-    else:
-        JPmeter += 2 * (route['q8'] - 3)
-
-    if route['q9'] - 3 > 0:
-        EImeter -= (route['q9'] - 3)
-    else:
-        EImeter -= 2 * (route['q9'] - 3)
-
-    if route['q10'] - 3 > 0:
-        JPmeter -= (route['q10'] - 3)
-    else:
-        JPmeter -= 2 * (route['q10'] - 3)
-
-    if route['q11'] - 3 > 0:
-        SNmeter -= 2 * (route['q11'] - 3)
-    else:
-        SNmeter -= (route['q11'] - 3)
-
-    if route['q12'] - 3 > 0:
-        EImeter += (route['q12'] - 3)
-    else:
-        EImeter += 2 * (route['q12'] - 3)
-
-    if route['q13'] - 3 > 0:
-        TFmeter += 2 * (route['q13'] - 3)
-    else:
-        TFmeter += (route['q13'] - 3)
+    TFmeter = TFmeter - (route['q4'] - 3) if route['q4'] - 3 > 0 else TFmeter - 2 * (route['q4'] - 3)
+    EImeter = EImeter - (route['q6'] - 3) if route['q6'] - 3 > 0 else EImeter - 2 * (route['q6'] - 3)
+    JPmeter = JPmeter + (route['q8'] - 3) if route['q8'] - 3 > 0 else JPmeter + 2 * (route['q8'] - 3)
+    EImeter = EImeter - (route['q9'] - 3) if route['q9'] - 3 > 0 else EImeter - 2 * (route['q9'] - 3)
+    JPmeter = JPmeter - (route['q10'] - 3) if route['q10'] - 3 > 0 else JPmeter - 2 * (route['q10'] - 3)
+    SNmeter = SNmeter - 2 * (route['q11'] - 3) if route['q11'] - 3 > 0 else SNmeter - (route['q11'] - 3)
+    EImeter = EImeter + (route['q12'] - 3) if route['q12'] - 3 > 0 else EImeter + 2 * (route['q12'] - 3)
+    TFmeter = TFmeter + 2 * (route['q13'] - 3) if route['q13'] - 3 > 0 else TFmeter + (route['q13'] - 3)
+    SNmeter = SNmeter + 2 * (route['q22'] - 3) if route['q22'] - 3 > 0 else SNmeter + (route['q22'] - 3)
+    SNmeter = SNmeter + 2 if route['q39'] == 0 else SNmeter - 4
 
     if not (route['q14'] - 3 > 0):
         SNmeter -= (route['q14'] - 3)
-
-    if route['q22'] - 3 > 0:
-        SNmeter += 2 * (route['q22'] - 3)
-    else:
-        SNmeter += (route['q22'] - 3)
-
-    if route['q39'] == 0:
-        SNmeter += 2
-    else:
-        SNmeter -= 4
 
     return [EImeter, SNmeter, TFmeter, JPmeter]
 
@@ -360,59 +298,15 @@ def pguesser(title):
     SNmeter = 2 * (route['q2'] - 3) - (route['q5'] - 3) + 2 * (route['q19'] - 3) + (route['q26'] - 3) - (route['q28'] - 3)
     TFmeter = 2 * (route['q21'] - 3) + (route['q27'] - 3) - (route['q29'] - 3) - 2 * (route['q31'] - 3) - (route['q33'] - 3) + (route['q34'] - 3) - (route['q35'] - 3)
     JPmeter = 2 * (route['q1'] - 3) - (route['q7'] - 3) - 2 * (route['q16'] - 3) + (route['q17'] - 3) - (route['q18'] - 3) + (route['q25'] - 3) + (route['q32'] - 3) + (route['q37'] - 3)
-    if route['q4'] - 3 > 0:
-        TFmeter -= (route['q4'] - 3)
-    else:
-        TFmeter -= 2 * (route['q4'] - 3)
-
-    if route['q6'] - 3 > 0:
-        EImeter -= (route['q6'] - 3)
-    else:
-        EImeter -= 2 * (route['q6'] - 3)
-
-    if route['q8'] - 3 > 0:
-        JPmeter += (route['q8'] - 3)
-    else:
-        JPmeter += 2 * (route['q8'] - 3)
-
-    if route['q9'] - 3 > 0:
-        EImeter -= (route['q9'] - 3)
-    else:
-        EImeter -= 2 * (route['q9'] - 3)
-
-    if route['q10'] - 3 > 0:
-        JPmeter -= (route['q10'] - 3)
-    else:
-        JPmeter -= 2 * (route['q10'] - 3)
-
-    if route['q11'] - 3 > 0:
-        SNmeter -= 2 * (route['q11'] - 3)
-    else:
-        SNmeter -= (route['q11'] - 3)
-
-    if route['q12'] - 3 > 0:
-        EImeter += (route['q12'] - 3)
-    else:
-        EImeter += 2 * (route['q12'] - 3)
-
-    if route['q13'] - 3 > 0:
-        TFmeter += 2 * (route['q13'] - 3)
-    else:
-        TFmeter += (route['q13'] - 3)
-
-    if not (route['q14'] - 3 > 0):
-        SNmeter -= (route['q14'] - 3)
-
-    if route['q22'] - 3 > 0:
-        SNmeter += 2 * (route['q22'] - 3)
-    else:
-        SNmeter += (route['q22'] - 3)
-
-    if route['q39'] == 0:
-        SNmeter += 2
-    else:
-        SNmeter -= 4
+    TFmeter = TFmeter - (route['q4'] - 3) if route['q4'] - 3 > 0 else TFmeter - 2 * (route['q4'] - 3)
+    EImeter = EImeter - (route['q6'] - 3) if route['q6'] - 3 > 0 else EImeter - 2 * (route['q6'] - 3)
+    JPmeter = JPmeter + (route['q8'] - 3) if route['q8'] - 3 > 0 else JPmeter + 2 * (route['q8'] - 3)
+    EImeter = EImeter - (route['q9'] - 3) if route['q9'] - 3 > 0 else EImeter - 2 * (route['q9'] - 3)
+    JPmeter = JPmeter - (route['q10'] - 3) if route['q10'] - 3 > 0 else JPmeter - 2 * (route['q10'] - 3)
+    SNmeter = SNmeter - 2 * (route['q11'] - 3) if route['q11'] - 3 > 0 else SNmeter - (route['q11'] - 3)
+    EImeter = EImeter + (route['q12'] - 3) if route['q12'] - 3 > 0 else EImeter + 2 * (route['q12'] - 3)
+    TFmeter = TFmeter + 2 * (route['q13'] - 3) if route['q13'] - 3 > 0 else TFmeter + (route['q13'] - 3)
+    SNmeter = SNmeter + 2 * (route['q22'] - 3) if route['q22'] - 3 > 0 else SNmeter + (route['q22'] - 3)
+    SNmeter = SNmeter + 2 if route['q39'] == 0 else SNmeter - 4
 
     return [EImeter, SNmeter, TFmeter, JPmeter]
-
-
