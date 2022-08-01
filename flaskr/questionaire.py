@@ -4,7 +4,7 @@ import string
 from flask_json import FlaskJSON, JsonError, json_response, as_json
 
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for
+    Blueprint, flash, g, redirect, render_template, request, url_for, jsonify
 )
 from werkzeug.exceptions import abort
 
@@ -93,10 +93,8 @@ def query_db():
     ).fetchall()
 
     temp = list(map(lambda row: dict(row), selfassessments))
-    print(temp)
-    print(json.dumps(temp))
+    return json.dumps(temp, default=str)
 
-    return json.dumps(temp)
 
 @bp.route('/selftest', methods=('GET', 'POST'))
 @login_required
