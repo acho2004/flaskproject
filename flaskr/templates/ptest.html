@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin 2 - Dashboard</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">소셜 MBTI 분석기</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+            {% if g.user %}
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="/index">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>대시보드</span></a>
+            </li>
+            {% endif %}
+            <!-- Divider -->
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                계정
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item" style="left:5%">
+
+                <div class="bg-white py-2 collapse-inner rounded" style="max-width:80%" >
+                    {% if g.user %}
+                    <a class="collapse-item" href="{{ url_for('auth.logout') }}">로그아웃</a>
+                    {% else %}
+
+                    <a class="collapse-item" href="{{ url_for('auth.login') }}">로그인</a><br>
+                    <a class="collapse-item" href="{{ url_for('auth.register') }}">회원가입</a><br>
+                    <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                    <div class="collapse-divider"></div>
+                    {% endif %}
+                </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{g.user['firstName']}} {{g.user['lastName']}}</span>
+                                <img class="img-profile rounded-circle"
+                                    src="img/undraw_profile.svg">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Settings
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Activity Log
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">홈 페이지</h1>
+                    </div>
+
+                        <div class="row">
+                            <!--
+                            <div class="col-xl-8 col-lg-7">
+                                <div class="card shadow mb-4">
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary">트랜드 그래프</h6>
+                                        <div class="dropdown no-arrow">
+                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                                aria-labelledby="dropdownMenuLink">
+                                                <div class="dropdown-header">Dropdown Header:</div>
+                                                <a class="dropdown-item" href="#">Action</a>
+                                                <a class="dropdown-item" href="#">Another action</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="#">Something else here</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-area">
+                                            <canvas id="myAreaChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-4 col-lg-5">
+                                <div class="card shadow mb-4">
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                                        <div class="dropdown no-arrow">
+                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                                aria-labelledby="dropdownMenuLink">
+                                                <div class="dropdown-header">Dropdown Header:</div>
+                                                <a class="dropdown-item" href="#">Action</a>
+                                                <a class="dropdown-item" href="#">Another action</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="#">Something else here</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-pie pt-4 pb-2">
+                                            <canvas id="myPieChart"></canvas>
+                                        </div>
+                                        <div class="mt-4 text-center small">
+                                            <span class="mr-2">
+                                                <i class="fas fa-circle text-primary"></i> Direct
+                                            </span>
+                                            <span class="mr-2">
+                                                <i class="fas fa-circle text-success"></i> Social
+                                            </span>
+                                            <span class="mr-2">
+                                                <i class="fas fa-circle text-info"></i> Referral
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                            <form style="padding: 15px" method="post" class = "questionaire">
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">상대방의 이메일</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>평가 하고 싶은 사람의 이메일을 적어주세요. 결과가 나온 후 문자가 들어갈 거에요.</p>
+                                        <div>
+                                            <input required type="email" name="target_email" id="target_email" placeholder="example@email.com">
+                                        </div>
+                                        <br>
+                                    </div>
+                                </div>
+                                {% for i in range (1,39) %}
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">Question {{i}}</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p id={{"question" + i|string}}></p>
+                                        <div>
+                                            <input required type="radio" id={{"cStrAgree" + i|string}} name={{"q" + i|string}} value=0><label for={{"cStrAgree" + i|string}}> 매우 동의 </label>
+                                            <input required type="radio" id={{"cAgree" + i|string}} name={{"q" + i|string}} value=1><label for={{"cAgree" + i|string}}> 동의 </label>
+                                            <input required type="radio" id={{"cSAgree" + i|string}} name={{"q" + i|string}} value=2><label for={{"cSAgree" + i|string}}> 약간 동의 </label>
+                                            <input required type="radio" id={{"cNANDA" + i|string}} name={{"q" + i|string}} value=3><label for={{"cNANDA" + i|string}}> 중립 </label>
+                                            <input required type="radio" id={{"cSDAgree" + i|string}} name={{"q" + i|string}} value=4><label for={{"cSDAgree" + i|string}}> 약간 부정 </label>
+                                            <input required type="radio" id={{"cDAgree" + i|string}} name={{"q" + i|string}} value=5><label for={{"cDAgree" + i|string}}> 부정 </label>
+                                            <input required type="radio" id={{"cStrDAgree" + i|string}} name={{"q" + i|string}} value=6><label for={{"cStrDAgree" + i|string}}> 매우 부정 </label>
+                                        </div>
+                                        <br>
+                                    </div>
+                                </div>
+                                {% endfor %}
+
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">Question 39</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p id="question39"}></p>
+                                        <div>
+                                            <input required type="radio" id="cAgree39" name="q39" value=0><label for="cAgree39">1.</label>
+                                            <input required type="radio" id="cSAgree39" name="q39" value=1><label for="cSAgree39">2.</label>
+                                        </div>
+                                        <br>
+                                    </div>
+                                </div>
+                                {% for i in range (1,6) %}
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">Self Response Question {{i}}</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p id={{"sresp" + i|string}}></p>
+                                        <div>
+                                            <input required type="text" name={{"sresp" + i|string}} placeholder="Write Response Here...">
+                                        </div>
+                                        <br>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Submit!">
+                            </form>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2021</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="{{ url_for('auth.logout') }}">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+    <script>
+        document.getElementById("question1").innerHTML = "어딘가를 가야 한다면, 무엇을 언제 할지 결정을 하고 간다.";
+        document.getElementById("question2").innerHTML = "자신이 선생님이라면 철학을 배재 한 수업을 가르칠 것이다.";
+        document.getElementById("question3").innerHTML = "조용하고 자신만의 시간을 중요시 한다.";
+        document.getElementById("question4").innerHTML = "감정이 자주 행동을 좌우한다.";
+        document.getElementById("question5").innerHTML = "이미 알려진 길을 가는 것 보다는 새로운 길을 찾는것을 선호 한다.";
+        document.getElementById("question6").innerHTML = "항상 친구들의 소식을 뒤늦게 접한다.";
+        document.getElementById("question7").innerHTML = "무엇을 할지 주말에 계획을 짜면 스트레스가 쌓인다.";
+        document.getElementById("question8").innerHTML = "특별한 일이 주어진다면, 일을 시작하기 전에 할 일들을 정리한다.";
+        document.getElementById("question9").innerHTML = "다수의 친구가 없는 대신에 소수의 깊은 우정을 쌓은 친구들이 있다.";
+        document.getElementById("question10").innerHTML = "이벤트를 짜는 대신에 그때 그때 재미있어 보이는 것을 한다";
+        document.getElementById("question11").innerHTML = "상상력이 풍부한 자들과 있는 것이 객관적인 시점을 가진 자들과 있는 것 보다 즐겁다.";
+        document.getElementById("question12").innerHTML = "사람들이 같이 있을떼 대체로 먼저 말을 꺼낸다.";
+        document.getElementById("question13").innerHTML = "공감 능력이 뛰어나다 고 불리는 것이 객관적이라고 불리는 것보다 더 좋은 칭찬이다 라고 생각한다.";
+        document.getElementById("question14").innerHTML = "이상하게 느껴질 정도로 새로운 표현을 만들어 설명하는 작가가 좋다.";
+        document.getElementById("question15").innerHTML = "필요가 따른다면 그 누구와도 쉽게 대화 할 수 있다.";
+        document.getElementById("question16").innerHTML = "스케줄을 따를 때 갑갑함을 느낀다.";
+        document.getElementById("question17").innerHTML = "일정이 있는 시간과 장소를 정하면 그것을 감안하고 다른 일들을 계획 할 수 있어서 좋다.";
+        document.getElementById("question18").innerHTML = "문제가 생기기 전에 파악해서 풀어나가는 것이 생길때마다 해결 하는것보다 힘들다.";
+        document.getElementById("question19").innerHTML = "남들이 현실적인 사람이라고 생각하길 바란다.";
+        document.getElementById("question20").innerHTML = "친구들과 함께 새로운 사람들을 만나면 자신이 자신의 친구들을 상대방한테 소개 시켜 준다.";
+        document.getElementById("question21").innerHTML = "이성적인 판단을 감성적인 생각보다 더욱 중요시 한다.";
+        document.getElementById("question22").innerHTML = "도전적인 삶보다 안정적인 삶을 가진 자들과 친구를 맺고 싶어 한다.";
+        document.getElementById("question23").innerHTML = "사람들이 보면 바로 어떤 사람인지 알 수 있다.";
+        document.getElementById("question24").innerHTML = "대체로 자신의 감정들을 남들에게 보이지 않는다.";
+        document.getElementById("question25").innerHTML = "계획을 짤 때 실패의 가능성도 고려 한 후 짠다."
+        document.getElementById("question26").innerHTML = "예술에 대한 대화를 할때 지루하다고 느껴진다.";
+        document.getElementById("question27").innerHTML = "다른 이들이 감성을 줄이고 더욱 이성적으로 생각하면 세상이 더욱 좋아 질수 있다고 믿는다.";
+        document.getElementById("question28").innerHTML = "다른 의견을 가진 사람이 어떤 이유를 가지고 있는지 자주 생각 한다.";
+        document.getElementById("question29").innerHTML = "다른 배경에서 온 사람을 쉽게 이해 할 수 있다.";
+        document.getElementById("question30").innerHTML = "혼자서 할수 있는 일이 편하다.";
+        document.getElementById("question31").innerHTML = "아무리 좋은 기회가 오더라도 그 기회가 다른 사람에게 더욱 큰 도움이 될 수 있다 판단 하면 쉽게 포기 할 후 있다.";
+        document.getElementById("question32").innerHTML = "이메일에 가능한 빨리 회신하려고 하고 지저분한 편지함을 참을 수 없다.";
+        document.getElementById("question33").innerHTML = "종종 다른 사람들의 감정에 공감하기가 어렵다.";
+        document.getElementById("question34").innerHTML = "토론 시 사람들의 민감한 반응보다 보다 진실을 더 중요시해야 한다.";
+        document.getElementById("question35").innerHTML = "친구가 어떤 일로 슬퍼할 경우, 문제를 처리하는 방법을 제시하기보다 정신적인 지지를 제공하곤 한다.";
+        document.getElementById("question36").innerHTML = "방에 사람들이 가득찬 경우, 방의 중앙보다는 벽 가까이에 않는다.";
+        document.getElementById("question37").innerHTML = "정리가 안 된 방을 보면 불편하다.";
+        document.getElementById("question38").innerHTML = "에너지를 충전하기 위해서 혼자 있는 시간이 필요하다.";
+        document.getElementById("question39").innerHTML = "둘중에 어떤것을 더 중요시 하는지 선택 하십시오. 1) 눈에 띄지 않기 위하여 평범하게 살려고 노력하는 사람이 좋다. 2) 눈에 띄든 말든 상관 없이 사는 사람이 좋다.";
+        document.getElementById("sresp1").innerHTML = "가장 닮은 유명인 과 가장 닮은 점: ";
+        document.getElementById("sresp2").innerHTML = "다른 사람들이랑 비교 했을떼 가장 눈에 띄는 점: ";
+        document.getElementById("sresp3").innerHTML = "대표적인 장점: ";
+        document.getElementById("sresp4").innerHTML = "가장 기억에 남는 순간: ";
+        document.getElementById("sresp5").innerHTML = "통합적인 평가: ";
+    </script>
+
+</body>
+
+</html>

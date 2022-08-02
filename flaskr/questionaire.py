@@ -158,7 +158,7 @@ def peertest():
         sresp5 = request.form['sresp5']
         x = ""
 
-        target_username = request.form['target_email']
+        target_email = request.form['target_email']
         error = None
         db = get_db()
 
@@ -166,10 +166,10 @@ def peertest():
             if not questions[i]:
                 error = 'All questions are required.'
 
-        if not sresp1 or not sresp2 or not sresp3 or not sresp4 or not sresp5 or not target_username:
+        if not sresp1 or not sresp2 or not sresp3 or not sresp4 or not sresp5 or not target_email:
             error = 'All questions are required.'
 
-        if target_username == g.user['email']:
+        if target_email == g.user['email']:
             error = "You can't submit a form for yourself."
 
         if error is not None:
@@ -188,7 +188,7 @@ def peertest():
                         counter += 1
 
                     query += 'sresp1, sresp2, sresp3, sresp4, sresp5, author_id, email, target_email, route, new_tags, new_tagp, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
-                    query2 += "'" +sresp1 + "', '" + sresp2 + "', '" + sresp3 + "', '" + sresp4 + "', '" + sresp5 + "', '" + str(g.user['id']) + "', '" + g.user['email'] + "', '" + target_username + "', '" + x + "', '1', '1', '-999', '-999', '-999', '-999')"
+                    query2 += "'" +sresp1 + "', '" + sresp2 + "', '" + sresp3 + "', '" + sresp4 + "', '" + sresp5 + "', '" + str(g.user['id']) + "', '" + g.user['email'] + "', '" + target_email + "', '" + x + "', '1', '1', '-999', '-999', '-999', '-999')"
                     query += query2
                     db.execute(query)
                     db.commit()
@@ -204,7 +204,7 @@ def peertest():
             db.commit()
             return redirect(url_for('questionaire.profile'))
 
-    return render_template('/peertest.html')
+    return render_template('/ptest.html')
 
 
 @bp.route('/addsample', methods=('GET', 'POST'))
