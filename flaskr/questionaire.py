@@ -136,7 +136,7 @@ def selftest():
             )
             db.commit()
             return redirect(url_for('questionaire.profile'))
-    return render_template('/selftest.html')
+    return render_template('/stest.html')
 
 
 
