@@ -8,6 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+          <h1 style="color:red">{{ message }}</h1>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
 
     <title>SB Admin 2 - Register</title>
 

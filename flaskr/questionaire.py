@@ -87,6 +87,32 @@ def srlist():
     return render_template('/srlist.html',
                            selfassessments=list(map(lambda row: dict(row), selfassessments)))
 
+@bp.route('/pslist')
+def pslist():
+    if g.user is None:
+        return redirect(url_for('auth.login'))
+    db = get_db()
+    peerassessments = db.execute(
+        'SELECT p.id, created, author_id, target_email, u.email, route, new_tags, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
+        ' FROM ptest p JOIN user u ON p.author_id = u.id'
+        ' ORDER BY created DESC'
+    ).fetchall()
+    return render_template('/pslist.html',
+                           peerassessments=list(map(lambda row: dict(row), peerassessments)))
+
+@bp.route('/splist')
+def splist():
+    if g.user is None:
+        return redirect(url_for('auth.login'))
+    db = get_db()
+    peerassessments = db.execute(
+        'SELECT p.id, created, author_id, target_email, u.email, route, new_tagp, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
+        ' FROM ptest p JOIN user u ON p.author_id = u.id'
+        ' ORDER BY created DESC'
+    ).fetchall()
+    return render_template('/splist.html',
+                           peerassessments=list(map(lambda row: dict(row), peerassessments)))
+
 
 import json
 @bp.route('/selectdb')
