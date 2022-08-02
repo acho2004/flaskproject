@@ -4,8 +4,10 @@ DROP TABLE IF EXISTS ptest;
 
 CREATE TABLE user (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  username TEXT UNIQUE NOT NULL,
-  password TEXT NOT NULL
+  email TEXT UNIQUE NOT NULL,
+  password TEXT NOT NULL,
+  firstName TEXT NOT NULL,
+  lastName TEXT NOT NULL
 );
 
 CREATE TABLE stest (
@@ -13,7 +15,7 @@ CREATE TABLE stest (
   author_id INTEGER NOT NULL,
   created TIMESTAMP NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%S', 'now', '+9 hours')),
   route TEXT UNIQUE NOT NULL,
-  username TEXT NOT NULL,
+  email TEXT NOT NULL,
   new_tag INTEGER NOT NULL,
   q1 INTEGER NOT NULL,
   q2 INTEGER NOT NULL,
@@ -68,10 +70,10 @@ CREATE TABLE stest (
 CREATE TABLE ptest (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   author_id INTEGER NOT NULL,
-  target_username TEXT NOT NULL,
+  target_email TEXT NOT NULL,
   created TIMESTAMP NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%S', 'now', '+9 hours')),
   route TEXT UNIQUE NOT NULL,
-  username TEXT NOT NULL,
+  email TEXT NOT NULL,
   new_tagp INTEGER NOT NULL,
   new_tags INTEGER NOT NULL,
   q1 INTEGER NOT NULL,

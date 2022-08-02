@@ -7,21 +7,13 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for, jsonify
 )
 from werkzeug.exceptions import abort
-
-sys.path.append("../../")
-
 from flaskr.auth import login_required
 from flaskr.db import get_db
 
 bp = Blueprint('questionaire', __name__)
 
-
-
 @bp.route("/results/self/<string:title>")
 def display_spost(title: str):
-    '''
-    hello this is docstring title : {fdsafasdfsff}f
-    '''
     db = get_db()
     route = db.execute(
         'SELECT * FROM stest WHERE route = ?', (title,)
@@ -46,14 +38,14 @@ def display_ppost(title: str):
     ).fetchone()
     if route is None:
         abort(404)
-    if not (g.user is None) and route['target_username'] == g.user['username']:
+    if not (g.user is None) and route['target_email'] == g.user['email']:
         db.execute(
             'UPDATE ptest SET new_tagp = ?'
             ' WHERE id = ?',
             (0, route['id'])
         )
         db.commit()
-    if not (g.user is None) and route['username'] == g.user['username']:
+    if not (g.user is None) and route['email'] == g.user['email']:
         db.execute(
             'UPDATE ptest SET new_tags = ?'
             ' WHERE id = ?',
@@ -69,12 +61,12 @@ def profile():
         return redirect(url_for('auth.login'))
     db = get_db()
     selfassessments = db.execute(
-        'SELECT p.id, created, author_id, u.username, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
+        'SELECT p.id, created, author_id, u.email, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
         ' FROM stest p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
     peerassessments = db.execute(
-        'SELECT p.id, created, author_id, u.username, target_username, route, new_tagp, new_tags, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
+        'SELECT p.id, created, author_id, u.email, target_email, route, new_tagp, new_tags, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
         ' FROM ptest p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
@@ -87,7 +79,7 @@ import json
 def query_db():
     db = get_db()
     selfassessments = db.execute(
-        'SELECT p.id, created, author_id, u.username, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
+        'SELECT p.id, created, author_id, u.email, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
         ' FROM stest p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
@@ -129,8 +121,8 @@ def selftest():
                         query2 += "'"  + item + "' ,"
                         counter += 1
 
-                    query += 'author_id, username, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
-                    query2 += "'" + str(g.user['id']) + "', '" + g.user['username'] + "', '" + x + "', '1', '-999', '-999', '-999', '-999')"
+                    query += 'author_id, email, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
+                    query2 += "'" + str(g.user['id']) + "', '" + g.user['email'] + "', '" + x + "', '1', '-999', '-999', '-999', '-999')"
                     query += query2
                     db.execute(query)
                     db.commit()
@@ -159,7 +151,6 @@ def peertest():
         for i in range (1,40):
             questions.append(request.form["q" + str(i)])
 
-
         sresp1 = request.form['sresp1']
         sresp2 = request.form['sresp2']
         sresp3 = request.form['sresp3']
@@ -167,7 +158,7 @@ def peertest():
         sresp5 = request.form['sresp5']
         x = ""
 
-        target_username = request.form['target_username']
+        target_username = request.form['target_email']
         error = None
         db = get_db()
 
@@ -178,7 +169,7 @@ def peertest():
         if not sresp1 or not sresp2 or not sresp3 or not sresp4 or not sresp5 or not target_username:
             error = 'All questions are required.'
 
-        if target_username == g.user['username']:
+        if target_username == g.user['email']:
             error = "You can't submit a form for yourself."
 
         if error is not None:
@@ -196,8 +187,8 @@ def peertest():
                         query2 += "'"  + item + "' ,"
                         counter += 1
 
-                    query += 'sresp1, sresp2, sresp3, sresp4, sresp5, author_id, username, target_username, route, new_tags, new_tagp, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
-                    query2 += "'" +sresp1 + "', '" + sresp2 + "', '" + sresp3 + "', '" + sresp4 + "', '" + sresp5 + "', '" + str(g.user['id']) + "', '" + g.user['username'] + "', '" + target_username + "', '" + x + "', '1', '1', '-999', '-999', '-999', '-999')"
+                    query += 'sresp1, sresp2, sresp3, sresp4, sresp5, author_id, email, target_email, route, new_tags, new_tagp, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
+                    query2 += "'" +sresp1 + "', '" + sresp2 + "', '" + sresp3 + "', '" + sresp4 + "', '" + sresp5 + "', '" + str(g.user['id']) + "', '" + g.user['email'] + "', '" + target_username + "', '" + x + "', '1', '1', '-999', '-999', '-999', '-999')"
                     query += query2
                     db.execute(query)
                     db.commit()
@@ -214,10 +205,6 @@ def peertest():
             return redirect(url_for('questionaire.profile'))
 
     return render_template('/peertest.html')
-
-
-
-
 
 
 @bp.route('/addsample', methods=('GET', 'POST'))
@@ -243,9 +230,9 @@ def addsample():
                     query2 += "'" + str(item) + "' ,"
                     counter += 1
 
-                query += 'author_id, username, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
+                query += 'author_id, email, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
                 query2 += "'" + str(g.user['id']) + "', '" + g.user[
-                    'username'] + "', '" + x + "', '1', '-999', '-999', '-999', '-999')"
+                    'email'] + "', '" + x + "', '1', '-999', '-999', '-999', '-999')"
                 query += query2
                 db.execute(query)
                 db.commit()
