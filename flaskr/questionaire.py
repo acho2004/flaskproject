@@ -74,6 +74,20 @@ def profile():
                            selfassessments=list(map(lambda row: dict(row), selfassessments)),
                            peerassessments=list(map(lambda row: dict(row), peerassessments)))
 
+@bp.route('/srlist')
+def srlist():
+    if g.user is None:
+        return redirect(url_for('auth.login'))
+    db = get_db()
+    selfassessments = db.execute(
+        'SELECT p.id, created, author_id, u.email, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
+        ' FROM stest p JOIN user u ON p.author_id = u.id'
+        ' ORDER BY created DESC'
+    ).fetchall()
+    return render_template('/srlist.html',
+                           selfassessments=list(map(lambda row: dict(row), selfassessments)))
+
+
 import json
 @bp.route('/selectdb')
 def query_db():
@@ -135,7 +149,7 @@ def selftest():
                 (sguesser(x)[0], sguesser(x)[1], sguesser(x)[2], sguesser(x)[3], x)
             )
             db.commit()
-            return redirect(url_for('questionaire.profile'))
+            return redirect(url_for('index'))
     return render_template('/stest.html')
 
 
@@ -202,7 +216,7 @@ def peertest():
                 (pguesser(x)[0], pguesser(x)[1], pguesser(x)[2], pguesser(x)[3], x)
             )
             db.commit()
-            return redirect(url_for('questionaire.profile'))
+            return redirect(url_for('index'))
 
     return render_template('/ptest.html')
 
