@@ -23,7 +23,7 @@ def display_spost(title: str):
     ).fetchone()
     if route is None:
         abort(404)
-    if not(g.user is None) and route['author_id'] == g.user['id']:
+    if (not (g.user is None)) and str(route['author_id']) == str(g.user['emp_no']):
         db.execute(
             'UPDATE stest SET new_tag = ?'
             ' WHERE id = ?',
@@ -50,14 +50,14 @@ def display_ppost(title: str):
         abort(404)
     if testee is None:
         error = "There is no account associated with the email this test is targetted for."
-    if not (g.user is None) and route['target_id'] == g.user['emp_no']:
+    if not (g.user is None) and str(route['target_id']) == str(g.user['emp_no']):
         db.execute(
             'UPDATE ptest SET new_tagp = ?'
             ' WHERE id = ?',
             (0, route['id'])
         )
         db.commit()
-    if not (g.user is None) and route['author_id'] == g.user['emp_no']:
+    if not (g.user is None) and str(route['author_id']) == str(g.user['emp_no']):
         db.execute(
             'UPDATE ptest SET new_tags = ?'
             ' WHERE id = ?',

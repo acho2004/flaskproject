@@ -39,14 +39,14 @@ def create_app(test_config=None):
             return redirect(url_for('home'))
         db = auth.get_db()
         selfassessments = db.execute(
-            'SELECT u.id, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
-            ' FROM stest p JOIN hunet_members u ON p.author_id = u.id'
+            'SELECT author_id, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
+            ' FROM stest'
             ' ORDER BY created DESC'
         ).fetchall()
         found = False
         selfguess = ""
         for x in selfassessments:
-            if(x[0] == g.user['id']):
+            if(str(x[0]) == str(g.user['emp_no'])):
                 found = True
                 break
         if not found:
