@@ -135,7 +135,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">{{route['created'].strftime('%Y-%m-%d %I:%M:%S %p')}}에 {{tester['firstName'] + " " + tester['lastName']}} 가 {{testee['firstName'] + " " + testee['lastName']}} 에 대하여 본 시험</h1>
+                        <h1 class="h3 mb-0 text-gray-800">{{route['created'].strftime('%Y-%m-%d %I:%M:%S %p')}}에 {{tester['name']}}가 {{testee['name']}}에 대하여 본 시험</h1>
                     </div>
 
                     <form style="padding: 15px" class = "questionaire">
@@ -183,6 +183,21 @@
                                 <br>
                             </div>
                         </div>
+                        {% for i in range(1,6) %}
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Self Response Question {{i}}</h6>
+                            </div>
+                            <div class="card-body">
+                                <p id={{"sresp" + i|string}}></p>
+                                <div>
+                                    <h6>{{route['sresp' + i|string]}}</h6>
+
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                        {% endfor %}
                     </form>
 
                 </div>

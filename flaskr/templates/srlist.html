@@ -252,7 +252,7 @@
                         </div> -->
                     </div>
                     {% for test in selfassessments %}
-                    {% if test['email'] == g.user['email'] %}
+                    {% if test['author_id']|string == g.user['emp_no']|string %}
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <a href={{"/results/self/" + test['route']}}  class="m-0 font-weight-bold text-primary text-decoration:none">{% if test['new_tag'] == 1 %} <span style="color:blue; text-decoration:underline">NEW!</span> {% endif %} {{ test['created'].strftime('%Y-%m-%d %I:%M:%S %p') }}</a>

@@ -19,7 +19,7 @@ def display_spost(title: str):
         'SELECT * FROM stest WHERE route = ?', (title,)
     ).fetchone()
     tester = db.execute(
-        'SELECT firstName, lastName FROM user WHERE email = ?', (route['email'],)
+        'SELECT name FROM hunet_members WHERE id = ?', (route['author_id'],)
     ).fetchone()
     if route is None:
         abort(404)
@@ -40,24 +40,24 @@ def display_ppost(title: str):
         'SELECT * FROM ptest WHERE route = ?', (title,)
     ).fetchone()
     tester = db.execute(
-        'SELECT firstName, lastName FROM user WHERE email = ?', (route['email'],)
+        'SELECT name FROM hunet_members WHERE emp_no = ?', (route['author_id'],)
     ).fetchone()
     testee = db.execute(
-        'SELECT firstName, lastName FROM user WHERE email = ?', (route['target_email'],)
+        'SELECT name FROM hunet_members WHERE emp_no = ?', (route['target_id'],)
     ).fetchone()
     error = None
     if route is None:
         abort(404)
     if testee is None:
         error = "There is no account associated with the email this test is targetted for."
-    if not (g.user is None) and route['target_email'] == g.user['email']:
+    if not (g.user is None) and route['target_id'] == g.user['emp_no']:
         db.execute(
             'UPDATE ptest SET new_tagp = ?'
             ' WHERE id = ?',
             (0, route['id'])
         )
         db.commit()
-    if not (g.user is None) and route['email'] == g.user['email']:
+    if not (g.user is None) and route['author_id'] == g.user['emp_no']:
         db.execute(
             'UPDATE ptest SET new_tags = ?'
             ' WHERE id = ?',
@@ -98,8 +98,8 @@ def srlist():
         return redirect(url_for('auth.login'))
     db = get_db()
     selfassessments = db.execute(
-        'SELECT p.id, created, author_id, u.email, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
-        ' FROM stest p JOIN user u ON p.author_id = u.id'
+        'SELECT created, author_id, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
+        ' FROM stest'
         ' ORDER BY created DESC'
     ).fetchall()
     return render_template('/srlist.html',
@@ -111,8 +111,8 @@ def pslist():
         return redirect(url_for('auth.login'))
     db = get_db()
     peerassessments = db.execute(
-        'SELECT p.id, created, author_id, target_email, u.email, route, new_tags, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
-        ' FROM ptest p JOIN user u ON p.author_id = u.id'
+        'SELECT created, author_id, target_id, id, route, new_tags, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
+        ' FROM ptest'
         ' ORDER BY created DESC'
     ).fetchall()
     return render_template('/pslist.html',
@@ -124,8 +124,8 @@ def splist():
         return redirect(url_for('auth.login'))
     db = get_db()
     peerassessments = db.execute(
-        'SELECT p.id, created, author_id, target_email, u.email, route, new_tagp, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
-        ' FROM ptest p JOIN user u ON p.author_id = u.id'
+        'SELECT created, author_id, target_id, id, route, new_tagp, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
+        ' FROM ptest'
         ' ORDER BY created DESC'
     ).fetchall()
     return render_template('/splist.html',
@@ -179,8 +179,8 @@ def selftest():
                         query2 += "'"  + item + "' ,"
                         counter += 1
 
-                    query += 'author_id, email, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
-                    query2 += "'" + str(g.user['id']) + "', '" + g.user['email'] + "', '" + x + "', '1', '-999', '-999', '-999', '-999')"
+                    query += 'author_id, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
+                    query2 += "'" + str(g.user['emp_no']) + "', '" + x + "', '1', '-999', '-999', '-999', '-999')"
                     query += query2
                     db.execute(query)
                     db.commit()
@@ -216,7 +216,7 @@ def peertest():
         sresp5 = request.form['sresp5']
         x = ""
 
-        target_email = request.form['target_email']
+        target_id = request.form['target_id']
         error = None
         db = get_db()
 
@@ -224,10 +224,10 @@ def peertest():
             if not questions[i]:
                 error = 'All questions are required.'
 
-        if not sresp1 or not sresp2 or not sresp3 or not sresp4 or not sresp5 or not target_email:
+        if not sresp1 or not sresp2 or not sresp3 or not sresp4 or not sresp5 or not target_id:
             error = 'All questions are required.'
 
-        if target_email == g.user['email']:
+        if target_id == g.user['emp_no']:
             error = "You can't submit a form for yourself."
 
         if error is not None:
@@ -245,8 +245,8 @@ def peertest():
                         query2 += "'"  + item + "' ,"
                         counter += 1
 
-                    query += 'sresp1, sresp2, sresp3, sresp4, sresp5, author_id, email, target_email, route, new_tags, new_tagp, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
-                    query2 += "'" +sresp1 + "', '" + sresp2 + "', '" + sresp3 + "', '" + sresp4 + "', '" + sresp5 + "', '" + str(g.user['id']) + "', '" + g.user['email'] + "', '" + target_email + "', '" + x + "', '1', '1', '-999', '-999', '-999', '-999')"
+                    query += 'sresp1, sresp2, sresp3, sresp4, sresp5, author_id, target_id, route, new_tags, new_tagp, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
+                    query2 += "'" +sresp1 + "', '" + sresp2 + "', '" + sresp3 + "', '" + sresp4 + "', '" + sresp5 + "', '" + str(g.user['emp_no']) + "', '" + target_id + "', '" + x + "', '1', '1', '-999', '-999', '-999', '-999')"
                     query += query2
                     db.execute(query)
                     db.commit()
@@ -288,9 +288,8 @@ def addsample():
                     query2 += "'" + str(item) + "' ,"
                     counter += 1
 
-                query += 'author_id, email, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
-                query2 += "'" + str(g.user['id']) + "', '" + g.user[
-                    'email'] + "', '" + x + "', '1', '-999', '-999', '-999', '-999')"
+                query += 'author_id, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
+                query2 += "'" + str(g.user['emp_no']) + "', '" + x + "', '1', '-999', '-999', '-999', '-999')"
                 query += query2
                 db.execute(query)
                 db.commit()

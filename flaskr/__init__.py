@@ -2,6 +2,8 @@ import os
 from flask import Flask
 from flask import g
 from flask import render_template
+from flask import redirect
+from flask import url_for
 
 
 def create_app(test_config=None):
@@ -33,6 +35,8 @@ def create_app(test_config=None):
 
     @app.route('/index')
     def index():
+        if g.user is None:
+            return redirect(url_for('home'))
         db = auth.get_db()
         selfassessments = db.execute(
             'SELECT u.id, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'

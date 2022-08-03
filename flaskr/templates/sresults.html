@@ -100,7 +100,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{g.user['firstName']}} {{g.user['lastName']}}</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{g.user['name']}}</span>
                                 <img class="img-profile rounded-circle"
                                     src="/img/undraw_profile.svg">
                             </a>
@@ -135,7 +135,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">{{route['created'].strftime('%Y-%m-%d %I:%M:%S %p')}}에 {{tester['firstName'] + " " + tester['lastName']}} 가 본 시험</h1>
+                        <h1 class="h3 mb-0 text-gray-800">{{route['created'].strftime('%Y-%m-%d %I:%M:%S %p')}}에 {{tester['name']}} (이)가 본 시험</h1>
                     </div>
 
                     <form style="padding: 15px" class = "questionaire">
