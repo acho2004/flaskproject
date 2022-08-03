@@ -138,120 +138,120 @@
                         <h1 class="h3 mb-0 text-gray-800">홈 페이지</h1>
                     </div>
 
-                        <div class="row">
-                            <!--
-                            <div class="col-xl-8 col-lg-7">
-                                <div class="card shadow mb-4">
-                                    <div
-                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-primary">트랜드 그래프</h6>
-                                        <div class="dropdown no-arrow">
-                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                aria-labelledby="dropdownMenuLink">
-                                                <div class="dropdown-header">Dropdown Header:</div>
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                            </div>
+                    <div class="row">
+                        <!--
+                        <div class="col-xl-8 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">트랜드 그래프</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Dropdown Header:</div>
+                                            <a class="dropdown-item" href="#">Action</a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Something else here</a>
                                         </div>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="chart-area">
-                                            <canvas id="myAreaChart"></canvas>
-                                        </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <canvas id="myAreaChart"></canvas>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-xl-4 col-lg-5">
-                                <div class="card shadow mb-4">
-                                    <div
-                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-                                        <div class="dropdown no-arrow">
-                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                aria-labelledby="dropdownMenuLink">
-                                                <div class="dropdown-header">Dropdown Header:</div>
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="chart-pie pt-4 pb-2">
-                                            <canvas id="myPieChart"></canvas>
-                                        </div>
-                                        <div class="mt-4 text-center small">
-                                            <span class="mr-2">
-                                                <i class="fas fa-circle text-primary"></i> Direct
-                                            </span>
-                                            <span class="mr-2">
-                                                <i class="fas fa-circle text-success"></i> Social
-                                            </span>
-                                            <span class="mr-2">
-                                                <i class="fas fa-circle text-info"></i> Referral
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
                         </div>
-                            <form style="padding: 15px" method="post" class = "questionaire">
-                                {% for i in range (1,39) %}
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Question {{i}}</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <p id={{"question" + i|string}}></p>
-                                        <div>
-                                            <input required type="radio" id={{"cStrAgree" + i|string}} name={{"q" + i|string}} value=0><label for={{"cStrAgree" + i|string}}> 매우 동의 </label>
-                                            <input required type="radio" id={{"cAgree" + i|string}} name={{"q" + i|string}} value=1><label for={{"cAgree" + i|string}}> 동의 </label>
-                                            <input required type="radio" id={{"cSAgree" + i|string}} name={{"q" + i|string}} value=2><label for={{"cSAgree" + i|string}}> 약간 동의 </label>
-                                            <input required type="radio" id={{"cNANDA" + i|string}} name={{"q" + i|string}} value=3><label for={{"cNANDA" + i|string}}> 중립 </label>
-                                            <input required type="radio" id={{"cSDAgree" + i|string}} name={{"q" + i|string}} value=4><label for={{"cSDAgree" + i|string}}> 약간 부정 </label>
-                                            <input required type="radio" id={{"cDAgree" + i|string}} name={{"q" + i|string}} value=5><label for={{"cDAgree" + i|string}}> 부정 </label>
-                                            <input required type="radio" id={{"cStrDAgree" + i|string}} name={{"q" + i|string}} value=6><label for={{"cStrDAgree" + i|string}}> 매우 부정 </label>
+
+                        <div class="col-xl-4 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Dropdown Header:</div>
+                                            <a class="dropdown-item" href="#">Action</a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Something else here</a>
                                         </div>
-                                        <br>
                                     </div>
                                 </div>
-                                {% endfor %}
-
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Question 39</h6>
+                                <div class="card-body">
+                                    <div class="chart-pie pt-4 pb-2">
+                                        <canvas id="myPieChart"></canvas>
                                     </div>
-                                    <div class="card-body">
-                                        <p id="question39"}></p>
-                                        <div>
-                                            <input required type="radio" id="cAgree39" name="q39" value=0><label for="cAgree39">1.</label>
-                                            <input required type="radio" id="cSAgree39" name="q39" value=1><label for="cSAgree39">2.</label>
-                                        </div>
-                                        <br>
+                                    <div class="mt-4 text-center small">
+                                        <span class="mr-2">
+                                            <i class="fas fa-circle text-primary"></i> Direct
+                                        </span>
+                                        <span class="mr-2">
+                                            <i class="fas fa-circle text-success"></i> Social
+                                        </span>
+                                        <span class="mr-2">
+                                            <i class="fas fa-circle text-info"></i> Referral
+                                        </span>
                                     </div>
                                 </div>
-                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Submit!">
-                            </form>
-
-                        </div>
+                            </div>
+                        </div> -->
                     </div>
+                    <form style="padding: 15px" method="post" class = "questionaire">
+                        {% for i in range (1,39) %}
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Question {{i}}</h6>
+                            </div>
+                            <div class="card-body">
+                                <p id={{"question" + i|string}}></p>
+                                <div>
+                                    <input required type="radio" id={{"cStrAgree" + i|string}} name={{"q" + i|string}} value=0><label for={{"cStrAgree" + i|string}}> 매우 동의 </label>
+                                    <input required type="radio" id={{"cAgree" + i|string}} name={{"q" + i|string}} value=1><label for={{"cAgree" + i|string}}> 동의 </label>
+                                    <input required type="radio" id={{"cSAgree" + i|string}} name={{"q" + i|string}} value=2><label for={{"cSAgree" + i|string}}> 약간 동의 </label>
+                                    <input required type="radio" id={{"cNANDA" + i|string}} name={{"q" + i|string}} value=3><label for={{"cNANDA" + i|string}}> 중립 </label>
+                                    <input required type="radio" id={{"cSDAgree" + i|string}} name={{"q" + i|string}} value=4><label for={{"cSDAgree" + i|string}}> 약간 부정 </label>
+                                    <input required type="radio" id={{"cDAgree" + i|string}} name={{"q" + i|string}} value=5><label for={{"cDAgree" + i|string}}> 부정 </label>
+                                    <input required type="radio" id={{"cStrDAgree" + i|string}} name={{"q" + i|string}} value=6><label for={{"cStrDAgree" + i|string}}> 매우 부정 </label>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Question 39</h6>
+                            </div>
+                            <div class="card-body">
+                                <p id="question39"}></p>
+                                <div>
+                                    <input required type="radio" id="cAgree39" name="q39" value=0><label for="cAgree39">1.</label>
+                                    <input required type="radio" id="cSAgree39" name="q39" value=1><label for="cSAgree39">2.</label>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                        <input class="btn btn-primary btn-user btn-block" type="submit" value="Submit!">
+                    </form>
 
                 </div>
+            </div>
+
+        </div>
                 <!-- /.container-fluid -->
 
-            </div>
+    </div>
             <!-- End of Main Content -->
 
             <!-- Footer -->

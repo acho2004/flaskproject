@@ -18,6 +18,9 @@ def display_spost(title: str):
     route = db.execute(
         'SELECT * FROM stest WHERE route = ?', (title,)
     ).fetchone()
+    tester = db.execute(
+        'SELECT firstName, lastName FROM user WHERE email = ?', (route['email'],)
+    ).fetchone()
     if route is None:
         abort(404)
     if not(g.user is None) and route['author_id'] == g.user['id']:
@@ -27,7 +30,7 @@ def display_spost(title: str):
             (0, route['id'])
         )
         db.commit()
-    return render_template('sresults.html', route=route)
+    return render_template('sresults.html', route=route, tester=tester)
 
 
 @bp.route("/results/peer/<string:title>")
@@ -36,8 +39,17 @@ def display_ppost(title: str):
     route = db.execute(
         'SELECT * FROM ptest WHERE route = ?', (title,)
     ).fetchone()
+    tester = db.execute(
+        'SELECT firstName, lastName FROM user WHERE email = ?', (route['email'],)
+    ).fetchone()
+    testee = db.execute(
+        'SELECT firstName, lastName FROM user WHERE email = ?', (route['target_email'],)
+    ).fetchone()
+    error = None
     if route is None:
         abort(404)
+    if testee is None:
+        error = "There is no account associated with the email this test is targetted for."
     if not (g.user is None) and route['target_email'] == g.user['email']:
         db.execute(
             'UPDATE ptest SET new_tagp = ?'
@@ -52,7 +64,13 @@ def display_ppost(title: str):
             (0, route['id'])
         )
         db.commit()
-    return render_template('presults.html', route=route)
+    if error is None:
+        return render_template('presults.html', route=route, tester=tester, testee=testee)
+    else:
+        flash(error)
+        return redirect(url_for('home'))
+
+
 
 
 @bp.route('/profile')
