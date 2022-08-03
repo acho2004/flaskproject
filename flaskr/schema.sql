@@ -1,21 +1,21 @@
-DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS stest;
 DROP TABLE IF EXISTS ptest;
 
-CREATE TABLE user (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  email TEXT UNIQUE NOT NULL,
+CREATE TABLE IF NOT EXISTS hunet_members (
+  id INTEGER PRIMARY KEY NOT NULL,
+  dept_name TEXT NOT NULL,
+  emp_no TEXT NOT NULL,
+  name TEXT NOT NULL,
   password TEXT NOT NULL,
-  firstName TEXT NOT NULL,
-  lastName TEXT NOT NULL
+  pchanged INTEGER NOT NULL
 );
+
 
 CREATE TABLE stest (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   author_id INTEGER NOT NULL,
   created TIMESTAMP NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%S', 'now', '+9 hours')),
   route TEXT UNIQUE NOT NULL,
-  email TEXT NOT NULL,
   new_tag INTEGER NOT NULL,
   q1 INTEGER NOT NULL,
   q2 INTEGER NOT NULL,
@@ -70,10 +70,9 @@ CREATE TABLE stest (
 CREATE TABLE ptest (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   author_id INTEGER NOT NULL,
-  target_email TEXT NOT NULL,
+  target_id INTEGER NOT NULL,
   created TIMESTAMP NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%S', 'now', '+9 hours')),
   route TEXT UNIQUE NOT NULL,
-  email TEXT NOT NULL,
   new_tagp INTEGER NOT NULL,
   new_tags INTEGER NOT NULL,
   q1 INTEGER NOT NULL,

@@ -7,74 +7,57 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from flaskr.db import get_db
 
+import csv
+
 bp = Blueprint('auth', __name__)
-
-@bp.route('/register', methods=('GET', 'POST'))
-def register():
-    if request.method == 'POST':
-        repassword = request.form['repassword']
-        password = request.form['password']
-        firstName = request.form['firstName']
-        lastName = request.form['lastName']
-        email = request.form['email']
-        db = get_db()
-        error = None
-
-        if not firstName:
-            error = 'First Name is required.'
-        elif not lastName:
-            error = 'Last Name is required.'
-        elif not email:
-            error = 'Email is required.'
-        elif not password:
-            error = 'Password is required.'
-        elif password != repassword:
-            error = 'Password needs to match Repeated Password.'
-
-
-        if error is None:
-            try:
-                db.execute(
-                    "INSERT INTO user (email, password, firstName, lastName) VALUES (?, ?, ?, ?)",
-                    (email, generate_password_hash(password), firstName, lastName),
-                )
-                db.commit()
-            except db.IntegrityError:
-                error = f"Email {email} is already registered."
-            else:
-                return redirect(url_for("auth.login"))
-
-        flash(error)
-
-    return render_template('register.html')
-
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
     if request.method == 'POST':
-        email = request.form['email']
+        id = request.form['id']
         password = request.form['password']
         db = get_db()
         error = None
         user = db.execute(
-            'SELECT * FROM user WHERE email = ?', (email,)
+            'SELECT * FROM hunet_members WHERE emp_no = ?', (id,)
         ).fetchone()
 
         if user is None:
-            error = 'Incorrect email.'
+            error = 'Incorrect id.'
         elif not check_password_hash(user['password'], password):
             error = 'Incorrect password.'
+
 
         if error is None:
             session.clear()
             session['user_id'] = user['id']
-
-            return redirect('/')
+            if user['pchanged'] == 0:
+                return redirect(url_for('auth.passchange'))
+            else:
+                return redirect('/')
 
         flash(error)
 
     return render_template('login.html')
 
+@bp.route('/passchange', methods=('GET', 'POST'))
+def passchange():
+    if g.user is None:
+        return redirect(url_for('auth.login'))
+    if request.method == 'POST':
+        password = request.form['password']
+        repassword = request.form['repassword']
+        if password != repassword:
+            flash("Password and Repeated Password are Different.")
+        else:
+            db = get_db()
+            db.execute(
+                'UPDATE hunet_members SET password = ?, pchanged = ?'
+                ' WHERE id = ?',
+                (generate_password_hash(password), 1, g.user['id'])
+            )
+            db.commit()
+    return render_template('passchange.html')
 
 
 @bp.route('/logout')
@@ -102,5 +85,5 @@ def load_logged_in_user():
         g.user = None
     else:
         g.user = get_db().execute(
-            'SELECT * FROM user WHERE id = ?', (user_id,)
+            'SELECT * FROM hunet_members WHERE id = ?', (user_id,)
         ).fetchone()

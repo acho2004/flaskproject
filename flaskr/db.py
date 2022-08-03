@@ -3,7 +3,7 @@ import sqlite3
 import click
 from flask import current_app, g
 from flask.cli import with_appcontext
-
+from werkzeug.security import check_password_hash, generate_password_hash
 
 def get_db():
     if 'db' not in g:
@@ -36,7 +36,25 @@ def init_db_command():
     init_db()
     click.echo('Initialized the database.')
 
+@click.command('hasher')
+@with_appcontext
+def hasher():
+    """Run this once after importing hunet members to hash their IDs!"""
+    db = get_db()
+    x = db.execute('SELECT * FROM hunet_members').fetchall()
+    for item in x:
+        y = generate_password_hash(item['password'])
+        db.execute(
+            'UPDATE hunet_members SET password = ?'
+            ' WHERE id = ?',
+            (y, item['id'])
+        )
+        db.commit()
+        click.echo('FINISHED HASHING PASSWORD #' + str(item['id']))
+    click.echo('FINISHED HASHING PASSWORD')
+
 
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
+    app.cli.add_command(hasher)
