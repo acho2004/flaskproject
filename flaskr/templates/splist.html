@@ -224,11 +224,11 @@
                     {% if peerassessments[i]['target_id']|string == g.user['emp_no']|string %}
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <a href={{"/results/peer/" + peerassessments[i]['route']}}  class="m-0 font-weight-bold
+                            <h6  class="m-0 font-weight-bold
                             text-primary text-decoration:none">{% if peerassessments[i]['new_tagp'] == 1 %}
                             <span style="color:blue; text-decoration:underline">NEW!</span> {% endif %}
                             {{ peerassessments[i]['created'].strftime('%Y-%m-%d %I:%M:%S %p') }}에
-                            {{tester[i]['name']}}가 본 시험</a>
+                            {{tester[i]['name']}}가 본 시험</h6>
                         </div>
                         <div class="card-body">
                             <p
