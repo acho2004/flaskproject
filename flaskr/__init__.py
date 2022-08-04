@@ -39,26 +39,26 @@ def create_app(test_config=None):
             return redirect(url_for('home'))
         db = auth.get_db()
         selfassessments = db.execute(
-            'SELECT author_id, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
-            ' FROM stest'
-            ' ORDER BY created DESC'
+            'SELECT author_id, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP, new_tag'
+            ' FROM stest WHERE author_id = ?'
+            ' ORDER BY created DESC', (g.user['emp_no'],)
         ).fetchall()
-        found = False
         selfguess = ""
-        for x in selfassessments:
-            if(str(x[0]) == str(g.user['emp_no'])):
-                found = True
-                break
-        if not found:
+        counter = 0
+        for item in selfassessments:
+            if item['new_tag'] == 1:
+                counter += 1
+
+        if len(selfassessments) == 0:
             selfguess = "N/A"
         else:
-            selfguess = selfguess + "E" if x[1] > 0 else selfguess + "I"
-            selfguess = selfguess + "S" if x[2] > 0 else selfguess + "N"
-            selfguess = selfguess + "T" if x[3] > 0 else selfguess + "F"
-            selfguess = selfguess + "J" if x[4] > 0 else selfguess + "P"
+            selfguess = selfguess + "E" if selfassessments[0][1] > 0 else selfguess + "I"
+            selfguess = selfguess + "S" if selfassessments[0][2] > 0 else selfguess + "N"
+            selfguess = selfguess + "T" if selfassessments[0][3] > 0 else selfguess + "F"
+            selfguess = selfguess + "J" if selfassessments[0][4] > 0 else selfguess + "P"
 
 
-        return render_template('index.html', selfguess=selfguess)
+        return render_template('index.html', selfassessments=selfassessments, selfguess=selfguess, counter=counter)
 
     from . import db
     db.init_app(app)

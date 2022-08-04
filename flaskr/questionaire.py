@@ -72,28 +72,6 @@ def display_ppost(title: str):
 
 
 
-
-@bp.route('/profile')
-def profile():
-    if g.user is None:
-        return redirect(url_for('auth.login'))
-    db = get_db()
-    selfassessments = db.execute(
-        'SELECT p.id, created, author_id, u.email, route, new_tag,'
-        ' guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
-        ' FROM stest p JOIN user u ON p.author_id = u.id'
-        ' ORDER BY created DESC'
-    ).fetchall()
-    peerassessments = db.execute(
-        'SELECT p.id, created, author_id, u.email, target_email, route, new_tagp, new_tags,' 
-        ' guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
-        ' FROM ptest p JOIN user u ON p.author_id = u.id'
-        ' ORDER BY created DESC'
-    ).fetchall()
-    return render_template('/profile.html',
-                           selfassessments=list(map(lambda row: dict(row), selfassessments)),
-                           peerassessments=list(map(lambda row: dict(row), peerassessments)))
-
 @bp.route('/srlist')
 def srlist():
     if g.user is None:
