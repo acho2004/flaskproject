@@ -33,7 +33,7 @@ def create_app(test_config=None):
     @app.route('/')
     def index():
         if g.user is None:
-            return redirect(url_for('home'))
+            return redirect(url_for('auth.login'))
         db = auth.get_db()
         selfassessments = db.execute(
             'SELECT author_id, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP, new_tag'
