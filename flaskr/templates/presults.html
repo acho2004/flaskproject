@@ -109,15 +109,7 @@
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
+                                    Change Password
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
@@ -135,7 +127,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">{{route['created'].strftime('%Y-%m-%d %I:%M:%S %p')}}에 {{tester['name']}}가 {{testee['name']}}에 대하여 본 시험</h1>
+                        <h1 class="h3 mb-0 text-gray-800">{{route['created'].strftime('%Y-%m-%d %I:%M:%S %p')}}에 {{tester['name']}}(이)가 {{testee['name']}}에 대하여 본 시험</h1>
                     </div>
 
                     <form style="padding: 15px" class = "questionaire">
