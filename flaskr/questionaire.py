@@ -204,17 +204,18 @@ def peertest():
         sresp5 = request.form['sresp5']
         x = ""
 
-        target_id = request.form['target_id']
+        t_emp_no = (request.form['name'].split())[1]
+
         error = None
 
         for i in range(0,39):
             if not questions[i]:
                 error = 'All questions are required.'
 
-        if not sresp1 or not sresp2 or not sresp3 or not sresp4 or not sresp5 or not target_id:
+        if not sresp1 or not sresp2 or not sresp3 or not sresp4 or not sresp5 or not t_emp_no:
             error = 'All questions are required.'
 
-        if target_id == g.user['emp_no']:
+        if t_emp_no == g.user['emp_no']:
             error = "You can't submit a form for yourself."
 
         if error is not None:
@@ -235,7 +236,7 @@ def peertest():
                     query += 'sresp1, sresp2, sresp3, sresp4, sresp5, author_id, target_id, route, new_tags,'
                     query += 'new_tagp, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
                     query2 += "'" +sresp1 + "', '" + sresp2 + "', '" + sresp3 + "', '" + sresp4 + "', '" + sresp5 \
-                    + "', '" + str(g.user['emp_no']) + "', '" + target_id + "', '" + x + \
+                    + "', '" + str(g.user['emp_no']) + "', '" + t_emp_no + "', '" + x + \
                     "', '1', '1', '-999', '-999', '-999', '-999')"
                     query += query2
                     db.execute(query)

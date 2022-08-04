@@ -29,11 +29,8 @@ def create_app(test_config=None):
         pass
 
     # a simple page that says hello
-    @app.route('/')
-    def home():
-        return render_template('home.html')
 
-    @app.route('/index')
+    @app.route('/')
     def index():
         if g.user is None:
             return redirect(url_for('home'))

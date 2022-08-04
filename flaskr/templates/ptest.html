@@ -40,14 +40,7 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
-            {% if g.user %}
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="/index">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>대시보드</span></a>
-            </li>
-            {% endif %}
+
             <!-- Divider -->
 
 
@@ -194,24 +187,11 @@
                                 <br>
                                 <label for="name">Choose the Target's Name:</label>
                                 <select name="name" id="name">
-
-
                                 </select>
                                 <br>
                             </div>
                         </div>
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">상대방의 아이디</h6>
-                            </div>
-                            <div class="card-body">
-                                <p>평가 하고 싶은 사람의 아이디를 적어주세요. 결과가 나온 후 문자가 들어갈 거에요.</p>
-                                <div>
-                                    <input required type="text" name="target_id" id="target_id" placeholder="ID">
-                                </div>
-                                <br>
-                            </div>
-                        </div>
+
                         {% for i in range (1,39) %}
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
@@ -379,7 +359,7 @@
             {% for person in people %}
                 if("{{person['dept_name']}}" == e.value){
                     let a = document.createElement('option');
-                    a.innerHTML = `<option value="{{person['name']}}">{{person['name']}}</option>`;
+                    a.innerHTML = `<option value="{{person['name']}}">{{person['name']}} {{person['emp_no']}}</option>`;
                     document.getElementById('name').appendChild(a);
                 }
             {% endfor %}
