@@ -109,146 +109,167 @@
                         <h1 class="h3 mb-0 text-gray-800">홈 페이지</h1>
                     </div>
 
-                        <div class="row">
-                            <!--
-                            <div class="col-xl-8 col-lg-7">
-                                <div class="card shadow mb-4">
-                                    <div
-                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-primary">트랜드 그래프</h6>
-                                        <div class="dropdown no-arrow">
-                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                aria-labelledby="dropdownMenuLink">
-                                                <div class="dropdown-header">Dropdown Header:</div>
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                            </div>
+                    <!-- <div class="row">
+
+                        <div class="col-xl-8 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">트랜드 그래프</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Dropdown Header:</div>
+                                            <a class="dropdown-item" href="#">Action</a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Something else here</a>
                                         </div>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="chart-area">
-                                            <canvas id="myAreaChart"></canvas>
-                                        </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <canvas id="myAreaChart"></canvas>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-xl-4 col-lg-5">
-                                <div class="card shadow mb-4">
-                                    <div
-                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-                                        <div class="dropdown no-arrow">
-                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                aria-labelledby="dropdownMenuLink">
-                                                <div class="dropdown-header">Dropdown Header:</div>
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="chart-pie pt-4 pb-2">
-                                            <canvas id="myPieChart"></canvas>
-                                        </div>
-                                        <div class="mt-4 text-center small">
-                                            <span class="mr-2">
-                                                <i class="fas fa-circle text-primary"></i> Direct
-                                            </span>
-                                            <span class="mr-2">
-                                                <i class="fas fa-circle text-success"></i> Social
-                                            </span>
-                                            <span class="mr-2">
-                                                <i class="fas fa-circle text-info"></i> Referral
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
                         </div>
-                            <form style="padding: 15px" method="post" class = "questionaire">
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">상대방의 아이디</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <p>평가 하고 싶은 사람의 아이디를 적어주세요. 결과가 나온 후 문자가 들어갈 거에요.</p>
-                                        <div>
-                                            <input required type="text" name="target_id" id="target_id" placeholder="ID">
-                                        </div>
-                                        <br>
-                                    </div>
-                                </div>
-                                {% for i in range (1,39) %}
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Question {{i}}</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <p id={{"question" + i|string}}></p>
-                                        <div>
-                                            <input required type="radio" id={{"cStrAgree" + i|string}} name={{"q" + i|string}} value=0><label for={{"cStrAgree" + i|string}}> 매우 동의 </label>
-                                            <input required type="radio" id={{"cAgree" + i|string}} name={{"q" + i|string}} value=1><label for={{"cAgree" + i|string}}> 동의 </label>
-                                            <input required type="radio" id={{"cSAgree" + i|string}} name={{"q" + i|string}} value=2><label for={{"cSAgree" + i|string}}> 약간 동의 </label>
-                                            <input required type="radio" id={{"cNANDA" + i|string}} name={{"q" + i|string}} value=3><label for={{"cNANDA" + i|string}}> 중립 </label>
-                                            <input required type="radio" id={{"cSDAgree" + i|string}} name={{"q" + i|string}} value=4><label for={{"cSDAgree" + i|string}}> 약간 부정 </label>
-                                            <input required type="radio" id={{"cDAgree" + i|string}} name={{"q" + i|string}} value=5><label for={{"cDAgree" + i|string}}> 부정 </label>
-                                            <input required type="radio" id={{"cStrDAgree" + i|string}} name={{"q" + i|string}} value=6><label for={{"cStrDAgree" + i|string}}> 매우 부정 </label>
-                                        </div>
-                                        <br>
-                                    </div>
-                                </div>
-                                {% endfor %}
 
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Question 39</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <p id="question39"}></p>
-                                        <div>
-                                            <input required type="radio" id="cAgree39" name="q39" value=0><label for="cAgree39">1.</label>
-                                            <input required type="radio" id="cSAgree39" name="q39" value=1><label for="cSAgree39">2.</label>
+                        <div class="col-xl-4 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Dropdown Header:</div>
+                                            <a class="dropdown-item" href="#">Action</a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Something else here</a>
                                         </div>
-                                        <br>
                                     </div>
                                 </div>
-                                {% for i in range (1,6) %}
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Self Response Question {{i}}</h6>
+                                <div class="card-body">
+                                    <div class="chart-pie pt-4 pb-2">
+                                        <canvas id="myPieChart"></canvas>
                                     </div>
-                                    <div class="card-body">
-                                        <p id={{"sresp" + i|string}}></p>
-                                        <div>
-                                            <input required type="text" name={{"sresp" + i|string}} placeholder="Write Response Here...">
-                                        </div>
-                                        <br>
+                                    <div class="mt-4 text-center small">
+                                        <span class="mr-2">
+                                            <i class="fas fa-circle text-primary"></i> Direct
+                                        </span>
+                                        <span class="mr-2">
+                                            <i class="fas fa-circle text-success"></i> Social
+                                        </span>
+                                        <span class="mr-2">
+                                            <i class="fas fa-circle text-info"></i> Referral
+                                        </span>
                                     </div>
                                 </div>
-                                {% endfor %}
-                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Submit!">
-                            </form>
-
+                            </div>
                         </div>
                     </div>
+                    -->
+                    <form style="padding: 15px" method="post" class = "questionaire">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Choose Department</h6>
+                            </div>
+                            <div class="card-body">
+                                <label for="dept">Choose a Department:</label>
+                                <select name="dept" id="dept" onchange="updater()">
+                                    {% for item in deptlist %}
+                                    <option value="{{item}}">{{item}}</option>
+                                    {% endfor %}
+                                </select>
+                                <br>
+                                <label for="name">Choose the Target's Name:</label>
+                                <select name="name" id="name">
+
+
+                                </select>
+                                <br>
+                            </div>
+                        </div>
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">상대방의 아이디</h6>
+                            </div>
+                            <div class="card-body">
+                                <p>평가 하고 싶은 사람의 아이디를 적어주세요. 결과가 나온 후 문자가 들어갈 거에요.</p>
+                                <div>
+                                    <input required type="text" name="target_id" id="target_id" placeholder="ID">
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                        {% for i in range (1,39) %}
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Question {{i}}</h6>
+                            </div>
+                            <div class="card-body">
+                                <p id={{"question" + i|string}}></p>
+                                <div>
+                                    <input required type="radio" id={{"cStrAgree" + i|string}} name={{"q" + i|string}} value=0><label for={{"cStrAgree" + i|string}}> 매우 동의 </label>
+                                    <input required type="radio" id={{"cAgree" + i|string}} name={{"q" + i|string}} value=1><label for={{"cAgree" + i|string}}> 동의 </label>
+                                    <input required type="radio" id={{"cSAgree" + i|string}} name={{"q" + i|string}} value=2><label for={{"cSAgree" + i|string}}> 약간 동의 </label>
+                                    <input required type="radio" id={{"cNANDA" + i|string}} name={{"q" + i|string}} value=3><label for={{"cNANDA" + i|string}}> 중립 </label>
+                                    <input required type="radio" id={{"cSDAgree" + i|string}} name={{"q" + i|string}} value=4><label for={{"cSDAgree" + i|string}}> 약간 부정 </label>
+                                    <input required type="radio" id={{"cDAgree" + i|string}} name={{"q" + i|string}} value=5><label for={{"cDAgree" + i|string}}> 부정 </label>
+                                    <input required type="radio" id={{"cStrDAgree" + i|string}} name={{"q" + i|string}} value=6><label for={{"cStrDAgree" + i|string}}> 매우 부정 </label>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Question 39</h6>
+                            </div>
+                            <div class="card-body">
+                                <p id="question39"}></p>
+                                <div>
+                                    <input required type="radio" id="cAgree39" name="q39" value=0><label for="cAgree39">1.</label>
+                                    <input required type="radio" id="cSAgree39" name="q39" value=1><label for="cSAgree39">2.</label>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                        {% for i in range (1,6) %}
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Self Response Question {{i}}</h6>
+                            </div>
+                            <div class="card-body">
+                                <p id={{"sresp" + i|string}}></p>
+                                <div>
+                                    <input required type="text" name={{"sresp" + i|string}} placeholder="Write Response Here...">
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <input class="btn btn-primary btn-user btn-block" type="submit" value="Submit!">
+                    </form>
 
                 </div>
-                <!-- /.container-fluid -->
-
             </div>
+
+        </div>
+            <!-- /.container-fluid -->
+
+    </div>
             <!-- End of Main Content -->
 
             <!-- Footer -->
@@ -302,13 +323,6 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
     <script>
         document.getElementById("question1").innerHTML = "어딘가를 가야 한다면, 무엇을 언제 할지 결정을 하고 간다.";
         document.getElementById("question2").innerHTML = "자신이 선생님이라면 철학을 배재 한 수업을 가르칠 것이다.";
@@ -354,8 +368,23 @@
         document.getElementById("sresp3").innerHTML = "대표적인 장점: ";
         document.getElementById("sresp4").innerHTML = "가장 기억에 남는 순간: ";
         document.getElementById("sresp5").innerHTML = "통합적인 평가: ";
-    </script>
+        updater();
 
+        function updater(){
+            let e = document.getElementById('dept');
+            x = document.getElementById('name')
+            while (x.firstChild) {
+              x.removeChild(x.firstChild);
+            }
+            {% for person in people %}
+                if("{{person['dept_name']}}" == e.value){
+                    let a = document.createElement('option');
+                    a.innerHTML = `<option value="{{person['name']}}">{{person['name']}}</option>`;
+                    document.getElementById('name').appendChild(a);
+                }
+            {% endfor %}
+        }
+    </script>
 </body>
 
 </html>

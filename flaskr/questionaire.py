@@ -121,19 +121,6 @@ def splist():
                            peerassessments=list(map(lambda row: dict(row), peerassessments)), tester=tester)
 
 
-import json
-@bp.route('/selectdb')
-def query_db():
-    db = get_db()
-    selfassessments = db.execute(
-        'SELECT p.id, created, author_id, u.email, route, new_tag, '
-        'guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
-        ' FROM stest p JOIN user u ON p.author_id = u.id'
-        ' ORDER BY created DESC'
-    ).fetchall()
-
-    temp = list(map(lambda row: dict(row), selfassessments))
-    return json.dumps(temp, default=str)
 
 
 @bp.route('/selftest', methods=('GET', 'POST'))
@@ -193,6 +180,17 @@ def selftest():
 def peertest():
     if g.user is None:
         return redirect(url_for('auth.login'))
+    db = get_db()
+    people = db.execute(
+        'SELECT name, emp_no, dept_name'
+        ' FROM hunet_members'
+    ).fetchall()
+    deptlist = []
+    for item in people:
+        if item['dept_name'] not in deptlist:
+            deptlist.append(item['dept_name'])
+
+
     if request.method == 'POST':
         obtainedUnique = False
         questions = []
@@ -208,7 +206,6 @@ def peertest():
 
         target_id = request.form['target_id']
         error = None
-        db = get_db()
 
         for i in range(0,39):
             if not questions[i]:
@@ -255,7 +252,7 @@ def peertest():
             db.commit()
             return redirect(url_for('index'))
 
-    return render_template('/ptest.html')
+    return render_template('/ptest.html', deptlist=deptlist, people=people)
 
 
 @bp.route('/addsample', methods=('GET', 'POST'))
