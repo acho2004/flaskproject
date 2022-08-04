@@ -7,8 +7,6 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from flaskr.db import get_db
 
-import csv
-
 bp = Blueprint('auth', __name__)
 
 @bp.route('/login', methods=('GET', 'POST'))
@@ -57,6 +55,7 @@ def passchange():
                 (generate_password_hash(password), 1, g.user['id'])
             )
             db.commit()
+            return redirect('/')
     return render_template('passchange.html')
 
 

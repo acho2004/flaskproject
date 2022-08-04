@@ -40,11 +40,17 @@ def create_app(test_config=None):
             ' FROM stest WHERE author_id = ?'
             ' ORDER BY created DESC', (g.user['emp_no'],)
         ).fetchall()
+        peerassessments = db.execute(
+            'SELECT target_id, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
+            ' FROM ptest WHERE target_id = ?'
+            ' ORDER BY created DESC', (g.user['emp_no'],)
+        ).fetchall()
         selfguess = ""
-        counter = 0
-        for item in selfassessments:
-            if item['new_tag'] == 1:
-                counter += 1
+        peerguess = ""
+        sumE = 0
+        sumS = 0
+        sumT = 0
+        sumJ = 0
 
         if len(selfassessments) == 0:
             selfguess = "N/A"
@@ -54,8 +60,21 @@ def create_app(test_config=None):
             selfguess = selfguess + "T" if selfassessments[0][3] > 0 else selfguess + "F"
             selfguess = selfguess + "J" if selfassessments[0][4] > 0 else selfguess + "P"
 
+        if len(peerassessments) == 0:
+            peerguess = "N/A"
+        else:
+            for item in peerassessments:
+                sumE += item['guess_MBTI_EI']
+                sumS += item['guess_MBTI_SN']
+                sumT += item['guess_MBTI_TF']
+                sumJ += item['guess_MBTI_JP']
+            peerguess = peerguess + "E" if sumE > 0 else peerguess + "I"
+            peerguess = peerguess + "S" if sumS > 0 else peerguess + "N"
+            peerguess = peerguess + "T" if sumT > 0 else peerguess + "F"
+            peerguess = peerguess + "J" if sumJ > 0 else peerguess + "P"
 
-        return render_template('index.html', selfassessments=selfassessments, selfguess=selfguess, counter=counter)
+
+        return render_template('index.html', selfassessments=selfassessments, selfguess=selfguess, peerguess=peerguess)
 
     from . import db
     db.init_app(app)

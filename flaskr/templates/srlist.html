@@ -64,10 +64,9 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href={{url_for('questionaire.srlist')}}>자가 시험 결과</a>
-                        <a class="collapse-item" href="{{url_for('questionaire.pslist')}}">남을 위한 시험 결과</a>
-                        <a class="collapse-item" href="{{url_for('questionaire.splist')}}">남이 나를 위한 시험 결과</a>
+                        <a class="collapse-item" href={{url_for('questionaire.srlist')}}>나 자신의 평가</a>
+                        <a class="collapse-item" href="{{url_for('questionaire.pslist')}}">너를 위해 본 시험들</a>
+                        <a class="collapse-item" href="{{url_for('questionaire.splist')}}">나를 위해 본 시험들</a>
                     </div>
                 </div>
             </li>
@@ -82,7 +81,6 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
                         <a class="collapse-item" href="{{ url_for('questionaire.selftest') }}">자가 시험</a>
                         <a class="collapse-item" href="{{ url_for('questionaire.peertest') }}">남을 위한 시험</a>
                     </div>
@@ -141,7 +139,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">자가 시험 리스트</h1>
+                        <h1 class="h3 mb-0 text-gray-800">나 자신의 평가</h1>
                     </div>
 
                     <!-- Content Row -->

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>소셜 MBTI 분석기 - 자가 시험</title>
+    <title>자가 시험</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -46,12 +46,43 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
 
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>상세 결과</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href={{url_for('questionaire.srlist')}}>나 자신의 평가</a>
+                        <a class="collapse-item" href="{{url_for('questionaire.pslist')}}">너를 위해 본 시험들</a>
+                        <a class="collapse-item" href="{{url_for('questionaire.splist')}}">나를 위해 본 시험들</a>
+                    </div>
+                </div>
+            </li>
 
-            <!-- Sidebar Toggler (Sidebar) -->
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>시험 보기</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ url_for('questionaire.selftest') }}">자가 시험</a>
+                        <a class="collapse-item" href="{{ url_for('questionaire.peertest') }}">남을 위한 시험</a>
+                    </div>
+                </div>
+            </li>
+
+            <hr class="sidebar-divider">
+
+
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
-
 
 
         </ul>
@@ -96,7 +127,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">홈 페이지</h1>
+                        <h1 class="h3 mb-0 text-gray-800">나를 위한 시험지</h1>
                     </div>
 
                     <div class="row">
