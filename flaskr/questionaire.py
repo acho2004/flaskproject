@@ -79,12 +79,14 @@ def profile():
         return redirect(url_for('auth.login'))
     db = get_db()
     selfassessments = db.execute(
-        'SELECT p.id, created, author_id, u.email, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
+        'SELECT p.id, created, author_id, u.email, route, new_tag,'
+        ' guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
         ' FROM stest p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
     peerassessments = db.execute(
-        'SELECT p.id, created, author_id, u.email, target_email, route, new_tagp, new_tags, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
+        'SELECT p.id, created, author_id, u.email, target_email, route, new_tagp, new_tags,' 
+        ' guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
         ' FROM ptest p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
@@ -98,7 +100,8 @@ def srlist():
         return redirect(url_for('auth.login'))
     db = get_db()
     selfassessments = db.execute(
-        'SELECT created, author_id, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
+        'SELECT created, author_id, route, new_tag,' 
+        ' guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
         ' FROM stest'
         ' ORDER BY created DESC'
     ).fetchall()
@@ -111,12 +114,16 @@ def pslist():
         return redirect(url_for('auth.login'))
     db = get_db()
     peerassessments = db.execute(
-        'SELECT created, author_id, target_id, id, route, new_tags, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
+        'SELECT created, author_id, target_id, id, route, new_tags,' 
+        ' guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
         ' FROM ptest'
         ' ORDER BY created DESC'
     ).fetchall()
+    testee = []
+    for item in peerassessments:
+        testee.append(db.execute('SELECT name FROM hunet_members WHERE emp_no = ?', (item['target_id'],)).fetchone())
     return render_template('/pslist.html',
-                           peerassessments=list(map(lambda row: dict(row), peerassessments)))
+                           peerassessments=list(map(lambda row: dict(row), peerassessments)), testee=testee)
 
 @bp.route('/splist')
 def splist():
@@ -124,12 +131,16 @@ def splist():
         return redirect(url_for('auth.login'))
     db = get_db()
     peerassessments = db.execute(
-        'SELECT created, author_id, target_id, id, route, new_tagp, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
+        'SELECT created, author_id, target_id, id, route, new_tagp,'
+        ' guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
         ' FROM ptest'
         ' ORDER BY created DESC'
     ).fetchall()
+    tester = []
+    for item in peerassessments:
+        tester.append(db.execute('SELECT name FROM hunet_members WHERE emp_no = ?', (item['author_id'],)).fetchone())
     return render_template('/splist.html',
-                           peerassessments=list(map(lambda row: dict(row), peerassessments)))
+                           peerassessments=list(map(lambda row: dict(row), peerassessments)), tester=tester)
 
 
 import json
@@ -137,7 +148,8 @@ import json
 def query_db():
     db = get_db()
     selfassessments = db.execute(
-        'SELECT p.id, created, author_id, u.email, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
+        'SELECT p.id, created, author_id, u.email, route, new_tag, '
+        'guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
         ' FROM stest p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
@@ -245,8 +257,11 @@ def peertest():
                         query2 += "'"  + item + "' ,"
                         counter += 1
 
-                    query += 'sresp1, sresp2, sresp3, sresp4, sresp5, author_id, target_id, route, new_tags, new_tagp, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
-                    query2 += "'" +sresp1 + "', '" + sresp2 + "', '" + sresp3 + "', '" + sresp4 + "', '" + sresp5 + "', '" + str(g.user['emp_no']) + "', '" + target_id + "', '" + x + "', '1', '1', '-999', '-999', '-999', '-999')"
+                    query += 'sresp1, sresp2, sresp3, sresp4, sresp5, author_id, target_id, route, new_tags,'
+                    query += 'new_tagp, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
+                    query2 += "'" +sresp1 + "', '" + sresp2 + "', '" + sresp3 + "', '" + sresp4 + "', '" + sresp5 \
+                    + "', '" + str(g.user['emp_no']) + "', '" + target_id + "', '" + x + \
+                    "', '1', '1', '-999', '-999', '-999', '-999')"
                     query += query2
                     db.execute(query)
                     db.commit()
@@ -311,10 +326,14 @@ def sguesser(title):
         'SELECT * FROM stest WHERE route = ?', (title,)
     ).fetchone()
 
-    EImeter = -2 * (route['q3'] - 3) + 2 * (route['q15'] - 3) + 2 * (route['q20'] - 3) + (route['q23'] - 3) - (route['q24'] - 3) - (route['q30'] - 3) - (route['q36'] - 3) - (route['q38'] - 3)
-    SNmeter = 2 * (route['q2'] - 3) - (route['q5'] - 3) + 2 * (route['q19'] - 3) + (route['q26'] - 3) - (route['q28'] - 3)
-    TFmeter = 2 * (route['q21'] - 3) + (route['q27'] - 3) - (route['q29'] - 3) - 2 * (route['q31'] - 3) - (route['q33'] - 3) + (route['q34'] - 3) - (route['q35'] - 3)
-    JPmeter = 2 * (route['q1'] - 3) - (route['q7'] - 3) - 2 * (route['q16'] - 3) + (route['q17'] - 3) - (route['q18'] - 3) + (route['q25'] - 3) + (route['q32'] - 3) + (route['q37'] - 3)
+    EImeter = -2 * (route['q3'] - 3) + 2 * (route['q15'] - 3) + 2 * (route['q20'] - 3) + (route['q23'] - 3) - \
+    (route['q24'] - 3) - (route['q30'] - 3) - (route['q36'] - 3) - (route['q38'] - 3)
+    SNmeter = 2 * (route['q2'] - 3) - (route['q5'] - 3) + 2 * (route['q19'] - 3) + (route['q26'] - 3) - \
+    (route['q28'] - 3)
+    TFmeter = 2 * (route['q21'] - 3) + (route['q27'] - 3) - (route['q29'] - 3) - 2 * (route['q31'] - 3) - \
+    (route['q33'] - 3) + (route['q34'] - 3) - (route['q35'] - 3)
+    JPmeter = 2 * (route['q1'] - 3) - (route['q7'] - 3) - 2 * (route['q16'] - 3) + (route['q17'] - 3) - \
+    (route['q18'] - 3) + (route['q25'] - 3) + (route['q32'] - 3) + (route['q37'] - 3)
     TFmeter = TFmeter - (route['q4'] - 3) if route['q4'] - 3 > 0 else TFmeter - 2 * (route['q4'] - 3)
     EImeter = EImeter - (route['q6'] - 3) if route['q6'] - 3 > 0 else EImeter - 2 * (route['q6'] - 3)
     JPmeter = JPmeter + (route['q8'] - 3) if route['q8'] - 3 > 0 else JPmeter + 2 * (route['q8'] - 3)
@@ -338,10 +357,14 @@ def pguesser(title):
         'SELECT * FROM ptest WHERE route = ?', (title,)
     ).fetchone()
 
-    EImeter = -2 * (route['q3'] - 3) + 2 * (route['q15'] - 3) + 2 * (route['q20'] - 3) + (route['q23'] - 3) - (route['q24'] - 3) - (route['q30'] - 3) - (route['q36'] - 3) - (route['q38'] - 3)
-    SNmeter = 2 * (route['q2'] - 3) - (route['q5'] - 3) + 2 * (route['q19'] - 3) + (route['q26'] - 3) - (route['q28'] - 3)
-    TFmeter = 2 * (route['q21'] - 3) + (route['q27'] - 3) - (route['q29'] - 3) - 2 * (route['q31'] - 3) - (route['q33'] - 3) + (route['q34'] - 3) - (route['q35'] - 3)
-    JPmeter = 2 * (route['q1'] - 3) - (route['q7'] - 3) - 2 * (route['q16'] - 3) + (route['q17'] - 3) - (route['q18'] - 3) + (route['q25'] - 3) + (route['q32'] - 3) + (route['q37'] - 3)
+    EImeter = -2 * (route['q3'] - 3) + 2 * (route['q15'] - 3) + 2 * (route['q20'] - 3) + (route['q23'] - 3) - \
+    (route['q24'] - 3) - (route['q30'] - 3) - (route['q36'] - 3) - (route['q38'] - 3)
+    SNmeter = 2 * (route['q2'] - 3) - (route['q5'] - 3) + 2 * (route['q19'] - 3) + (route['q26'] - 3) - \
+    (route['q28'] - 3)
+    TFmeter = 2 * (route['q21'] - 3) + (route['q27'] - 3) - (route['q29'] - 3) - 2 * (route['q31'] - 3) - \
+    (route['q33'] - 3) + (route['q34'] - 3) - (route['q35'] - 3)
+    JPmeter = 2 * (route['q1'] - 3) - (route['q7'] - 3) - 2 * (route['q16'] - 3) + (route['q17'] - 3) - \
+    (route['q18'] - 3) + (route['q25'] - 3) + (route['q32'] - 3) + (route['q37'] - 3)
     TFmeter = TFmeter - (route['q4'] - 3) if route['q4'] - 3 > 0 else TFmeter - 2 * (route['q4'] - 3)
     EImeter = EImeter - (route['q6'] - 3) if route['q6'] - 3 > 0 else EImeter - 2 * (route['q6'] - 3)
     JPmeter = JPmeter + (route['q8'] - 3) if route['q8'] - 3 > 0 else JPmeter + 2 * (route['q8'] - 3)
