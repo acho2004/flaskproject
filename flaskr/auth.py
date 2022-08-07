@@ -11,6 +11,8 @@ bp = Blueprint('auth', __name__)
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
+    if g.user is not None:
+        return(redirect('/'))
     if request.method == 'POST':
         id = request.form['id']
         password = request.form['password']
