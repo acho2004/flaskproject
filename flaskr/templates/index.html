@@ -57,8 +57,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href={{url_for('questionaire.srlist')}}>나 자신의 평가</a>
-                        <a class="collapse-item" href="{{url_for('questionaire.pslist')}}">너를 위해 본 시험들</a>
-                        <a class="collapse-item" href="{{url_for('questionaire.splist')}}">나를 위해 본 시험들</a>
+                        <a class="collapse-item" href="{{url_for('questionaire.pslist')}}">너를 위해 봐준 시험들</a>
+                        <a class="collapse-item" href="{{url_for('questionaire.splist')}}">나를 위해 봐준 시험들</a>
                     </div>
                 </div>
             </li>
@@ -73,8 +73,8 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ url_for('questionaire.selftest') }}">자가 시험</a>
-                        <a class="collapse-item" href="{{ url_for('questionaire.peertest') }}">남을 위한 시험</a>
+                        <a class="collapse-item" href="{{ url_for('questionaire.selftest') }}">나를 위한 시험지</a>
+                        <a class="collapse-item" href="{{ url_for('questionaire.peertest') }}">너를 위한 시험지</a>
                     </div>
                 </div>
             </li>
@@ -156,7 +156,7 @@
                         </div>
                         <div class="card-body">
                             <p>소셜 MBTI 분석기는 머신 러닝을 통하여 일반 MBTI 시험보다 많은 정보를 얻어내려고 노력합니다. 타인을 대상으로 MBTI 시험을 하고 그것을 그 타인의 자가 시험 과 비교 하여 다른 이유와 무엇을 바꿀 수 있는지 조언을 줍니다.</p>
-                            <p class="mb-0">자기 자신의 MBTI를 채점 하거나 타인의 MBTI를 채점 하시려면 왼쪽 "시험 보기"를 눌러 주세요. 이미 본 시험의 결과를 보고 싶다면 상세 결과를 눌러 주세요. 로그아웃은 오른쪽 상단에 있는 프로필을 눌러서 할 수 있습니다.</p>
+                            <p class="mb-0">자기 자신의 MBTI를 채점 하거나 타인의 MBTI를 채점 하시려면 왼쪽 "시험 보기"를 눌러 주세요. 이미 본 시험의 결과를 보고 싶다면 상세 결과를 눌러 주세요. 로그아웃은 오른쪽 상단에 있는 이름을 눌러서 할 수 있습니다.</p>
                         </div>
                     </div>
 
@@ -195,54 +195,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!--
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">리더십 키워드
-                                            </div>
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar"
-                                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                         -->
                     </div>
 
                     <!-- Content Row -->
