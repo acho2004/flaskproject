@@ -132,25 +132,25 @@
                         {% for i in range (1,39) %}
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Question {{i}}</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">객관식 질문 {{i}}</h6>
                             </div>
                             <div class="card-body">
                                 <p id={{"question" + i|string}}></p>
                                 <div>
                                     <input required type="radio" id={{"cStrAgree" + i|string}} name={{"q" + i|string}}
-                                           value=0><label for={{"cStrAgree" + i|string}}> 매우 동의 </label>
+                                           value=0><label for={{"cStrAgree" + i|string}}>&nbsp; 매우 동의 &nbsp;</label>
                                     <input required type="radio" id={{"cAgree" + i|string}} name={{"q" + i|string}}
-                                           value=1><label for={{"cAgree" + i|string}}> 동의 </label>
+                                           value=1><label for={{"cAgree" + i|string}}>&nbsp; 동의 &nbsp;</label>
                                     <input required type="radio" id={{"cSAgree" + i|string}} name={{"q" + i|string}}
-                                           value=2><label for={{"cSAgree" + i|string}}> 약간 동의 </label>
+                                           value=2><label for={{"cSAgree" + i|string}}>&nbsp; 약간 동의 &nbsp;</label>
                                     <input required type="radio" id={{"cNANDA" + i|string}} name={{"q" + i|string}}
-                                           value=3><label for={{"cNANDA" + i|string}}> 중립 </label>
+                                           value=3><label for={{"cNANDA" + i|string}}>&nbsp; 중립 &nbsp;</label>
                                     <input required type="radio" id={{"cSDAgree" + i|string}} name={{"q" + i|string}}
-                                           value=4><label for={{"cSDAgree" + i|string}}> 약간 부정 </label>
+                                           value=4><label for={{"cSDAgree" + i|string}}>&nbsp; 약간 부정 &nbsp;</label>
                                     <input required type="radio" id={{"cDAgree" + i|string}} name={{"q" + i|string}}
-                                           value=5><label for={{"cDAgree" + i|string}}> 부정 </label>
+                                           value=5><label for={{"cDAgree" + i|string}}>&nbsp; 부정 &nbsp;</label>
                                     <input required type="radio" id={{"cStrDAgree" + i|string}} name={{"q" + i|string}}
-                                           value=6><label for={{"cStrDAgree" + i|string}}> 매우 부정 </label>
+                                           value=6><label for={{"cStrDAgree" + i|string}}>&nbsp; 매우 부정 </label>
                                 </div>
                                 <br>
                             </div>
@@ -159,7 +159,7 @@
 
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Question 39</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">객관식 질문 39</h6>
                             </div>
                             <div class="card-body">
                                 <p id="question39"}></p>
