@@ -19,7 +19,21 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
 
+        function change_check_status(x) {
+            var data = {'data':x};
+            console.log(data);
+            $.ajax({
+                url: "/rptag", // 클라이언트가 요청을 보낼 서버의 URL 주소
+                data: data,                // HTTP 요청과 함께 서버로 보낼 데이터
+                type: "POST",                             // HTTP 요청 방식(GET, POST)
+            })
+            let y = document.getElementById("new_tag" + x);
+            y.remove();
+        };
+    </script>
 </head>
 
 <body id="page-top">
@@ -155,7 +169,7 @@
                         <div class="card-header py-3">
                             <h6  class="m-0 font-weight-bold
                             text-primary text-decoration:none">{% if peerassessments[i]['new_tagp'] == 1 %}
-                            <span style="color:blue; text-decoration:underline">NEW!</span> {% endif %}
+                            <span id={{"new_tag" + (peerassessments|length - i)|string}} style="color:blue; text-decoration:underline" onmouseover='change_check_status({{peerassessments|length - i}});'>NEW!</span> {% endif %}
                             {{ peerassessments[i]['created'].strftime('%Y-%m-%d %I:%M:%S %p') }}에
                             {{tester[i]['name']}}가 본 시험</h6>
                         </div>
@@ -233,10 +247,6 @@
 
     <!-- Page level plugins -->
     <script src="vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
 
 
 

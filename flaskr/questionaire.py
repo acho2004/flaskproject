@@ -1,11 +1,16 @@
 import sys
 import random
 import string
+import time
+
+from flask import Response
 from flask_json import FlaskJSON, JsonError, json_response, as_json
 
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for, jsonify
 )
+import json
+
 from werkzeug.exceptions import abort
 from flaskr.auth import login_required
 from flaskr.db import get_db
@@ -70,6 +75,31 @@ def display_ppost(title: str):
         flash(error)
         return redirect(url_for('home'))
 
+
+
+
+
+
+
+@bp.route("/rptag", methods=['POST'])
+def remove_peer():
+    db = get_db()
+    temp = request.form.to_dict()
+
+    db.execute(f'''UPDATE ptest SET new_tagp = 0 WHERE id = {temp['data']}''')
+    db.commit()
+    response = Response(status=200)
+    return response
+
+@bp.route("/rstag", methods=['POST'])
+def remove_self():
+    db = get_db()
+    temp = request.form.to_dict()
+
+    db.execute(f'''UPDATE ptest SET new_tags = 0 WHERE id = {temp['data']}''')
+    db.commit()
+    response = Response(status=200)
+    return response
 
 
 @bp.route('/srlist')
