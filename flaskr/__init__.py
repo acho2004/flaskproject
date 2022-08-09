@@ -55,10 +55,10 @@ def create_app(test_config=None):
         if len(selfassessments) == 0:
             selfguess = "N/A"
         else:
-            selfguess = selfguess + "E" if selfassessments[0][1] > 0 else selfguess + "I"
-            selfguess = selfguess + "S" if selfassessments[0][2] > 0 else selfguess + "N"
-            selfguess = selfguess + "T" if selfassessments[0][3] > 0 else selfguess + "F"
-            selfguess = selfguess + "J" if selfassessments[0][4] > 0 else selfguess + "P"
+            selfguess = selfguess + "E" if selfassessments[0][1] > 2.5 else selfguess + "I"
+            selfguess = selfguess + "S" if selfassessments[0][2] > 2.5 else selfguess + "N"
+            selfguess = selfguess + "T" if selfassessments[0][3] > 2.5 else selfguess + "F"
+            selfguess = selfguess + "J" if selfassessments[0][4] > 2.5 else selfguess + "P"
 
         if len(peerassessments) == 0:
             peerguess = "N/A"
@@ -68,10 +68,10 @@ def create_app(test_config=None):
                 sumS += item['guess_MBTI_SN']
                 sumT += item['guess_MBTI_TF']
                 sumJ += item['guess_MBTI_JP']
-            peerguess = peerguess + "E" if sumE > 0 else peerguess + "I"
-            peerguess = peerguess + "S" if sumS > 0 else peerguess + "N"
-            peerguess = peerguess + "T" if sumT > 0 else peerguess + "F"
-            peerguess = peerguess + "J" if sumJ > 0 else peerguess + "P"
+            peerguess = peerguess + "E" if sumE > 2.5 else peerguess + "I"
+            peerguess = peerguess + "S" if sumS > 2.5 else peerguess + "N"
+            peerguess = peerguess + "T" if sumT > 2.5 else peerguess + "F"
+            peerguess = peerguess + "J" if sumJ > 2.5 else peerguess + "P"
 
 
         return render_template('index.html', selfassessments=selfassessments, selfguess=selfguess, peerguess=peerguess)

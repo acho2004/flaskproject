@@ -38,46 +38,6 @@ def display_spost(title: str):
     return render_template('sresults.html', route=route, tester=tester)
 
 
-@bp.route("/results/peer/<string:title>")
-def display_ppost(title: str):
-    db = get_db()
-    route = db.execute(
-        'SELECT * FROM ptest WHERE route = ?', (title,)
-    ).fetchone()
-    tester = db.execute(
-        'SELECT name FROM hunet_members WHERE emp_no = ?', (route['author_id'],)
-    ).fetchone()
-    testee = db.execute(
-        'SELECT name FROM hunet_members WHERE emp_no = ?', (route['target_id'],)
-    ).fetchone()
-    error = None
-    if route is None:
-        abort(404)
-    if testee is None:
-        error = "There is no account associated with the email this test is targetted for."
-    if not (g.user is None) and str(route['target_id']) == str(g.user['emp_no']):
-        db.execute(
-            'UPDATE ptest SET new_tagp = ?'
-            ' WHERE id = ?',
-            (0, route['id'])
-        )
-        db.commit()
-    if not (g.user is None) and str(route['author_id']) == str(g.user['emp_no']):
-        db.execute(
-            'UPDATE ptest SET new_tags = ?'
-            ' WHERE id = ?',
-            (0, route['id'])
-        )
-        db.commit()
-    if error is None:
-        return render_template('presults.html', route=route, tester=tester, testee=testee)
-    else:
-        flash(error)
-        return redirect(url_for('home'))
-
-
-
-
 
 
 
@@ -333,26 +293,23 @@ def sguesser(title):
     ).fetchone()
 
     EImeter = -2 * (route['q3'] - 3) + 2 * (route['q15'] - 3) + 2 * (route['q20'] - 3) + (route['q23'] - 3) - \
-    (route['q24'] - 3) - (route['q30'] - 3) - (route['q36'] - 3) - (route['q38'] - 3)
+    (route['q24'] - 3) - (route['q30'] - 3) - (route['q36'] - 3) - (route['q38'] - 3) - (route['q6'] - 3) - (route['q9'] - 3) + (route['q12'] - 3)
     SNmeter = 2 * (route['q2'] - 3) - (route['q5'] - 3) + 2 * (route['q19'] - 3) + (route['q26'] - 3) - \
-    (route['q28'] - 3)
+    (route['q28'] - 3) - (route['q11'] - 3) + (route['q22'] - 3) - 4 * (route['q39'] - .5) - (route['q14'] - 3)
     TFmeter = 2 * (route['q21'] - 3) + (route['q27'] - 3) - (route['q29'] - 3) - 2 * (route['q31'] - 3) - \
-    (route['q33'] - 3) + (route['q34'] - 3) - (route['q35'] - 3)
+    (route['q33'] - 3) + (route['q34'] - 3) - (route['q35'] - 3) - (route['q4'] - 3) + (route['q13'] - 3)
     JPmeter = 2 * (route['q1'] - 3) - (route['q7'] - 3) - 2 * (route['q16'] - 3) + (route['q17'] - 3) - \
-    (route['q18'] - 3) + (route['q25'] - 3) + (route['q32'] - 3) + (route['q37'] - 3)
-    TFmeter = TFmeter - (route['q4'] - 3) if route['q4'] - 3 > 0 else TFmeter - 2 * (route['q4'] - 3)
-    EImeter = EImeter - (route['q6'] - 3) if route['q6'] - 3 > 0 else EImeter - 2 * (route['q6'] - 3)
-    JPmeter = JPmeter + (route['q8'] - 3) if route['q8'] - 3 > 0 else JPmeter + 2 * (route['q8'] - 3)
-    EImeter = EImeter - (route['q9'] - 3) if route['q9'] - 3 > 0 else EImeter - 2 * (route['q9'] - 3)
-    JPmeter = JPmeter - (route['q10'] - 3) if route['q10'] - 3 > 0 else JPmeter - 2 * (route['q10'] - 3)
-    SNmeter = SNmeter - 2 * (route['q11'] - 3) if route['q11'] - 3 > 0 else SNmeter - (route['q11'] - 3)
-    EImeter = EImeter + (route['q12'] - 3) if route['q12'] - 3 > 0 else EImeter + 2 * (route['q12'] - 3)
-    TFmeter = TFmeter + 2 * (route['q13'] - 3) if route['q13'] - 3 > 0 else TFmeter + (route['q13'] - 3)
-    SNmeter = SNmeter + 2 * (route['q22'] - 3) if route['q22'] - 3 > 0 else SNmeter + (route['q22'] - 3)
-    SNmeter = SNmeter + 2 if route['q39'] == 0 else SNmeter - 4
+    (route['q18'] - 3) + (route['q25'] - 3) + (route['q32'] - 3) + (route['q37'] - 3) + (route['q8'] - 3) - (route['q10'] - 3)
 
-    if not (route['q14'] - 3 > 0):
-        SNmeter -= (route['q14'] - 3)
+    EImeter += 42
+    EImeter = EImeter / 84 * 5
+    SNmeter += 36
+    SNmeter = SNmeter / 72 * 5
+    TFmeter += 30
+    TFmeter = TFmeter / 60 * 5
+    JPmeter += 36
+    JPmeter = JPmeter / 72 * 5
+
 
     return [EImeter, SNmeter, TFmeter, JPmeter]
 
@@ -364,22 +321,21 @@ def pguesser(title):
     ).fetchone()
 
     EImeter = -2 * (route['q3'] - 3) + 2 * (route['q15'] - 3) + 2 * (route['q20'] - 3) + (route['q23'] - 3) - \
-    (route['q24'] - 3) - (route['q30'] - 3) - (route['q36'] - 3) - (route['q38'] - 3)
+    (route['q24'] - 3) - (route['q30'] - 3) - (route['q36'] - 3) - (route['q38'] - 3) - (route['q6'] - 3) - (route['q9'] - 3) + (route['q12'] - 3)
     SNmeter = 2 * (route['q2'] - 3) - (route['q5'] - 3) + 2 * (route['q19'] - 3) + (route['q26'] - 3) - \
-    (route['q28'] - 3)
+    (route['q28'] - 3) - (route['q11'] - 3) + (route['q22'] - 3) - 4 * (route['q39'] - .5)
     TFmeter = 2 * (route['q21'] - 3) + (route['q27'] - 3) - (route['q29'] - 3) - 2 * (route['q31'] - 3) - \
-    (route['q33'] - 3) + (route['q34'] - 3) - (route['q35'] - 3)
+    (route['q33'] - 3) + (route['q34'] - 3) - (route['q35'] - 3) - (route['q4'] - 3) + (route['q13'] - 3)
     JPmeter = 2 * (route['q1'] - 3) - (route['q7'] - 3) - 2 * (route['q16'] - 3) + (route['q17'] - 3) - \
-    (route['q18'] - 3) + (route['q25'] - 3) + (route['q32'] - 3) + (route['q37'] - 3)
-    TFmeter = TFmeter - (route['q4'] - 3) if route['q4'] - 3 > 0 else TFmeter - 2 * (route['q4'] - 3)
-    EImeter = EImeter - (route['q6'] - 3) if route['q6'] - 3 > 0 else EImeter - 2 * (route['q6'] - 3)
-    JPmeter = JPmeter + (route['q8'] - 3) if route['q8'] - 3 > 0 else JPmeter + 2 * (route['q8'] - 3)
-    EImeter = EImeter - (route['q9'] - 3) if route['q9'] - 3 > 0 else EImeter - 2 * (route['q9'] - 3)
-    JPmeter = JPmeter - (route['q10'] - 3) if route['q10'] - 3 > 0 else JPmeter - 2 * (route['q10'] - 3)
-    SNmeter = SNmeter - 2 * (route['q11'] - 3) if route['q11'] - 3 > 0 else SNmeter - (route['q11'] - 3)
-    EImeter = EImeter + (route['q12'] - 3) if route['q12'] - 3 > 0 else EImeter + 2 * (route['q12'] - 3)
-    TFmeter = TFmeter + 2 * (route['q13'] - 3) if route['q13'] - 3 > 0 else TFmeter + (route['q13'] - 3)
-    SNmeter = SNmeter + 2 * (route['q22'] - 3) if route['q22'] - 3 > 0 else SNmeter + (route['q22'] - 3)
-    SNmeter = SNmeter + 2 if route['q39'] == 0 else SNmeter - 4
+    (route['q18'] - 3) + (route['q25'] - 3) + (route['q32'] - 3) + (route['q37'] - 3) + (route['q8'] - 3) - (route['q10'] - 3)
+
+    EImeter += 42
+    EImeter = EImeter / 84 * 5
+    SNmeter += 36
+    SNmeter = SNmeter / 72 * 5
+    TFmeter += 30
+    TFmeter = TFmeter / 60 * 5
+    JPmeter += 36
+    JPmeter = JPmeter / 72 * 5
 
     return [EImeter, SNmeter, TFmeter, JPmeter]

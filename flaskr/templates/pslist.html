@@ -171,10 +171,10 @@
                         </div>
                         <div class="card-body">
                             <p
-                            >{%- if peerassessments[i]['guess_MBTI_EI']|int > 0 %}E{% else %}I{% endif -%}
-                                {%- if peerassessments[i]['guess_MBTI_SN']|int > 0 %}S{% else %}N{% endif -%}
-                                {%- if peerassessments[i]['guess_MBTI_TF']|int > 0 %}T{% else %}F{% endif -%}
-                                {%- if peerassessments[i]['guess_MBTI_JP']|int > 0 %}J{% else %}P{% endif -%} </p>
+                            >{%- if peerassessments[i]['guess_MBTI_EI']|float > 2.5 %}E{% else %}I{% endif -%}
+                                {%- if peerassessments[i]['guess_MBTI_SN']|float > 2.5 %}S{% else %}N{% endif -%}
+                                {%- if peerassessments[i]['guess_MBTI_TF']|float > 2.5 %}T{% else %}F{% endif -%}
+                                {%- if peerassessments[i]['guess_MBTI_JP']|float > 2.5 %}J{% else %}P{% endif -%} </p>
                         </div>
                     </div>
                     {% endif %}
