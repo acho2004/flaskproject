@@ -14,8 +14,7 @@ def keeprunning():
     while True:
         time.sleep(5)
 
-        x = []
-        y = ""
+        x = ""
         users = db.execute(
             'SELECT * FROM hunet_members WHERE updated = 0'
         ).fetchall()
@@ -24,17 +23,13 @@ def keeprunning():
             continue
 
         for user in users:
-            x.append(user['name'])
 
             print(user['name'])
             tests = db.execute(f'''SELECT * FROM ptest WHERE target_id = '{user['emp_no']}' ''')
 
             for test in tests:
-                y += (test['sresp1'] + " " + test['sresp2'] + " " + test['sresp3'] + " " + test['sresp4'] + " " + test['sresp5'] + " / ")
-            x.append(y)
-            print(x[0])
-            print(x[1])
-
+                x += (test['sresp1'] + " " + test['sresp2'] + " " + test['sresp3'] + " " + test['sresp4'] + " " + test['sresp5'] + " / ")
+            print(x)
 
 
 
