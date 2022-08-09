@@ -1,10 +1,10 @@
-import sys
+
 import random
 import string
 
 from flask import Response
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for, jsonify
+    Blueprint, flash, g, redirect, render_template, request, url_for
 )
 
 from werkzeug.exceptions import abort
@@ -22,7 +22,7 @@ def display_spost(title: str):
         'SELECT * FROM stest WHERE route = ?', (title,)
     ).fetchone()
     tester = db.execute(
-        'SELECT name FROM hunet_members WHERE id = ?', (route['author_id'],)
+        'SELECT name FROM hunet_members WHERE emp_no = ?', (route['author_id'],)
     ).fetchone()
     if route is None:
         abort(404)
