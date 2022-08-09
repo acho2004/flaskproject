@@ -14,8 +14,8 @@
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
@@ -24,247 +24,252 @@
 
 <body id="page-top">
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
+<!-- Page Wrapper -->
+<div id="wrapper">
 
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">소셜 MBTI 분석기</div>
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-laugh-wink"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">소셜 MBTI 분석기</div>
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <!-- Divider -->
+
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+               aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>상세 결과</span>
             </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Divider -->
-
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>상세 결과</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href={{url_for('questionaire.srlist')}}>나 자신의 평가</a>
-                        <a class="collapse-item" href="{{url_for('questionaire.pslist')}}">너를 위해 봐준 시험들</a>
-                        <a class="collapse-item" href="{{url_for('questionaire.splist')}}">나를 위해 봐준 시험들</a>
-                    </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href={{url_for('questionaire.srlist')}}>나 자신의 평가</a>
+                    <a class="collapse-item" href="{{url_for('questionaire.pslist')}}">너를 위해 봐준 시험들</a>
+                    <a class="collapse-item" href="{{url_for('questionaire.splist')}}">나를 위해 봐준 시험들</a>
                 </div>
-            </li>
-
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>시험 보기</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ url_for('questionaire.selftest') }}">나를 위한 시험지</a>
-                        <a class="collapse-item" href="{{ url_for('questionaire.peertest') }}">너를 위한 시험지</a>
-                    </div>
-                </div>
-            </li>
-
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
+        </li>
+
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+               aria-expanded="true" aria-controls="collapseUtilities">
+                <i class="fas fa-fw fa-wrench"></i>
+                <span>시험 보기</span>
+            </a>
+            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                 data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="{{ url_for('questionaire.selftest') }}">나를 위한 시험지</a>
+                    <a class="collapse-item" href="{{ url_for('questionaire.peertest') }}">너를 위한 시험지</a>
+                </div>
+            </div>
+        </li>
+
+        <hr class="sidebar-divider d-none d-md-block">
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
 
 
+    </ul>
+    <!-- End of Sidebar -->
 
-        </ul>
-        <!-- End of Sidebar -->
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
 
-            <!-- Main Content -->
-            <div id="content">
-
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small" style="font-size:1.5rem">{{g.user['name']}}</span>
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small" style="font-size:1.5rem">{{g.user['name']}}</span>
+                        </a>
+                        <!-- Dropdown - User Information -->
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="{{ url_for('auth.passchange') }}">
+                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Change Password
                             </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="{{ url_for('auth.passchange') }}">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Change Password
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </nav>
-                <!-- End of Topbar -->
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">너를 위한 시험지</h1>
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">너를 위한 시험지</h1>
+                </div>
+
+                <form style="padding: 15px" method="post" class="questionaire">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">부서 선택</h6>
+                        </div>
+                        <div class="card-body">
+                            <label for="dept">상대방의 부서를 선택 해 주세요:</label>
+                            <select name="dept" id="dept" onchange="updater();promptChange(1)">
+                                {% for item in deptlist %}
+                                <option value="{{item}}">{{item}}</option>
+                                {% endfor %}
+                            </select>
+                            <br>
+                            <label for="name">상대방의 이름을 선택 해 주세요:</label>
+                            <select name="name" id="name" onchange="promptChange(1)">
+                            </select>
+                            <br>
+                        </div>
                     </div>
 
-                    <form style="padding: 15px" method="post" class = "questionaire">
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">부서 선택</h6>
-                            </div>
-                            <div class="card-body">
-                                <label for="dept">상대방의 부서를 선택 해 주세요:</label>
-                                <select name="dept" id="dept" onchange="updater();promptChange(1)">
-                                    {% for item in deptlist %}
-                                    <option value="{{item}}">{{item}}</option>
-                                    {% endfor %}
-                                </select>
-                                <br>
-                                <label for="name">상대방의 이름을 선택 해 주세요:</label>
-                                <select name="name" id="name" onchange="promptChange(1)">
-                                </select>
-                                <br>
-                            </div>
+                    {% for i in range (1,39) %}
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">객관식 질문 {{i}}</h6>
                         </div>
+                        <div class="card-body">
+                            <p id={{"question" + i|string}}></p>
+                            <div>
+                                <input required type="radio" id={{"cStrAgree" + i|string}} name={{"q" + i|string}}
+                                       value=0><label for={{"cStrAgree" + i|string}}>&nbsp; 매우 동의 &nbsp;</label>
+                                <input required type="radio" id={{"cAgree" + i|string}} name={{"q" + i|string}} value=1><label
+                                    for={{"cAgree" + i|string}}>&nbsp; 동의 &nbsp;</label>
+                                <input required type="radio" id={{"cSAgree" + i|string}} name={{"q" + i|string}}
+                                       value=2><label for={{"cSAgree" + i|string}}>&nbsp; 약간 동의 &nbsp;</label>
+                                <input required type="radio" id={{"cNANDA" + i|string}} name={{"q" + i|string}} value=3><label
+                                    for={{"cNANDA" + i|string}}>&nbsp; 중립 &nbsp;</label>
+                                <input required type="radio" id={{"cSDAgree" + i|string}} name={{"q" + i|string}}
+                                       value=4><label for={{"cSDAgree" + i|string}}>&nbsp; 약간 부정 &nbsp;</label>
+                                <input required type="radio" id={{"cDAgree" + i|string}} name={{"q" + i|string}}
+                                       value=5><label for={{"cDAgree" + i|string}}>&nbsp; 부정 &nbsp;</label>
+                                <input required type="radio" id={{"cStrDAgree" + i|string}} name={{"q" + i|string}}
+                                       value=6><label for={{"cStrDAgree" + i|string}}>&nbsp; 매우 부정 &nbsp;</label>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    {% endfor %}
 
-                        {% for i in range (1,39) %}
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">객관식 질문 {{i}}</h6>
-                            </div>
-                            <div class="card-body">
-                                <p id={{"question" + i|string}}></p>
-                                <div>
-                                    <input required type="radio" id={{"cStrAgree" + i|string}} name={{"q" + i|string}} value=0><label for={{"cStrAgree" + i|string}}>&nbsp; 매우 동의 &nbsp;</label>
-                                    <input required type="radio" id={{"cAgree" + i|string}} name={{"q" + i|string}} value=1><label for={{"cAgree" + i|string}}>&nbsp; 동의 &nbsp;</label>
-                                    <input required type="radio" id={{"cSAgree" + i|string}} name={{"q" + i|string}} value=2><label for={{"cSAgree" + i|string}}>&nbsp; 약간 동의 &nbsp;</label>
-                                    <input required type="radio" id={{"cNANDA" + i|string}} name={{"q" + i|string}} value=3><label for={{"cNANDA" + i|string}}>&nbsp; 중립 &nbsp;</label>
-                                    <input required type="radio" id={{"cSDAgree" + i|string}} name={{"q" + i|string}} value=4><label for={{"cSDAgree" + i|string}}>&nbsp; 약간 부정 &nbsp;</label>
-                                    <input required type="radio" id={{"cDAgree" + i|string}} name={{"q" + i|string}} value=5><label for={{"cDAgree" + i|string}}>&nbsp; 부정 &nbsp;</label>
-                                    <input required type="radio" id={{"cStrDAgree" + i|string}} name={{"q" + i|string}} value=6><label for={{"cStrDAgree" + i|string}}>&nbsp; 매우 부정 &nbsp;</label>
-                                </div>
-                                <br>
-                            </div>
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">객관식 질문 39</h6>
                         </div>
-                        {% endfor %}
+                        <div class="card-body">
+                            <p id="question39" }></p>
+                            <div>
+                                <input required type="radio" id="cAgree39" name="q39" value=0><label for="cAgree39">&nbsp;
+                                1. &nbsp; </label>
+                                <input required type="radio" id="cSAgree39" name="q39" value=1><label for="cSAgree39">&nbsp;
+                                2. &nbsp;</label>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    {% for i in range (1,6) %}
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">주관식 질문 {{i}}</h6>
+                        </div>
+                        <div class="card-body">
+                            <p id={{"sresp" + i|string}}></p>
+                            <div>
+                                <textarea required type="text" name={{"sresp" + i|string}} cols="30"
+                                          placeholder="대답을 여기에 적어주세요..."></textarea>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <input class="btn btn-primary btn-user btn-block" type="submit" value="Submit!">
+                </form>
 
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">객관식 질문 39</h6>
-                            </div>
-                            <div class="card-body">
-                                <p id="question39"}></p>
-                                <div>
-                                    <input required type="radio" id="cAgree39" name="q39" value=0><label for="cAgree39">&nbsp; 1. &nbsp; </label>
-                                    <input required type="radio" id="cSAgree39" name="q39" value=1><label for="cSAgree39">&nbsp; 2. &nbsp;</label>
-                                </div>
-                                <br>
-                            </div>
-                        </div>
-                        {% for i in range (1,6) %}
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">주관식 질문 {{i}}</h6>
-                            </div>
-                            <div class="card-body">
-                                <p id={{"sresp" + i|string}}></p>
-                                <div>
-                                    <textarea required type="text" name={{"sresp" + i|string}} cols="30"placeholder="대답을 여기에 적어주세요..."></textarea>
-                                </div>
-                                <br>
-                            </div>
-                        </div>
-                        {% endfor %}
-                        <input class="btn btn-primary btn-user btn-block" type="submit" value="Submit!">
-                    </form>
-
-                </div>
             </div>
-
         </div>
-            <!-- /.container-fluid -->
 
     </div>
-            <!-- End of Main Content -->
+</div>
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Hunet 2022</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
-
+<!-- Footer -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Hunet 2022</span>
         </div>
-        <!-- End of Content Wrapper -->
-
     </div>
-    <!-- End of Page Wrapper -->
+</footer>
+<!-- End of Footer -->
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+</div>
+<!-- End of Content Wrapper -->
+</div>
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="{{ url_for('auth.logout') }}">Logout</a>
-                </div>
+
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="{{ url_for('auth.logout') }}">Logout</a>
             </div>
         </div>
     </div>
+</div>
 
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="/vendor/jquery/jquery.min.js"></script>
-    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap core JavaScript-->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="/js/sb-admin-2.min.js"></script>
-    <script>
-
+<!-- Custom scripts for all pages-->
+<script src="/js/sb-admin-2.min.js"></script>
+<script>
         updater();
-        function updater(){
 
+        promptChange(0);
+
+        function updater(){
             let e = document.getElementById('dept');
             x = document.getElementById('name')
             while (x.firstChild) {
@@ -281,7 +286,7 @@
 
         function promptChange(a){
             x = document.getElementById('name').value;
-            
+
             let x1 = x.split(' ');
             if (a == 0){
                 y = "박창훈";
@@ -333,8 +338,9 @@
             document.getElementById("sresp4").innerHTML = y + "님과 함께한 시간 중에서 가장 기억에 남았던 기억이 무엇 인가요?";
             document.getElementById("sresp5").innerHTML = y + "님에 대한 통합적인 평가를 내리자면, 어떻게 " +y + "님을 보시나요?";
         }
-        promptChange(0);
-    </script>
+
+
+</script>
 </body>
 
 </html>

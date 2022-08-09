@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 
-    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <head>
-        <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-        <title>Sample Addition</title>
-        <script src="https://cdn.plot.ly/plotly-2.12.1.min.js"></script>
-    </head>
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<head>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <title>Sample Addition</title>
+    <script src="https://cdn.plot.ly/plotly-2.12.1.min.js"></script>
+</head>
 
-    <body>
-        <script>
+<body>
+<script>
             window.addEventListener( "pageshow", function ( event ) {
               var historyTraversal = event.persisted ||
                                      ( typeof window.performance != "undefined" &&
@@ -19,17 +19,18 @@
                 window.location.reload();
               }
             });
-        </script>
-        <div class="menu" style="padding-top:5px">
-            <a href="/" style="position:relative; padding-left:20px">소셜 MBTI 분석기</a>
-        </div>
 
-        {% for message in get_flashed_messages() %}
-        <div class="flash">{{ message }}</div>
-        {% endfor %}
-        <form method="post" class = "questionaire">
-            <input type="submit" value="Submit">
-        </form>
-    </body>
+</script>
+<div class="menu" style="padding-top:5px">
+    <a href="/" style="position:relative; padding-left:20px">소셜 MBTI 분석기</a>
+</div>
+
+{% for message in get_flashed_messages() %}
+<div class="flash">{{ message }}</div>
+{% endfor %}
+<form method="post" class="questionaire">
+    <input type="submit" value="Submit">
+</form>
+</body>
 </html>
 
