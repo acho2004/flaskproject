@@ -33,7 +33,8 @@ def display_spost(title: str):
             (0, route['id'])
         )
         db.commit()
-    return render_template('sresults.html', route=route, tester=tester)
+        return render_template('sresults.html', route=route, tester=tester)
+    return redirect("/")
 
 
 
