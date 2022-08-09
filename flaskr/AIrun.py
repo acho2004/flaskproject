@@ -31,11 +31,6 @@ def keeprunning():
                 x += (test['sresp1'] + " " + test['sresp2'] + " " + test['sresp3'] + " " + test['sresp4'] + " " + test['sresp5'] + " / ")
             print(x)
 
-
-
-
-
-
 keeprunning()
 
 
