@@ -4,6 +4,8 @@ from flask import g
 from flask import render_template
 from flask import redirect
 from flask import url_for
+import time
+import threading
 
 
 def create_app(test_config=None):
@@ -84,5 +86,7 @@ def create_app(test_config=None):
 
     from . import questionaire
     app.register_blueprint(questionaire.bp)
+
+
 
     return app
