@@ -65,11 +65,19 @@ def create_app(test_config=None):
         if len(peerassessments) == 0:
             peerguess = "N/A"
         else:
+            counter = 0
             for item in peerassessments:
+                if counter == 5:
+                    break
+                counter+=1
                 sumE += item['guess_MBTI_EI']
                 sumS += item['guess_MBTI_SN']
                 sumT += item['guess_MBTI_TF']
                 sumJ += item['guess_MBTI_JP']
+            sumE /= counter
+            sumS /= counter
+            sumT /= counter
+            sumJ /= counter
             peerguess = peerguess + "E" if sumE > 2.5 else peerguess + "I"
             peerguess = peerguess + "S" if sumS > 2.5 else peerguess + "N"
             peerguess = peerguess + "T" if sumT > 2.5 else peerguess + "F"
