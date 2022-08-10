@@ -65,10 +65,7 @@ CREATE TABLE stest (
   guess_MBTI_EI REAL NOT NULL,
   guess_MBTI_SN REAL NOT NULL,
   guess_MBTI_TF REAL NOT NULL,
-  guess_MBTI_JP REAL NOT NULL,
-
-
-  FOREIGN KEY (author_id) REFERENCES user (id)
+  guess_MBTI_JP REAL NOT NULL
 
 );
 
@@ -129,8 +126,6 @@ CREATE TABLE ptest (
   guess_MBTI_EI REAL NOT NULL,
   guess_MBTI_SN REAL NOT NULL,
   guess_MBTI_TF REAL NOT NULL,
-  guess_MBTI_JP REAL NOT NULL,
-
-  FOREIGN KEY (author_id) REFERENCES user (id)
+  guess_MBTI_JP REAL NOT NULL
 );
 

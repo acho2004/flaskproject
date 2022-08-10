@@ -37,8 +37,8 @@ def create_app(test_config=None):
         imageExists = path.is_file()
         db = auth.get_db()
         selfassessments = db.execute(
-            'SELECT author_id, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP, new_tag'
-            ' FROM stest WHERE author_id = ?'
+            'SELECT author_emp_no, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP, new_tag'
+            ' FROM stest WHERE author_emp_no = ?'
             ' ORDER BY created DESC', (g.user['emp_no'],)
         ).fetchall()
         peerassessments = db.execute(

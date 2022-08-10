@@ -144,7 +144,7 @@
 
 
                 {% for test in selfassessments %}
-                {% if test['author_id']|string == g.user['emp_no']|string %}
+                {% if test['author_emp_no']|string == g.user['emp_no']|string %}
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <a href={{"/results/self/" + test['route']}} class="m-0 font-weight-bold text-primary
