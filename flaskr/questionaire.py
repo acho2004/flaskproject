@@ -29,7 +29,7 @@ def show_selftest(title: str):
             (0, route['id'])
         )
         db.commit()
-        return render_template('sresults.html', route=route, tester=tester)
+        return render_template('viewselfresult.html', route=route, tester=tester)
     return redirect("/")
 
 
@@ -59,8 +59,8 @@ def update_tester_viewed_tag():
     return response
 
 
-@bp.route('/selflist')
-def srlist():
+@bp.route('/selfresults')
+def display_self_results():
     if g.user is None:
         return redirect(url_for('auth.login'))
     db = get_db()
@@ -70,11 +70,11 @@ def srlist():
         ' FROM stest'
         ' ORDER BY created DESC'
     ).fetchall()
-    return render_template('/srlist.html',
+    return render_template('/selfresults.html',
                            selfassessments=list(map(lambda row: dict(row), selfassessments)))
 
-@bp.route('/listbyme')
-def pslist():
+@bp.route('/resultsbyme')
+def display_peertests_by_me():
     if g.user is None:
         return redirect(url_for('auth.login'))
     db = get_db()
@@ -87,11 +87,11 @@ def pslist():
     testee = []
     for item in peerassessments:
         testee.append(db.execute('SELECT name FROM hunet_members WHERE emp_no = ?', (item['target_id'],)).fetchone())
-    return render_template('/pslist.html',
+    return render_template('/resultsbyme.html',
                            peerassessments=list(map(lambda row: dict(row), peerassessments)), testee=testee)
 
-@bp.route('/listforme')
-def splist():
+@bp.route('/resultsforme')
+def display_peertests_for_me():
     if g.user is None:
         return redirect(url_for('auth.login'))
     db = get_db()
@@ -104,7 +104,7 @@ def splist():
     tester = []
     for item in peerassessments:
         tester.append(db.execute('SELECT name FROM hunet_members WHERE emp_no = ?', (item['author_id'],)).fetchone())
-    return render_template('/splist.html',
+    return render_template('/resultsforme.html',
                            peerassessments=list(map(lambda row: dict(row), peerassessments)), tester=tester)
 
 

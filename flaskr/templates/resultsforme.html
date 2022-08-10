@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>나 to 너</title>
+    <title>소셜 MBTI 분석기 - 너 to 나</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -19,19 +19,21 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
 
         function change_check_status(x) {
             var data = {'data':x};
             console.log(data);
             $.ajax({
-                url: "/updatetester", // 클라이언트가 요청을 보낼 서버의 URL 주소
+                url: "/updatetestee", // 클라이언트가 요청을 보낼 서버의 URL 주소
                 data: data,                // HTTP 요청과 함께 서버로 보낼 데이터
                 type: "POST",                             // HTTP 요청 방식(GET, POST)
             })
             let y = document.getElementById("new_tag" + x);
             y.remove();
         };
+
 
     </script>
 </head>
@@ -47,6 +49,7 @@
             window.location.reload();
           }
         });
+
 
 </script>
 <!-- Page Wrapper -->
@@ -66,12 +69,13 @@
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
 
+        <!-- Divider -->
+
 
         <!-- Divider -->
         <hr class="sidebar-divider">
 
         <!-- Heading -->
-
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                aria-expanded="true" aria-controls="collapseTwo">
@@ -80,9 +84,9 @@
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href={{url_for('questionaire.srlist')}}>나 자신의 평가</a>
-                    <a class="collapse-item" href="{{url_for('questionaire.pslist')}}">너를 위해 봐준 시험들</a>
-                    <a class="collapse-item" href="{{url_for('questionaire.splist')}}">나를 위해 봐준 시험들</a>
+                    <a class="collapse-item" href={{url_for('questionaire.display_self_results')}}>나 자신의 평가</a>
+                    <a class="collapse-item" href="{{url_for('questionaire.display_peertests_by_me')}}">너를 위해 봐준 시험들</a>
+                    <a class="collapse-item" href="{{url_for('questionaire.display_peertests_for_me')}}">나를 위해 봐준 시험들</a>
                 </div>
             </div>
         </li>
@@ -103,6 +107,7 @@
             </div>
         </li>
 
+        <!-- Divider -->
         <hr class="sidebar-divider">
 
 
@@ -154,24 +159,24 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">너를 위해 봐준 시험들</h1>
+                    <h1 class="h3 mb-0 text-gray-800">나를 위해 봐준 시험들</h1>
                 </div>
 
                 <!-- Content Row -->
 
 
                 {% for i in range(0,peerassessments|length) %}
-                {% if peerassessments[i]['author_id']|string == g.user['emp_no']|string %}
+                {% if peerassessments[i]['target_id']|string == g.user['emp_no']|string %}
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold
-                            text-primary text-decoration:none">{% if peerassessments[i]['new_tags'] == 1 %}
+                            text-primary text-decoration:none">{% if peerassessments[i]['new_tagp'] == 1 %}
                             <span id={{"new_tag" + (peerassessments|length - i)|string}}
                                   style="color:blue; text-decoration:underline"
                                   onmouseover='change_check_status({{peerassessments|length - i}});'>NEW!</span> {%
                             endif %}
                             {{ peerassessments[i]['created'].strftime('%Y-%m-%d %I:%M:%S %p') }}에
-                            {{testee[i]['name']}}(을)를 위하여 본 시험</h6>
+                            {{tester[i]['name']}}(이)가 본 시험</h6>
                     </div>
                     <div class="card-body">
                         <p

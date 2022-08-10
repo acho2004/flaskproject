@@ -54,9 +54,9 @@
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href={{url_for('questionaire.srlist')}}>나 자신의 평가</a>
-                    <a class="collapse-item" href="{{url_for('questionaire.pslist')}}">너를 위해 봐준 시험들</a>
-                    <a class="collapse-item" href="{{url_for('questionaire.splist')}}">나를 위해 봐준 시험들</a>
+                    <a class="collapse-item" href={{url_for('questionaire.display_self_results')}}>나 자신의 평가</a>
+                    <a class="collapse-item" href="{{url_for('questionaire.display_peertests_by_me')}}">너를 위해 봐준 시험들</a>
+                    <a class="collapse-item" href="{{url_for('questionaire.display_peertests_for_me')}}">나를 위해 봐준 시험들</a>
                 </div>
             </div>
         </li>
