@@ -26,7 +26,7 @@
             var data = {'data':x};
             console.log(data);
             $.ajax({
-                url: "/rptag", // 클라이언트가 요청을 보낼 서버의 URL 주소
+                url: "/updatetestee", // 클라이언트가 요청을 보낼 서버의 URL 주소
                 data: data,                // HTTP 요청과 함께 서버로 보낼 데이터
                 type: "POST",                             // HTTP 요청 방식(GET, POST)
             })
@@ -176,7 +176,7 @@
                                   onmouseover='change_check_status({{peerassessments|length - i}});'>NEW!</span> {%
                             endif %}
                             {{ peerassessments[i]['created'].strftime('%Y-%m-%d %I:%M:%S %p') }}에
-                            {{tester[i]['name']}}가 본 시험</h6>
+                            {{tester[i]['name']}}(이)가 본 시험</h6>
                     </div>
                     <div class="card-body">
                         <p

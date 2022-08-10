@@ -1,12 +1,8 @@
+import random, string
 
-import random
-import string
-
-from flask import Response
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for
+    Response, Blueprint, flash, g, redirect, render_template, request, url_for
 )
-
 from werkzeug.exceptions import abort
 from flaskr.auth import login_required
 from flaskr.db import get_db
@@ -16,7 +12,7 @@ bp = Blueprint('questionaire', __name__)
 
 
 @bp.route("/results/self/<string:title>")
-def display_spost(title: str):
+def show_selftest(title: str):
     db = get_db()
     route = db.execute(
         'SELECT * FROM stest WHERE route = ?', (title,)
@@ -40,18 +36,20 @@ def display_spost(title: str):
 
 
 
-@bp.route("/rptag", methods=['POST'])
-def remove_peer():
+@bp.route("/updatetestee", methods=['POST'])
+def update_testee_viewed_tag():
+    """MARKS A PEER TEST AS VIEWED BY THE TEST RECEIVER"""
     db = get_db()
-    temp = request.form.to_dict()
+    user = request.form.to_dict()
 
-    db.execute(f'''UPDATE ptest SET new_tagp = 0 WHERE id = {temp['data']}''')
+    db.execute(f'''UPDATE ptest SET new_tagp = 0 WHERE id = {user['data']}''')
     db.commit()
     response = Response(status=200)
     return response
 
-@bp.route("/rstag", methods=['POST'])
-def remove_self():
+@bp.route("/updatetester", methods=['POST'])
+def update_tester_viewed_tag():
+    """MARKS A PEER TEST AS VIEWED BY THE TEST TAKER"""
     db = get_db()
     temp = request.form.to_dict()
 
@@ -61,7 +59,7 @@ def remove_self():
     return response
 
 
-@bp.route('/srlist')
+@bp.route('/selflist')
 def srlist():
     if g.user is None:
         return redirect(url_for('auth.login'))
@@ -75,7 +73,7 @@ def srlist():
     return render_template('/srlist.html',
                            selfassessments=list(map(lambda row: dict(row), selfassessments)))
 
-@bp.route('/pslist')
+@bp.route('/listbyme')
 def pslist():
     if g.user is None:
         return redirect(url_for('auth.login'))
@@ -92,7 +90,7 @@ def pslist():
     return render_template('/pslist.html',
                            peerassessments=list(map(lambda row: dict(row), peerassessments)), testee=testee)
 
-@bp.route('/splist')
+@bp.route('/listforme')
 def splist():
     if g.user is None:
         return redirect(url_for('auth.login'))

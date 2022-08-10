@@ -18,12 +18,12 @@ def keeprunning():
         users = db.execute(
             'SELECT * FROM hunet_members WHERE updated = 0'
         ).fetchall()
+
         if len(users) == 0:
             print("EMPTY")
             continue
 
         for user in users:
-
             print(user['name'])
             tests = db.execute(f'''SELECT * FROM ptest WHERE target_id = '{user['emp_no']}' ''')
 

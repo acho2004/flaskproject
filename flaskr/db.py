@@ -1,8 +1,7 @@
-import sqlite3
-
 import click
 from flask import current_app, g
 from flask.cli import with_appcontext
+import sqlite3
 from werkzeug.security import generate_password_hash
 
 def get_db():
