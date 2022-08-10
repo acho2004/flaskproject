@@ -31,10 +31,10 @@ def create_app(test_config=None):
 
     @app.route('/')
     def index():
-        path = Path("../../flaskr/static/output/" + g.user['emp_no'] +"_radarchart.png")
-        imageExists = path.is_file()
         if g.user is None:
             return redirect(url_for('auth.login'))
+        path = Path("../../flaskr/static/output/" + g.user['emp_no'] + "_radarchart.png")
+        imageExists = path.is_file()
         db = auth.get_db()
         selfassessments = db.execute(
             'SELECT author_id, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP, new_tag'
