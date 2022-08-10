@@ -154,7 +154,7 @@ def selftest():
             db.execute(
                 'UPDATE stest SET guess_MBTI_EI = ?, guess_MBTI_SN = ?, guess_MBTI_TF = ?, guess_MBTI_JP = ?'
                 ' WHERE route = ?',
-                (sguesser(x)[0], sguesser(x)[1], sguesser(x)[2], sguesser(x)[3], x)
+                (guesser(x,"self")[0], guesser(x,"self")[1], guesser(x,"self")[2], guesser(x,"self")[3], x)
             )
             db.commit()
             return redirect(url_for('index'))
@@ -247,7 +247,7 @@ def peertest():
             db.execute(
                 'UPDATE ptest SET guess_MBTI_EI = ?, guess_MBTI_SN = ?, guess_MBTI_TF = ?, guess_MBTI_JP = ?'
                 ' WHERE route = ?',
-                (pguesser(x)[0], pguesser(x)[1], pguesser(x)[2], pguesser(x)[3], x)
+                (guesser(x,"peer")[0], guesser(x,"peer")[1], guesser(x,"peer")[2], guesser(x,"peer")[3], x)
             )
             db.commit()
 
@@ -290,17 +290,23 @@ def addsample():
         db.execute(
             'UPDATE stest SET guess_MBTI_EI = ?, guess_MBTI_SN = ?, guess_MBTI_TF = ?, guess_MBTI_JP = ?'
             ' WHERE route = ?',
-            (sguesser(x)[0], sguesser(x)[1], sguesser(x)[2], sguesser(x)[3], x)
+            (guesser(x,"self")[0], guesser(x,"self")[1], guesser(x,"self")[2], guesser(x,"self")[3], x)
         )
         db.commit()
     return render_template('/addsample.html')
 
 
-def sguesser(title):
+def guesser(pathway, target):
     db = get_db()
-    route = db.execute(
-        'SELECT * FROM stest WHERE route = ?', (title,)
-    ).fetchone()
+    if target == "self":
+        route = db.execute(
+            'SELECT * FROM stest WHERE route = ?', (pathway,)
+        ).fetchone()
+    else:
+        route = db.execute(
+            'SELECT * FROM ptest WHERE route = ?', (pathway,)
+        ).fetchone()
+
 
     EImeter = -2 * (route['q3'] - 3) + 2 * (route['q15'] - 3) + 2 * (route['q20'] - 3) + (route['q23'] - 3) - \
     (route['q24'] - 3) - (route['q30'] - 3) - (route['q36'] - 3) - (route['q38'] - 3) - (route['q6'] - 3) - (route['q9'] - 3) + (route['q12'] - 3)
@@ -322,33 +328,5 @@ def sguesser(title):
 
 
     return [EImeter, SNmeter, TFmeter, JPmeter]
-
-
-def pguesser(title):
-    db = get_db()
-    route = db.execute(
-        'SELECT * FROM ptest WHERE route = ?', (title,)
-    ).fetchone()
-
-    EImeter = -2 * (route['q3'] - 3) + 2 * (route['q15'] - 3) + 2 * (route['q20'] - 3) + (route['q23'] - 3) - \
-    (route['q24'] - 3) - (route['q30'] - 3) - (route['q36'] - 3) - (route['q38'] - 3) - (route['q6'] - 3) - (route['q9'] - 3) + (route['q12'] - 3)
-    SNmeter = 2 * (route['q2'] - 3) - (route['q5'] - 3) + 2 * (route['q19'] - 3) + (route['q26'] - 3) - \
-    (route['q28'] - 3) - (route['q11'] - 3) + (route['q22'] - 3) - 4 * (route['q39'] - .5)
-    TFmeter = 2 * (route['q21'] - 3) + (route['q27'] - 3) - (route['q29'] - 3) - 2 * (route['q31'] - 3) - \
-    (route['q33'] - 3) + (route['q34'] - 3) - (route['q35'] - 3) - (route['q4'] - 3) + (route['q13'] - 3)
-    JPmeter = 2 * (route['q1'] - 3) - (route['q7'] - 3) - 2 * (route['q16'] - 3) + (route['q17'] - 3) - \
-    (route['q18'] - 3) + (route['q25'] - 3) + (route['q32'] - 3) + (route['q37'] - 3) + (route['q8'] - 3) - (route['q10'] - 3)
-
-    EImeter += 42
-    EImeter = EImeter / 84 * 5
-    SNmeter += 36
-    SNmeter = SNmeter / 72 * 5
-    TFmeter += 30
-    TFmeter = TFmeter / 60 * 5
-    JPmeter += 36
-    JPmeter = JPmeter / 72 * 5
-
-    return [EImeter, SNmeter, TFmeter, JPmeter]
-
 
 
