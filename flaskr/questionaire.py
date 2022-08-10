@@ -154,7 +154,7 @@ def selftest():
             db.execute(
                 'UPDATE stest SET guess_MBTI_EI = ?, guess_MBTI_SN = ?, guess_MBTI_TF = ?, guess_MBTI_JP = ?'
                 ' WHERE route = ?',
-                (mbti_guesser(x,"self")[0], mbti_guesser(x,"self")[1], mbti_guesser(x,"self")[2], mbti_guesser(x,"self")[3], x)
+                (mbti_grader(x,"self")[0], mbti_grader(x,"self")[1], mbti_grader(x,"self")[2], mbti_grader(x,"self")[3], x)
             )
             db.commit()
             return redirect(url_for('index'))
@@ -247,7 +247,7 @@ def peertest():
             db.execute(
                 'UPDATE ptest SET guess_MBTI_EI = ?, guess_MBTI_SN = ?, guess_MBTI_TF = ?, guess_MBTI_JP = ?'
                 ' WHERE route = ?',
-                (mbti_guesser(x,"peer")[0], mbti_guesser(x,"peer")[1], mbti_guesser(x,"peer")[2], mbti_guesser(x,"peer")[3], x)
+                (mbti_grader(x,"peer")[0], mbti_grader(x,"peer")[1], mbti_grader(x,"peer")[2], mbti_grader(x,"peer")[3], x)
             )
             db.commit()
 
@@ -290,13 +290,13 @@ def addsample():
         db.execute(
             'UPDATE stest SET guess_MBTI_EI = ?, guess_MBTI_SN = ?, guess_MBTI_TF = ?, guess_MBTI_JP = ?'
             ' WHERE route = ?',
-            (mbti_guesser(x,"self")[0], mbti_guesser(x,"self")[1], mbti_guesser(x,"self")[2], mbti_guesser(x,"self")[3], x)
+            (mbti_grader(x,"self")[0], mbti_grader(x,"self")[1], mbti_grader(x,"self")[2], mbti_grader(x,"self")[3], x)
         )
         db.commit()
     return render_template('/addsample.html')
 
 
-def mbti_guesser(pathway, target):
+def mbti_grader(pathway, target):
     db = get_db()
     if target == "self":
         route = db.execute(
