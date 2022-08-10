@@ -25,11 +25,11 @@ def get_radarchart_one(data_df: pd.DataFrame, employee_num: str, output_path: st
     ax.set_theta_offset(pi / 2)  ## 시작점
     ax.set_theta_direction(-1)  ## 그려지는 방향 시계방향
 
-    plt.xticks(angles[:-1], labels, fontsize=15)  ## x축 눈금 라벨
+    plt.xticks(angles[:-1], labels, fontsize=20)  ## x축 눈금 라벨
     ax.tick_params(axis='x', which='major', pad=15)  ## x축과 눈금 사이에 여백을 준다.
 
     ax.set_rlabel_position(0)  ## y축 각도 설정(degree 단위)
-    plt.yticks([0, 1, 2, 3, 4, 5], ['0', '1', '2', '3', '4', '5'], fontsize=10)  ## y축 눈금 설정
+    plt.yticks([0, 1, 2, 3, 4, 5], ['0', '1', '2', '3', '4', '5'], fontsize=20)  ## y축 눈금 설정
     plt.ylim(0, 5)
 
     ax.plot(angles, data, color=color, linewidth=2, linestyle='solid')  ## 레이더 차트 출력
