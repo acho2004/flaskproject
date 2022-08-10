@@ -42,7 +42,7 @@ def update_testee_viewed_tag():
     db = get_db()
     user = request.form.to_dict()
 
-    db.execute(f'''UPDATE ptest SET new_tagp = 0 WHERE id = {user['data']}''')
+    db.execute(f'''UPDATE ptest SET new_tag_testee = 0 WHERE id = {user['data']}''')
     db.commit()
     response = Response(status=200)
     return response
@@ -53,7 +53,7 @@ def update_tester_viewed_tag():
     db = get_db()
     temp = request.form.to_dict()
 
-    db.execute(f'''UPDATE ptest SET new_tags = 0 WHERE id = {temp['data']}''')
+    db.execute(f'''UPDATE ptest SET new_tag_tester = 0 WHERE id = {temp['data']}''')
     db.commit()
     response = Response(status=200)
     return response
@@ -79,7 +79,7 @@ def display_peertests_by_me():
         return redirect(url_for('auth.login'))
     db = get_db()
     peerassessments = db.execute(
-        'SELECT created, author_emp_no, target_emp_no, id, route, new_tags,' 
+        'SELECT created, author_emp_no, target_emp_no, id, route, new_tag_tester,' 
         ' guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
         ' FROM ptest'
         ' ORDER BY created DESC'
@@ -96,7 +96,7 @@ def display_peertests_for_me():
         return redirect(url_for('auth.login'))
     db = get_db()
     peerassessments = db.execute(
-        'SELECT created, author_emp_no, target_emp_no, id, route, new_tagp,'
+        'SELECT created, author_emp_no, target_emp_no, id, route, new_tag_testee,'
         ' guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
         ' FROM ptest'
         ' ORDER BY created DESC'
@@ -232,8 +232,8 @@ def peertest():
                         query2 += "'"  + item + "' ,"
                         counter += 1
 
-                    query += 'sresp1, sresp2, sresp3, sresp4, sresp5, author_emp_no, target_emp_no, route, new_tags,'
-                    query += 'new_tagp, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
+                    query += 'sresp1, sresp2, sresp3, sresp4, sresp5, author_emp_no, target_emp_no, route, new_tag_tester,'
+                    query += 'new_tag_testee, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
                     query2 += "'" + sresp1.replace("'",'').replace("/", '').rstrip('\n') + "', '" + sresp2.replace("'",'').replace("/", '').rstrip('\n') + "', '" + sresp3.replace("'",'').replace("/", '').rstrip('\n') + "', '" + sresp4.replace("'",'').replace("/", '').rstrip('\n') + "', '" + sresp5.replace("'",'').replace("/", '').rstrip('\n') \
                     + "', '" + str(g.user['emp_no']) + "', '" + t_emp_no + "', '" + x + \
                     "', '1', '1', '-999', '-999', '-999', '-999')"

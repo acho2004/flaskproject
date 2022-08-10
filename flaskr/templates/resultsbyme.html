@@ -165,7 +165,7 @@
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold
-                            text-primary text-decoration:none">{% if peerassessments[i]['new_tags'] == 1 %}
+                            text-primary text-decoration:none">{% if peerassessments[i]['new_tag_tester'] == 1 %}
                             <span id={{"new_tag" + (peerassessments|length - i)|string}}
                                   style="color:blue; text-decoration:underline"
                                   onmouseover='change_check_status({{peerassessments|length - i}});'>NEW!</span> {%
