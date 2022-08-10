@@ -12,7 +12,7 @@ bp = Blueprint('questionaire', __name__)
 
 
 @bp.route("/results/self/<string:title>")
-def show_selftest(title: str):
+def show_self_test(title: str):
     db = get_db()
     route = db.execute(
         'SELECT * FROM stest WHERE route = ?', (title,)
@@ -33,9 +33,6 @@ def show_selftest(title: str):
     return redirect("/")
 
 
-
-
-
 @bp.route("/updatetestee", methods=['POST'])
 def update_testee_viewed_tag():
     """MARKS A PEER TEST AS VIEWED BY THE TEST RECEIVER"""
@@ -46,6 +43,7 @@ def update_testee_viewed_tag():
     db.commit()
     response = Response(status=200)
     return response
+
 
 @bp.route("/updatetester", methods=['POST'])
 def update_tester_viewed_tag():
