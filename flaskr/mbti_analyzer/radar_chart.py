@@ -14,7 +14,7 @@ def get_radarchart_one(data_df: pd.DataFrame, employee_num: str, output_path: st
     angles += angles[:1]  ## 시작점으로 다시 돌아와야하므로 시작점 추가
     my_palette = plt.cm.get_cmap("Set2", 100)
 
-    fig = plt.figure(figsize=(15, 20))
+    fig = plt.figure(figsize=(15, 15))
     fig.set_facecolor('white')
 
     color = my_palette(random.randint(0, 100))

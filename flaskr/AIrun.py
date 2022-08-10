@@ -38,11 +38,11 @@ def keeprunning():
             print(responses)
             analysis = main(responses, str(user['emp_no']))
             print(analysis)
-            #db.execute(
-            #    'UPDATE hunet_members SET updated = 1 WHERE emp_no = ?',
-            #    (user['emp_no'],)
-            #)
-            #db.commit()
+            db.execute(
+                'UPDATE hunet_members SET updated = 1 WHERE emp_no = ?',
+                (user['emp_no'],)
+            )
+            db.commit()
 
 keeprunning()
 
