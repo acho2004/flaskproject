@@ -4,9 +4,7 @@ from flask import g
 from flask import render_template
 from flask import redirect
 from flask import url_for
-import time
-import threading
-
+from pathlib import Path
 
 def create_app(test_config=None):
     # create and configure the app
@@ -30,10 +28,11 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # a simple page that says hello
 
     @app.route('/')
     def index():
+        path = Path("../../flaskr/static/output/" + g.user['emp_no'] +"_radarchart.png")
+        imageExists = path.is_file()
         if g.user is None:
             return redirect(url_for('auth.login'))
         db = auth.get_db()
@@ -84,7 +83,7 @@ def create_app(test_config=None):
             peerguess = peerguess + "J" if sumJ > 2.5 else peerguess + "P"
 
 
-        return render_template('index.html', selfassessments=selfassessments, selfguess=selfguess, peerguess=peerguess)
+        return render_template('index.html', selfassessments=selfassessments, selfguess=selfguess, peerguess=peerguess, imageExists=imageExists)
 
     from . import db
     db.init_app(app)
