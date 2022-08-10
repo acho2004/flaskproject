@@ -42,8 +42,8 @@ def create_app(test_config=None):
             ' ORDER BY created DESC', (g.user['emp_no'],)
         ).fetchall()
         peerassessments = db.execute(
-            'SELECT target_id, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
-            ' FROM ptest WHERE target_id = ?'
+            'SELECT target_emp_no, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
+            ' FROM ptest WHERE target_emp_no = ?'
             ' ORDER BY created DESC', (g.user['emp_no'],)
         ).fetchall()
         selfguess = ""

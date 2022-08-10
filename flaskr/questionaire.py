@@ -79,14 +79,14 @@ def display_peertests_by_me():
         return redirect(url_for('auth.login'))
     db = get_db()
     peerassessments = db.execute(
-        'SELECT created, author_emp_no, target_id, id, route, new_tags,' 
+        'SELECT created, author_emp_no, target_emp_no, id, route, new_tags,' 
         ' guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
         ' FROM ptest'
         ' ORDER BY created DESC'
     ).fetchall()
     testee = []
     for item in peerassessments:
-        testee.append(db.execute('SELECT name FROM hunet_members WHERE emp_no = ?', (item['target_id'],)).fetchone())
+        testee.append(db.execute('SELECT name FROM hunet_members WHERE emp_no = ?', (item['target_emp_no'],)).fetchone())
     return render_template('/resultsbyme.html',
                            peerassessments=list(map(lambda row: dict(row), peerassessments)), testee=testee)
 
@@ -96,7 +96,7 @@ def display_peertests_for_me():
         return redirect(url_for('auth.login'))
     db = get_db()
     peerassessments = db.execute(
-        'SELECT created, author_emp_no, target_id, id, route, new_tagp,'
+        'SELECT created, author_emp_no, target_emp_no, id, route, new_tagp,'
         ' guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
         ' FROM ptest'
         ' ORDER BY created DESC'
@@ -232,9 +232,9 @@ def peertest():
                         query2 += "'"  + item + "' ,"
                         counter += 1
 
-                    query += 'sresp1, sresp2, sresp3, sresp4, sresp5, author_emp_no, target_id, route, new_tags,'
+                    query += 'sresp1, sresp2, sresp3, sresp4, sresp5, author_emp_no, target_emp_no, route, new_tags,'
                     query += 'new_tagp, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
-                    query2 += "'" + sresp1.replace("'",'').replace("/", '') + "', '" + sresp2.replace("'",'').replace("/", '') + "', '" + sresp3.replace("'",'').replace("/", '') + "', '" + sresp4.replace("'",'').replace("/", '') + "', '" + sresp5.replace("'",'').replace("/", '') \
+                    query2 += "'" + sresp1.replace("'",'').replace("/", '').rstrip('\n') + "', '" + sresp2.replace("'",'').replace("/", '').rstrip('\n') + "', '" + sresp3.replace("'",'').replace("/", '').rstrip('\n') + "', '" + sresp4.replace("'",'').replace("/", '').rstrip('\n') + "', '" + sresp5.replace("'",'').replace("/", '').rstrip('\n') \
                     + "', '" + str(g.user['emp_no']) + "', '" + t_emp_no + "', '" + x + \
                     "', '1', '1', '-999', '-999', '-999', '-999')"
                     query += query2

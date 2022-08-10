@@ -72,7 +72,7 @@ CREATE TABLE stest (
 CREATE TABLE ptest (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   author_emp_no TEXT NOT NULL,
-  target_id TEXT NOT NULL,
+  target_emp_no TEXT NOT NULL,
   created TIMESTAMP NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%S', 'now', '+9 hours')),
   route TEXT UNIQUE NOT NULL,
   new_tagp INTEGER NOT NULL,

@@ -27,7 +27,7 @@ def keeprunning():
 
         for user in users:
             print(user['name'])
-            tests = db.execute(f'''SELECT * FROM ptest WHERE target_id = '{user['emp_no']}' ORDER BY created DESC''').fetchall()
+            tests = db.execute(f'''SELECT * FROM ptest WHERE target_emp_no = '{user['emp_no']}' ORDER BY created DESC''').fetchall()
             counter = 0
             for test in tests:
                 if counter == 3:

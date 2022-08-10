@@ -166,7 +166,7 @@
 
 
                 {% for i in range(0,peerassessments|length) %}
-                {% if peerassessments[i]['target_id']|string == g.user['emp_no']|string %}
+                {% if peerassessments[i]['target_emp_no']|string == g.user['emp_no']|string %}
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold
