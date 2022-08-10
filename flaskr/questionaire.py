@@ -117,22 +117,22 @@ def selftest():
         return redirect(url_for('auth.login'))
     if request.method == 'POST':
 
-        obtainedUnique = False
+        got_unique = False
         questions = []
-        for i in range(1,40):
+        for i in range(1, 40):
             questions.append(request.form["q" + str(i)])
 
         x = ""
         error = None
         db = get_db()
-        for i in range(0,39):
+        for i in range(0, 39):
             if not questions[i]:
                 error = 'All questions are required.'
 
         if error is not None:
             flash(error)
         else:
-            while (not obtainedUnique):
+            while not got_unique:
                 try:
                     x = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24))
                     query = "INSERT INTO stest ("
@@ -140,26 +140,27 @@ def selftest():
                     counter = 1
                     for item in questions:
                         query += 'q' + str(counter) + ', '
-                        query2 += "'"  + item + "' ,"
+                        query2 += "'" + item + "' ,"
                         counter += 1
 
-                    query += 'author_emp_no, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
+                    query += 'author_emp_no, route, new_tag, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF,'
+                    query += ' guess_MBTI_JP)'
                     query2 += "'" + str(g.user['emp_no']) + "', '" + x + "', '1', '-999', '-999', '-999', '-999')"
                     query += query2
                     db.execute(query)
                     db.commit()
-                    obtainedUnique = True
+                    got_unique = True
                 except db.IntegrityError:
-                    obtainedUnique = False
+                    got_unique = False
             db.execute(
                 'UPDATE stest SET guess_MBTI_EI = ?, guess_MBTI_SN = ?, guess_MBTI_TF = ?, guess_MBTI_JP = ?'
                 ' WHERE route = ?',
-                (mbti_grader(x, "self")[0], mbti_grader(x, "self")[1], mbti_grader(x, "self")[2], mbti_grader(x, "self")[3], x)
+                (mbti_grader(x, "self")[0], mbti_grader(x, "self")[1], mbti_grader(x, "self")[2],
+                    mbti_grader(x, "self")[3], x)
             )
             db.commit()
             return redirect(url_for('index'))
     return render_template('/stest.html')
-
 
 
 @bp.route('/peertest', methods=('GET', 'POST'))
@@ -177,9 +178,8 @@ def peertest():
         if item['dept_name'] not in deptlist:
             deptlist.append(item['dept_name'])
 
-
     if request.method == 'POST':
-        obtainedUnique = False
+        got_unique = False
         questions = []
         for i in range (1,40):
             questions.append(request.form["q" + str(i)])
@@ -205,7 +205,6 @@ def peertest():
         if t_emp_no == g.user['emp_no']:
             error = "You can't submit a form for yourself."
 
-
         if error is not None:
             flash(error)
         else:
@@ -220,7 +219,7 @@ def peertest():
             ).fetchone()
 
             print(d['updated'])
-            while (not obtainedUnique):
+            while not got_unique:
                 try:
                     x = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24))
 
@@ -232,18 +231,23 @@ def peertest():
                         query2 += "'"  + item + "' ,"
                         counter += 1
 
-                    query += 'sresp1, sresp2, sresp3, sresp4, sresp5, author_emp_no, target_emp_no, route, new_tag_tester,'
-                    query += 'new_tag_testee, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP)'
-                    query2 += "'" + sresp1.replace("'",'').replace("/", '').rstrip('\n') + "', '" + sresp2.replace("'",'').replace("/", '').rstrip('\n') + "', '" + sresp3.replace("'",'').replace("/", '').rstrip('\n') + "', '" + sresp4.replace("'",'').replace("/", '').rstrip('\n') + "', '" + sresp5.replace("'",'').replace("/", '').rstrip('\n') \
-                    + "', '" + str(g.user['emp_no']) + "', '" + t_emp_no + "', '" + x + \
-                    "', '1', '1', '-999', '-999', '-999', '-999')"
+                    query += 'sresp1, sresp2, sresp3, sresp4, sresp5, author_emp_no, target_emp_no, route,'
+                    query += 'new_tag_tester, new_tag_testee, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF,)'
+                    query += ' guess_MBTI_JP'
+                    query2 += "'" + sresp1.replace("'", '').replace("/", '').rstrip('\n') + "', '" + \
+                        sresp2.replace("'", '').replace("/", '').rstrip('\n') + "', '" + \
+                        sresp3.replace("'", '').replace("/", '').rstrip('\n') + "', '" + \
+                        sresp4.replace("'", '').replace("/", '').rstrip('\n') + "', '" + \
+                        sresp5.replace("'", '').replace("/", '').rstrip('\n') \
+                        + "', '" + str(g.user['emp_no']) + "', '" + t_emp_no + "', '" + x + \
+                        "', '1', '1', '-999', '-999', '-999', '-999')"
                     query += query2
                     db.execute(query)
                     db.commit()
-                    obtainedUnique = True
+                    got_unique = True
 
                 except db.IntegrityError:
-                    obtainedUnique = False
+                    got_unique = False
             db.execute(
                 'UPDATE ptest SET guess_MBTI_EI = ?, guess_MBTI_SN = ?, guess_MBTI_TF = ?, guess_MBTI_JP = ?'
                 ' WHERE route = ?',
@@ -262,13 +266,13 @@ def addsample():
     if g.user is None:
         return redirect(url_for('auth.login'))
     if request.method == 'POST':
-        obtainedUnique = False
+        got_unique = False
         questions = []
-        for i in range (0,38):
+        for i in range(0, 38):
             questions.append(random.randrange(0, 7))
         questions.append(random.randrange(0, 2))
         db = get_db()
-        while (not obtainedUnique):
+        while not got_unique:
             try:
                 x = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24))
                 query = "INSERT INTO stest ("
@@ -284,13 +288,14 @@ def addsample():
                 query += query2
                 db.execute(query)
                 db.commit()
-                obtainedUnique = True
+                got_unique = True
             except db.IntegrityError:
-                obtainedUnique = False
+                got_unique = False
         db.execute(
             'UPDATE stest SET guess_MBTI_EI = ?, guess_MBTI_SN = ?, guess_MBTI_TF = ?, guess_MBTI_JP = ?'
             ' WHERE route = ?',
-            (mbti_grader(x, "self")[0], mbti_grader(x, "self")[1], mbti_grader(x, "self")[2], mbti_grader(x, "self")[3], x)
+            (mbti_grader(x, "self")[0], mbti_grader(x, "self")[1], mbti_grader(x, "self")[2],
+                mbti_grader(x, "self")[3], x)
         )
         db.commit()
     return render_template('/addsample.html')
@@ -307,15 +312,16 @@ def mbti_grader(pathway, target):
             'SELECT * FROM ptest WHERE route = ?', (pathway,)
         ).fetchone()
 
-
     EImeter = -2 * (route['q3'] - 3) + 2 * (route['q15'] - 3) + 2 * (route['q20'] - 3) + (route['q23'] - 3) - \
-    (route['q24'] - 3) - (route['q30'] - 3) - (route['q36'] - 3) - (route['q38'] - 3) - (route['q6'] - 3) - (route['q9'] - 3) + (route['q12'] - 3)
+        (route['q24'] - 3) - (route['q30'] - 3) - (route['q36'] - 3) - (route['q38'] - 3) - (route['q6'] - 3) - \
+        (route['q9'] - 3) + (route['q12'] - 3)
     SNmeter = 2 * (route['q2'] - 3) - (route['q5'] - 3) + 2 * (route['q19'] - 3) + (route['q26'] - 3) - \
-    (route['q28'] - 3) - (route['q11'] - 3) + (route['q22'] - 3) - 4 * (route['q39'] - .5) - (route['q14'] - 3)
+        (route['q28'] - 3) - (route['q11'] - 3) + (route['q22'] - 3) - 4 * (route['q39'] - .5) - (route['q14'] - 3)
     TFmeter = 2 * (route['q21'] - 3) + (route['q27'] - 3) - (route['q29'] - 3) - 2 * (route['q31'] - 3) - \
-    (route['q33'] - 3) + (route['q34'] - 3) - (route['q35'] - 3) - (route['q4'] - 3) + (route['q13'] - 3)
+        (route['q33'] - 3) + (route['q34'] - 3) - (route['q35'] - 3) - (route['q4'] - 3) + (route['q13'] - 3)
     JPmeter = 2 * (route['q1'] - 3) - (route['q7'] - 3) - 2 * (route['q16'] - 3) + (route['q17'] - 3) - \
-    (route['q18'] - 3) + (route['q25'] - 3) + (route['q32'] - 3) + (route['q37'] - 3) + (route['q8'] - 3) - (route['q10'] - 3)
+        (route['q18'] - 3) + (route['q25'] - 3) + (route['q32'] - 3) + (route['q37'] - 3) + (route['q8'] - 3) - \
+        (route['q10'] - 3)
 
     EImeter += 42
     EImeter = EImeter / 84 * 5
@@ -325,7 +331,6 @@ def mbti_grader(pathway, target):
     TFmeter = TFmeter / 60 * 5
     JPmeter += 36
     JPmeter = JPmeter / 72 * 5
-
 
     return [EImeter, SNmeter, TFmeter, JPmeter]
 
