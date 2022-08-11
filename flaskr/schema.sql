@@ -1,6 +1,3 @@
-DROP TABLE IF EXISTS stest;
-DROP TABLE IF EXISTS ptest;
-
 CREATE TABLE IF NOT EXISTS hunet_members  (
   id INTEGER PRIMARY KEY NOT NULL,
   dept_name TEXT NOT NULL,
@@ -15,8 +12,13 @@ CREATE TABLE IF NOT EXISTS hunet_members  (
   JP REAL NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS questionlist (
+    question_number INTEGER PRIMARY KEY NOT NULL,
+    self_test_question TEXT NOT NULL,
+    peer_test_question TEXT NOT NULL
+);
 
-CREATE TABLE stest (
+CREATE TABLE IF NOT EXISTS stest (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   author_emp_no TEXT NOT NULL,
   created TIMESTAMP NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%S', 'now', '+9 hours')),
@@ -69,7 +71,7 @@ CREATE TABLE stest (
 
 );
 
-CREATE TABLE ptest (
+CREATE TABLE IF NOT EXISTS ptest (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   author_emp_no TEXT NOT NULL,
   target_emp_no TEXT NOT NULL,
