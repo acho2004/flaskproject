@@ -299,6 +299,54 @@ def addsample():
     return render_template('/addsample.html')
 
 
+@bp.route('/addsample_p', methods=('GET', 'POST'))
+@login_required
+def addsample_p():
+    if g.user is None:
+        return redirect(url_for('auth.login'))
+    if request.method == 'POST':
+        got_unique = False
+        questions = []
+        for i in range(0, 38):
+            questions.append(random.randrange(0, 7))
+        questions.append(random.randrange(0, 2))
+        db = get_db()
+        t_emp_no = request.form["t_emp_no"]
+        sresp1 = request.form["sresp1"]
+        sresp2 = request.form["sresp2"]
+        sresp3 = request.form["sresp3"]
+        sresp4 = request.form["sresp4"]
+        sresp5 = request.form["sresp5"]
+
+        while not got_unique:
+            try:
+                x = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24))
+                query = "INSERT INTO ptest ("
+                query2 = "VALUES ("
+                counter = 1
+                for item in questions:
+                    query += 'q' + str(counter) + ', '
+                    query2 += "'" + str(item) + "' ,"
+                    counter += 1
+
+                query += 'author_emp_no, route, new_tag_testee, new_tag_tester, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP, target_emp_no, sresp1, sresp2, sresp3, sresp4, sresp5)'
+                query2 += "'" + str(g.user['emp_no']) + "', '" + x + "', '1', '1', '-999', '-999', '-999', '-999', '" + str(t_emp_no) + "', '" + str(sresp1) + "', '" + str(sresp2) + "', '" + str(sresp3) + "', '" + str(sresp4) + "', '" + str(sresp5) +  "')"
+                query += query2
+                db.execute(query)
+                db.commit()
+                got_unique = True
+            except db.IntegrityError:
+                got_unique = False
+        db.execute(
+            'UPDATE stest SET guess_MBTI_EI = ?, guess_MBTI_SN = ?, guess_MBTI_TF = ?, guess_MBTI_JP = ?'
+            ' WHERE route = ?',
+            (mbti_grader(x, "peer")[0], mbti_grader(x, "peer")[1], mbti_grader(x, "peer")[2],
+                mbti_grader(x, "peer")[3], x)
+        )
+        db.commit()
+    return render_template('/addsample_p.html')
+
+
 def mbti_grader(pathway, target):
     db = get_db()
     if target == "self":
