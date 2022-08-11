@@ -368,6 +368,7 @@ def addsample_p():
 
 def mbti_grader(pathway, target):
     db = get_db()
+    questions = db.execute('SELECT * FROM questionlist').fetchall()
     if target == "self":
         route = db.execute(
             'SELECT * FROM stest WHERE route = ?', (pathway,)
@@ -376,26 +377,79 @@ def mbti_grader(pathway, target):
         route = db.execute(
             'SELECT * FROM ptest WHERE route = ?', (pathway,)
         ).fetchone()
+    counter = 0
 
-    EImeter = 2 * (route['q3'] - 3) - 2 * (route['q15'] - 3) - 2 * (route['q20'] - 3) - (route['q23'] - 3) - \
-        (route['q24'] - 3) + (route['q30'] - 3) + (route['q36'] - 3) + (route['q38'] - 3) + (route['q6'] - 3) + \
-        (route['q9'] - 3) - (route['q12'] - 3)
-    SNmeter = -2 * (route['q2'] - 3) + (route['q5'] - 3) - 2 * (route['q19'] - 3) - (route['q26'] - 3) + \
-        (route['q28'] - 3) + (route['q11'] - 3) - (route['q22'] - 3) + 4 * (route['q39'] - .5) + (route['q14'] - 3)
-    TFmeter = -2 * (route['q21'] - 3) - (route['q27'] - 3) + (route['q29'] - 3) + 2 * (route['q31'] - 3) + \
-        (route['q33'] - 3) - (route['q34'] - 3) + (route['q35'] - 3) + (route['q4'] - 3) - (route['q13'] - 3)
-    JPmeter = -2 * (route['q1'] - 3) + (route['q7'] - 3) + 2 * (route['q16'] - 3) - (route['q17'] - 3) + \
-        (route['q18'] - 3) - (route['q25'] - 3) - (route['q32'] - 3) - (route['q37'] - 3) - (route['q8'] - 3) + \
-        (route['q10'] - 3)
+    EItotal = 0
+    SNtotal = 0
+    TFtotal = 0
+    JPtotal = 0
 
-    EImeter += 42
-    EImeter = EImeter / 84 * 5
-    SNmeter += 36
-    SNmeter = SNmeter / 72 * 5
-    TFmeter += 30
-    TFmeter = TFmeter / 60 * 5
-    JPmeter += 36
-    JPmeter = JPmeter / 72 * 5
+    EImeter = 0
+    SNmeter = 0
+    TFmeter = 0
+    JPmeter = 0
+
+    for question in questions:
+        counter += 1
+        if question['question_worth'][0] == 'E':
+            EImeter -= int(question['question_worth'][1]) * (route['q' + str(counter)] - 3)
+            EItotal += int(question['question_worth'][1])
+        elif question['question_worth'][0] == 'I':
+            EImeter += int(question['question_worth'][1]) * (route['q' + str(counter)] - 3)
+            EItotal += int(question['question_worth'][1])
+        elif question['question_worth'][0] == 'S':
+            SNmeter -= int(question['question_worth'][1]) * (route['q' + str(counter)] - 3)
+            SNtotal += int(question['question_worth'][1])
+        elif question['question_worth'][0] == 'N':
+            SNmeter += int(question['question_worth'][1]) * (route['q' + str(counter)] - 3)
+            SNtotal += int(question['question_worth'][1])
+        elif question['question_worth'][0] == 'T':
+            TFmeter -= int(question['question_worth'][1]) * (route['q' + str(counter)] - 3)
+            TFtotal += int(question['question_worth'][1])
+        elif question['question_worth'][0] == 'F':
+            TFmeter += int(question['question_worth'][1]) * (route['q' + str(counter)] - 3)
+            TFtotal += int(question['question_worth'][1])
+        elif question['question_worth'][0] == 'J':
+            JPmeter -= int(question['question_worth'][1]) * (route['q' + str(counter)] - 3)
+            JPtotal += int(question['question_worth'][1])
+        elif question['question_worth'][0] == 'P':
+            JPmeter += int(question['question_worth'][1]) * (route['q' + str(counter)] - 3)
+            JPtotal += int(question['question_worth'][1])
+        elif question['question_worth'][0] == 'D':
+            if question['question_worth'][1] == 'E':
+                EItotal += 1
+                EImeter -= 2 * (route['q' + str(counter)] - .5)
+            elif question['question_worth'][1] == 'I':
+                EItotal += 1
+                EImeter += 2 * (route['q' + str(counter)] - .5)
+            elif question['question_worth'][1] == 'S':
+                SNtotal += 1
+                SNmeter -= 2 * (route['q' + str(counter)] - .5)
+            elif question['question_worth'][1] == 'N':
+                SNtotal += 1
+                SNmeter += 2 * (route['q' + str(counter)] - .5)
+            elif question['question_worth'][1] == 'T':
+                TFtotal += 1
+                TFmeter -= 2 * (route['q' + str(counter)] - .5)
+            elif question['question_worth'][1] == 'F':
+                TFtotal += 1
+                TFmeter += 2 * (route['q' + str(counter)] - .5)
+            elif question['question_worth'][1] == 'J':
+                JPtotal += 1
+                JPmeter -= 2 * (route['q' + str(counter)] - .5)
+            elif question['question_worth'][1] == 'P':
+                JPtotal += 1
+                JPmeter += 2 * (route['q' + str(counter)] - .5)
+
+
+    EImeter += EItotal * 3
+    EImeter = 5 * EImeter / (EItotal * 6)
+    SNmeter += SNtotal * 3
+    SNmeter = 5 * SNmeter / (SNtotal * 6)
+    TFmeter += TFtotal * 3
+    TFmeter = 5 * TFmeter / (TFtotal * 6)
+    JPmeter += JPtotal * 3
+    JPmeter = 5 * JPmeter / (JPtotal * 6)
 
     return [EImeter, SNmeter, TFmeter, JPmeter]
 

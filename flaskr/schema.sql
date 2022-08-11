@@ -15,7 +15,8 @@ CREATE TABLE IF NOT EXISTS hunet_members  (
 CREATE TABLE IF NOT EXISTS questionlist (
     question_number TEXT PRIMARY KEY NOT NULL,
     self_test_question TEXT NOT NULL,
-    peer_test_question TEXT NOT NULL
+    peer_test_question TEXT NOT NULL,
+    question_worth TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS stest (
