@@ -266,19 +266,25 @@ def peertest():
 def addsample():
     if g.user is None:
         return redirect(url_for('auth.login'))
+    db = get_db()
+    questions = db.execute('SELECT * FROM questionlist').fetchall()
     if request.method == 'POST':
         got_unique = False
         answers = []
-        for i in range(0, 38):
-            answers.append(random.randrange(0, 7))
-        answers.append(random.randrange(0, 2))
-        db = get_db()
+        for question in questions:
+            if question['self_test_question'] == ".":
+                continue
+            if question['question_worth'][0] == "D":
+                answers.append(random.randrange(0, 2))
+            else:answers.append(random.randrange(0, 7))
+
         while not got_unique:
             try:
                 x = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24))
                 query = "INSERT INTO stest ("
                 query2 = "VALUES ("
                 counter = 1
+
                 for item in answers:
                     query += 'q' + str(counter) + ', '
                     query2 += "'" + str(item) + "' ,"
