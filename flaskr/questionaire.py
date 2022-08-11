@@ -203,6 +203,14 @@ def peertest():
         if t_emp_no == g.user['emp_no']:
             error = "You can't submit a form for yourself."
 
+        d = db.execute(
+            'SELECT * FROM hunet_members WHERE emp_no = ?',
+            (t_emp_no,)
+        ).fetchone()
+
+        if d is None:
+            error = "이 사원 번호를 가진 사원은 없습니다."
+
         if error is not None:
             flash(error)
         else:
@@ -211,10 +219,6 @@ def peertest():
                 (t_emp_no,)
             )
             db.commit()
-            d = db.execute(
-                'SELECT * FROM hunet_members WHERE emp_no = ?',
-                (t_emp_no,)
-            ).fetchone()
 
             print(d['updated'])
             while not got_unique:
@@ -317,33 +321,44 @@ def addsample_p():
         sresp3 = request.form["sresp3"]
         sresp4 = request.form["sresp4"]
         sresp5 = request.form["sresp5"]
+        d = db.execute(
+            'SELECT * FROM hunet_members WHERE emp_no = ?',
+            (t_emp_no,)
+        ).fetchone()
+        if d is None:
+            flash("주어진 사원 아이디를 가진 사원은 없습니다.")
+        else:
+            while not got_unique:
+                try:
+                    x = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24))
+                    query = "INSERT INTO ptest ("
+                    query2 = "VALUES ("
+                    counter = 1
+                    for item in questions:
+                        query += 'q' + str(counter) + ', '
+                        query2 += "'" + str(item) + "' ,"
+                        counter += 1
 
-        while not got_unique:
-            try:
-                x = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(24))
-                query = "INSERT INTO ptest ("
-                query2 = "VALUES ("
-                counter = 1
-                for item in questions:
-                    query += 'q' + str(counter) + ', '
-                    query2 += "'" + str(item) + "' ,"
-                    counter += 1
-
-                query += 'author_emp_no, route, new_tag_testee, new_tag_tester, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP, target_emp_no, sresp1, sresp2, sresp3, sresp4, sresp5)'
-                query2 += "'" + str(g.user['emp_no']) + "', '" + x + "', '1', '1', '-999', '-999', '-999', '-999', '" + str(t_emp_no) + "', '" + str(sresp1) + "', '" + str(sresp2) + "', '" + str(sresp3) + "', '" + str(sresp4) + "', '" + str(sresp5) +  "')"
-                query += query2
-                db.execute(query)
-                db.commit()
-                got_unique = True
-            except db.IntegrityError:
-                got_unique = False
-        db.execute(
-            'UPDATE stest SET guess_MBTI_EI = ?, guess_MBTI_SN = ?, guess_MBTI_TF = ?, guess_MBTI_JP = ?'
-            ' WHERE route = ?',
-            (mbti_grader(x, "peer")[0], mbti_grader(x, "peer")[1], mbti_grader(x, "peer")[2],
-                mbti_grader(x, "peer")[3], x)
-        )
-        db.commit()
+                    query += 'author_emp_no, route, new_tag_testee, new_tag_tester, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP, target_emp_no, sresp1, sresp2, sresp3, sresp4, sresp5)'
+                    query2 += "'" + str(g.user['emp_no']) + "', '" + x + "', '1', '1', '-999', '-999', '-999', '-999', '" + str(t_emp_no) + "', '" + sresp1.replace("'", '').replace("/", '').rstrip('\n') + "', '" + sresp2.replace("'", '').replace("/", '').rstrip('\n') + "', '" + sresp3.replace("'", '').replace("/", '').rstrip('\n') + "', '" + sresp4.replace("'", '').replace("/", '').rstrip('\n') + "', '" + sresp5.replace("'", '').replace("/", '').rstrip('\n') +  "')"
+                    query += query2
+                    db.execute(query)
+                    db.commit()
+                    got_unique = True
+                except db.IntegrityError:
+                    got_unique = False
+            db.execute(
+                'UPDATE ptest SET guess_MBTI_EI = ?, guess_MBTI_SN = ?, guess_MBTI_TF = ?, guess_MBTI_JP = ?'
+                ' WHERE route = ?',
+                (mbti_grader(x, "peer")[0], mbti_grader(x, "peer")[1], mbti_grader(x, "peer")[2],
+                    mbti_grader(x, "peer")[3], x)
+            )
+            db.commit()
+            db.execute(
+                'UPDATE hunet_members SET updated = 0 WHERE emp_no = ?',
+                (t_emp_no,)
+            )
+            db.commit()
     return render_template('/addsample_p.html')
 
 
