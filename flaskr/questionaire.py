@@ -375,15 +375,15 @@ def mbti_grader(pathway, target):
             'SELECT * FROM ptest WHERE route = ?', (pathway,)
         ).fetchone()
 
-    EImeter = -2 * (route['q3'] - 3) + 2 * (route['q15'] - 3) + 2 * (route['q20'] - 3) + (route['q23'] - 3) - \
-        (route['q24'] - 3) - (route['q30'] - 3) - (route['q36'] - 3) - (route['q38'] - 3) - (route['q6'] - 3) - \
-        (route['q9'] - 3) + (route['q12'] - 3)
-    SNmeter = 2 * (route['q2'] - 3) - (route['q5'] - 3) + 2 * (route['q19'] - 3) + (route['q26'] - 3) - \
-        (route['q28'] - 3) - (route['q11'] - 3) + (route['q22'] - 3) - 4 * (route['q39'] - .5) - (route['q14'] - 3)
-    TFmeter = 2 * (route['q21'] - 3) + (route['q27'] - 3) - (route['q29'] - 3) - 2 * (route['q31'] - 3) - \
-        (route['q33'] - 3) + (route['q34'] - 3) - (route['q35'] - 3) - (route['q4'] - 3) + (route['q13'] - 3)
-    JPmeter = 2 * (route['q1'] - 3) - (route['q7'] - 3) - 2 * (route['q16'] - 3) + (route['q17'] - 3) - \
-        (route['q18'] - 3) + (route['q25'] - 3) + (route['q32'] - 3) + (route['q37'] - 3) + (route['q8'] - 3) - \
+    EImeter = 2 * (route['q3'] - 3) - 2 * (route['q15'] - 3) - 2 * (route['q20'] - 3) - (route['q23'] - 3) - \
+        (route['q24'] - 3) + (route['q30'] - 3) + (route['q36'] - 3) + (route['q38'] - 3) + (route['q6'] - 3) + \
+        (route['q9'] - 3) - (route['q12'] - 3)
+    SNmeter = -2 * (route['q2'] - 3) + (route['q5'] - 3) - 2 * (route['q19'] - 3) - (route['q26'] - 3) + \
+        (route['q28'] - 3) + (route['q11'] - 3) - (route['q22'] - 3) + 4 * (route['q39'] - .5) + (route['q14'] - 3)
+    TFmeter = -2 * (route['q21'] - 3) - (route['q27'] - 3) + (route['q29'] - 3) + 2 * (route['q31'] - 3) + \
+        (route['q33'] - 3) - (route['q34'] - 3) + (route['q35'] - 3) + (route['q4'] - 3) - (route['q13'] - 3)
+    JPmeter = -2 * (route['q1'] - 3) + (route['q7'] - 3) + 2 * (route['q16'] - 3) - (route['q17'] - 3) + \
+        (route['q18'] - 3) - (route['q25'] - 3) - (route['q32'] - 3) - (route['q37'] - 3) - (route['q8'] - 3) + \
         (route['q10'] - 3)
 
     EImeter += 42
