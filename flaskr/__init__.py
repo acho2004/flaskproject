@@ -54,7 +54,7 @@ def create_app(test_config=None):
         sumJ = 0
 
         if len(selfassessments) == 0:
-            selfguess = "N/A"
+            selfguess = "결과 없음"
         else:
             selfguess = selfguess + "E" if selfassessments[0][1] > 2.5 else selfguess + "I"
             selfguess = selfguess + "S" if selfassessments[0][2] > 2.5 else selfguess + "N"
@@ -62,7 +62,7 @@ def create_app(test_config=None):
             selfguess = selfguess + "J" if selfassessments[0][4] > 2.5 else selfguess + "P"
 
         if len(peerassessments) == 0:
-            peerguess = "N/A"
+            peerguess = "결과 없음"
         else:
             counter = 0
             for item in peerassessments:
