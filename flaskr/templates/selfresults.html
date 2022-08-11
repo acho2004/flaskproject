@@ -149,8 +149,9 @@
                     <div class="card-header py-3">
                         <a href={{"/results/self/" + test['route']}} class="m-0 font-weight-bold text-primary
                         text-decoration:none">{% if test['new_tag'] == 1 %} <span
-                            style="color:blue; text-decoration:underline">NEW!</span> {% endif %} {{
-                        test['created'].strftime('%Y-%m-%d %I:%M:%S %p') }}</a>
+                            style="color:blue; text-decoration:underline">NEW!</span> {% endif %}
+                        {{test['created'].strftime('%Y')}}년 {{test['created'].strftime('%m')}}월 {{test['created'].strftime('%d')}}일
+                        {% if test['created'].strftime('%p') == "AM" %}오전{% else %} 오후 {% endif %} {{test['created'].strftime('%I')}}시 {{test['created'].strftime('%M')}}분에 본 시험</a>
                     </div>
                     <div class="card-body">
                         <p
