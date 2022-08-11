@@ -49,7 +49,7 @@ def passchange():
         password = request.form['password']
         repassword = request.form['repassword']
         if password != repassword:
-            flash("Password and Repeated Password are Different.")
+            flash("패스워드가 동일하지 않습니다. 다시한번 확인해주세요.")
         else:
             db = get_db()
             db.execute(
