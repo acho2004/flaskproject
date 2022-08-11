@@ -230,8 +230,8 @@ def peertest():
                         counter += 1
 
                     query += 'sresp1, sresp2, sresp3, sresp4, sresp5, author_emp_no, target_emp_no, route,'
-                    query += 'new_tag_tester, new_tag_testee, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF,)'
-                    query += ' guess_MBTI_JP'
+                    query += 'new_tag_tester, new_tag_testee, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF,'
+                    query += ' guess_MBTI_JP)'
                     query2 += "'" + sresp1.replace("'", '').replace("/", '').rstrip('\n') + "', '" + \
                         sresp2.replace("'", '').replace("/", '').rstrip('\n') + "', '" + \
                         sresp3.replace("'", '').replace("/", '').rstrip('\n') + "', '" + \
