@@ -201,15 +201,9 @@ def peertest():
             error = 'All questions are required.'
 
         if t_emp_no == g.user['emp_no']:
-            error = "You can't submit a form for yourself."
+            error = "자기 자신을 테스트 하시려면 '나를 위한 시험지' 를 사용해주세요."
 
-        d = db.execute(
-            'SELECT * FROM hunet_members WHERE emp_no = ?',
-            (t_emp_no,)
-        ).fetchone()
 
-        if d is None:
-            error = "이 사원 번호를 가진 사원은 없습니다."
 
         if error is not None:
             flash(error)
@@ -219,7 +213,10 @@ def peertest():
                 (t_emp_no,)
             )
             db.commit()
-
+            d = db.execute(
+                'SELECT * FROM hunet_members WHERE emp_no = ?',
+                (t_emp_no,)
+            ).fetchone()
             print(d['updated'])
             while not got_unique:
                 try:
@@ -325,8 +322,13 @@ def addsample_p():
             'SELECT * FROM hunet_members WHERE emp_no = ?',
             (t_emp_no,)
         ).fetchone()
+        error = ""
+        if t_emp_no == g.user['emp_no']:
+            error = "자기 자신을 테스트 하시려면 '나를 위한 시험지' 를 사용해주세요."
         if d is None:
-            flash("주어진 사원 아이디를 가진 사원은 없습니다.")
+            error = "주어진 사원 아이디를 가진 사원은 없습니다."
+        if error is not None:
+            flash(error)
         else:
             while not got_unique:
                 try:

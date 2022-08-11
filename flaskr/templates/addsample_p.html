@@ -126,6 +126,11 @@
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">너를 위한 시험지 - 샘플 추가</h1>
                 </div>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages%}
+                        <li style="color:red">{{messages}}</li>
+                    {% endif %}
+                {% endwith %}
 
                 <form style="padding: 15px" method="post" class="questionaire">
                     <div class="card shadow mb-4">
