@@ -125,8 +125,8 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">{{route['created'].strftime('%Y-%m-%d %I:%M:%S %p')}}에
-                        {{tester['name']}} (이)가 자신을 위해 본 시험</h1>
+                    <h1 class="h3 mb-0 text-gray-800">{{route['created'].strftime('%Y')}}년 {{route['created'].strftime('%m')}}월 {{route['created'].strftime('%d')}}일
+                        {% if route['created'].strftime('%p') == "AM" %}오전{% else %} 오후 {% endif %} {{route['created'].strftime('%I')}}시 {{route['created'].strftime('%M')}}분에 본 시험</h1>
                 </div>
 
                 <form style="padding: 15px" class="questionaire">
