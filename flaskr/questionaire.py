@@ -113,7 +113,7 @@ def selftest():
     if g.user is None:
         return redirect(url_for('auth.login'))
     db = get_db()
-    questions = db.execute('SELECT * FROM questionlist')
+    questions = db.execute('SELECT * FROM questionlist').fetchall()
     if request.method == 'POST':
         got_unique = False
         answers = []
@@ -168,7 +168,7 @@ def peertest():
     if g.user is None:
         return redirect(url_for('auth.login'))
     db = get_db()
-    questions = db.execute('SELECT * FROM questionlist')
+    questions = db.execute('SELECT * FROM questionlist').fetchall()
     people = db.execute(
         'SELECT name, emp_no, dept_name'
         ' FROM hunet_members'
