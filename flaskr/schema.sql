@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS hunet_members  (
 );
 
 CREATE TABLE IF NOT EXISTS questionlist (
-    question_number INTEGER PRIMARY KEY NOT NULL,
+    question_number TEXT PRIMARY KEY NOT NULL,
     self_test_question TEXT NOT NULL,
     peer_test_question TEXT NOT NULL
 );

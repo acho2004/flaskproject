@@ -14,6 +14,7 @@ bp = Blueprint('questionaire', __name__)
 @bp.route("/results/self/<string:title>")
 def show_self_test(title: str):
     db = get_db()
+    questions = db.execute('SELECT * FROM questionlist')
     route = db.execute(
         'SELECT * FROM stest WHERE route = ?', (title,)
     ).fetchone()
@@ -29,7 +30,7 @@ def show_self_test(title: str):
             (0, route['id'])
         )
         db.commit()
-        return render_template('viewselfresult.html', route=route, tester=tester)
+        return render_template('viewselfresult.html', route=route, tester=tester, questions=questions)
     return redirect("/")
 
 
@@ -106,25 +107,25 @@ def display_peertests_for_me():
                            peerassessments=list(map(lambda row: dict(row), peerassessments)), tester=tester)
 
 
-
-
 @bp.route('/selftest', methods=('GET', 'POST'))
 @login_required
 def selftest():
     if g.user is None:
         return redirect(url_for('auth.login'))
+    db = get_db()
+    questions = db.execute('SELECT * FROM questionlist')
     if request.method == 'POST':
-
         got_unique = False
-        questions = []
+        answers = []
         for i in range(1, 40):
-            questions.append(request.form["q" + str(i)])
+            answers.append(request.form["q" + str(i)])
 
         x = ""
         error = None
-        db = get_db()
+
+        
         for i in range(0, 39):
-            if not questions[i]:
+            if not answers[i]:
                 error = 'All questions are required.'
 
         if error is not None:
@@ -136,7 +137,7 @@ def selftest():
                     query = "INSERT INTO stest ("
                     query2 = "VALUES ("
                     counter = 1
-                    for item in questions:
+                    for item in answers:
                         query += 'q' + str(counter) + ', '
                         query2 += "'" + item + "' ,"
                         counter += 1
@@ -158,7 +159,7 @@ def selftest():
             )
             db.commit()
             return redirect(url_for('index'))
-    return render_template('/stest.html')
+    return render_template('/stest.html', questions=questions)
 
 
 @bp.route('/peertest', methods=('GET', 'POST'))
@@ -167,6 +168,7 @@ def peertest():
     if g.user is None:
         return redirect(url_for('auth.login'))
     db = get_db()
+    questions = db.execute('SELECT * FROM questionlist')
     people = db.execute(
         'SELECT name, emp_no, dept_name'
         ' FROM hunet_members'
@@ -178,9 +180,9 @@ def peertest():
 
     if request.method == 'POST':
         got_unique = False
-        questions = []
+        answers = []
         for i in range (1,40):
-            questions.append(request.form["q" + str(i)])
+            answers.append(request.form["q" + str(i)])
 
         sresp1 = request.form['sresp1']
         sresp2 = request.form['sresp2']
@@ -194,7 +196,7 @@ def peertest():
         error = None
 
         for i in range(0,39):
-            if not questions[i]:
+            if not answers[i]:
                 error = 'All questions are required.'
 
         if not sresp1 or not sresp2 or not sresp3 or not sresp4 or not sresp5 or not t_emp_no:
@@ -225,7 +227,7 @@ def peertest():
                     query = "INSERT INTO ptest ("
                     query2 = "VALUES ("
                     counter = 1
-                    for item in questions:
+                    for item in answers:
                         query += 'q' + str(counter) + ', '
                         query2 += "'"  + item + "' ,"
                         counter += 1
@@ -256,7 +258,7 @@ def peertest():
 
             return redirect(url_for('index'))
 
-    return render_template('/ptest.html', deptlist=deptlist, people=people)
+    return render_template('/ptest.html', deptlist=deptlist, people=people, questions=questions)
 
 
 @bp.route('/addsample', methods=('GET', 'POST'))
@@ -266,10 +268,10 @@ def addsample():
         return redirect(url_for('auth.login'))
     if request.method == 'POST':
         got_unique = False
-        questions = []
+        answers = []
         for i in range(0, 38):
-            questions.append(random.randrange(0, 7))
-        questions.append(random.randrange(0, 2))
+            answers.append(random.randrange(0, 7))
+        answers.append(random.randrange(0, 2))
         db = get_db()
         while not got_unique:
             try:
@@ -277,7 +279,7 @@ def addsample():
                 query = "INSERT INTO stest ("
                 query2 = "VALUES ("
                 counter = 1
-                for item in questions:
+                for item in answers:
                     query += 'q' + str(counter) + ', '
                     query2 += "'" + str(item) + "' ,"
                     counter += 1
@@ -307,10 +309,10 @@ def addsample_p():
         return redirect(url_for('auth.login'))
     if request.method == 'POST':
         got_unique = False
-        questions = []
+        answers = []
         for i in range(0, 38):
-            questions.append(random.randrange(0, 7))
-        questions.append(random.randrange(0, 2))
+            answers.append(random.randrange(0, 7))
+        answers.append(random.randrange(0, 2))
         db = get_db()
         t_emp_no = request.form["t_emp_no"]
         sresp1 = request.form["sresp1"]
@@ -336,7 +338,7 @@ def addsample_p():
                     query = "INSERT INTO ptest ("
                     query2 = "VALUES ("
                     counter = 1
-                    for item in questions:
+                    for item in answers:
                         query += 'q' + str(counter) + ', '
                         query2 += "'" + str(item) + "' ,"
                         counter += 1
