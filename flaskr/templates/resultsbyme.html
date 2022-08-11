@@ -170,7 +170,8 @@
                                   style="color:blue; text-decoration:underline"
                                   onmouseover='change_check_status({{peerassessments|length - i}});'>NEW!</span> {%
                             endif %}
-                            {{ peerassessments[i]['created'].strftime('%Y-%m-%d %I:%M:%S %p') }}에
+                            {{peerassessments[i]['created'].strftime('%Y')}}년 {{peerassessments[i]['created'].strftime('%m')}}월 {{peerassessments[i]['created'].strftime('%d')}}일
+                            {% if peerassessments[i]['created'].strftime('%p') == "AM" %}오전{% else %} 오후 {% endif %} {{peerassessments[i]['created'].strftime('%I')}}시 {{peerassessments[i]['created'].strftime('%M')}}분에
                             {{testee[i]['name']}}(을)를 위하여 본 시험</h6>
                     </div>
                     <div class="card-body">
