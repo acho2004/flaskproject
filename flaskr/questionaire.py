@@ -322,7 +322,7 @@ def addsample_p():
             'SELECT * FROM hunet_members WHERE emp_no = ?',
             (t_emp_no,)
         ).fetchone()
-        error = ""
+        error = None
         if t_emp_no == g.user['emp_no']:
             error = "자기 자신을 테스트 하시려면 '나를 위한 시험지' 를 사용해주세요."
         if d is None:
