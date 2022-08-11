@@ -313,19 +313,22 @@ def addsample():
 def addsample_p():
     if g.user is None:
         return redirect(url_for('auth.login'))
+    db = get_db()
+    questions = db.execute('SELECT * FROM questionlist').fetchall()
+
+
     if request.method == 'POST':
         got_unique = False
         answers = []
-        for i in range(0, 38):
-            answers.append(random.randrange(0, 7))
-        answers.append(random.randrange(0, 2))
-        db = get_db()
+        for question in questions:
+            if question['self_test_question'] == ".":
+                answers.append(request.form[question['question_number']])
+            if question['question_worth'][0] == "D":
+                answers.append(random.randrange(0, 2))
+            else:
+                answers.append(random.randrange(0, 7))
+
         t_emp_no = request.form["t_emp_no"]
-        sresp1 = request.form["sresp1"]
-        sresp2 = request.form["sresp2"]
-        sresp3 = request.form["sresp3"]
-        sresp4 = request.form["sresp4"]
-        sresp5 = request.form["sresp5"]
         d = db.execute(
             'SELECT * FROM hunet_members WHERE emp_no = ?',
             (t_emp_no,)
@@ -344,13 +347,20 @@ def addsample_p():
                     query = "INSERT INTO ptest ("
                     query2 = "VALUES ("
                     counter = 1
-                    for item in answers:
-                        query += 'q' + str(counter) + ', '
-                        query2 += "'" + str(item) + "' ,"
+                    sresp_counter = 0
+                    for question in questions:
+                        if question['self_test_question'] == ".":
+                            query2 += "'" + str(answers[counter - sresp_counter - 1]) + "' ,"
+                            query += question['question_number'] + ', '
+                            sresp_counter += 1
+                        else:
+                            query += 'q' + str(counter - sresp_counter) + ', '
+                            query2 += "'" + str(answers[counter - sresp_counter - 1]) + "' ,"
                         counter += 1
 
-                    query += 'author_emp_no, route, new_tag_testee, new_tag_tester, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP, target_emp_no, sresp1, sresp2, sresp3, sresp4, sresp5)'
-                    query2 += "'" + str(g.user['emp_no']) + "', '" + x + "', '1', '1', '-999', '-999', '-999', '-999', '" + str(t_emp_no) + "', '" + sresp1.replace("'", '').replace("/", '').rstrip('\n') + "', '" + sresp2.replace("'", '').replace("/", '').rstrip('\n') + "', '" + sresp3.replace("'", '').replace("/", '').rstrip('\n') + "', '" + sresp4.replace("'", '').replace("/", '').rstrip('\n') + "', '" + sresp5.replace("'", '').replace("/", '').rstrip('\n') +  "')"
+
+                    query += 'author_emp_no, route, new_tag_testee, new_tag_tester, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP, target_emp_no)'
+                    query2 += "'" + str(g.user['emp_no']) + "', '" + x + "', '1', '1', '-999', '-999', '-999', '-999', '" + str(t_emp_no) + "')"
                     query += query2
                     db.execute(query)
                     db.commit()
@@ -397,55 +407,58 @@ def mbti_grader(pathway, target):
 
     for question in questions:
         counter += 1
+        if question['self_test_question'] == ".":
+            counter -= 1
+            continue
         if question['question_worth'][0] == 'E':
-            EImeter -= int(question['question_worth'][1]) * (route['q' + str(counter)] - 3)
+            EImeter -= int(question['question_worth'][1]) * (float(route['q' + str(counter)]) - 3)
             EItotal += int(question['question_worth'][1])
         elif question['question_worth'][0] == 'I':
-            EImeter += int(question['question_worth'][1]) * (route['q' + str(counter)] - 3)
+            EImeter += int(question['question_worth'][1]) * (float(route['q' + str(counter)]) - 3)
             EItotal += int(question['question_worth'][1])
         elif question['question_worth'][0] == 'S':
-            SNmeter -= int(question['question_worth'][1]) * (route['q' + str(counter)] - 3)
+            SNmeter -= int(question['question_worth'][1]) * (float(route['q' + str(counter)]) - 3)
             SNtotal += int(question['question_worth'][1])
         elif question['question_worth'][0] == 'N':
-            SNmeter += int(question['question_worth'][1]) * (route['q' + str(counter)] - 3)
+            SNmeter += int(question['question_worth'][1]) * (float(route['q' + str(counter)]) - 3)
             SNtotal += int(question['question_worth'][1])
         elif question['question_worth'][0] == 'T':
-            TFmeter -= int(question['question_worth'][1]) * (route['q' + str(counter)] - 3)
+            TFmeter -= int(question['question_worth'][1]) * (float(route['q' + str(counter)]) - 3)
             TFtotal += int(question['question_worth'][1])
         elif question['question_worth'][0] == 'F':
-            TFmeter += int(question['question_worth'][1]) * (route['q' + str(counter)] - 3)
+            TFmeter += int(question['question_worth'][1]) * (float(route['q' + str(counter)]) - 3)
             TFtotal += int(question['question_worth'][1])
         elif question['question_worth'][0] == 'J':
-            JPmeter -= int(question['question_worth'][1]) * (route['q' + str(counter)] - 3)
+            JPmeter -= int(question['question_worth'][1]) * (float(route['q' + str(counter)]) - 3)
             JPtotal += int(question['question_worth'][1])
         elif question['question_worth'][0] == 'P':
-            JPmeter += int(question['question_worth'][1]) * (route['q' + str(counter)] - 3)
+            JPmeter += int(question['question_worth'][1]) * (float(route['q' + str(counter)]) - 3)
             JPtotal += int(question['question_worth'][1])
         elif question['question_worth'][0] == 'D':
             if question['question_worth'][1] == 'E':
                 EItotal += 1
-                EImeter -= 2 * (route['q' + str(counter)] - .5)
+                EImeter -= 2 * (float(route['q' + str(counter)]) - .5)
             elif question['question_worth'][1] == 'I':
                 EItotal += 1
-                EImeter += 2 * (route['q' + str(counter)] - .5)
+                EImeter += 2 * (float(route['q' + str(counter)]) - .5)
             elif question['question_worth'][1] == 'S':
                 SNtotal += 1
-                SNmeter -= 2 * (route['q' + str(counter)] - .5)
+                SNmeter -= 2 * (float(route['q' + str(counter)]) - .5)
             elif question['question_worth'][1] == 'N':
                 SNtotal += 1
-                SNmeter += 2 * (route['q' + str(counter)] - .5)
+                SNmeter += 2 * (float(route['q' + str(counter)]) - .5)
             elif question['question_worth'][1] == 'T':
                 TFtotal += 1
-                TFmeter -= 2 * (route['q' + str(counter)] - .5)
+                TFmeter -= 2 * (float(route['q' + str(counter)]) - .5)
             elif question['question_worth'][1] == 'F':
                 TFtotal += 1
-                TFmeter += 2 * (route['q' + str(counter)] - .5)
+                TFmeter += 2 * (float(route['q' + str(counter)]) - .5)
             elif question['question_worth'][1] == 'J':
                 JPtotal += 1
-                JPmeter -= 2 * (route['q' + str(counter)] - .5)
+                JPmeter -= 2 * (float(route['q' + str(counter)]) - .5)
             elif question['question_worth'][1] == 'P':
                 JPtotal += 1
-                JPmeter += 2 * (route['q' + str(counter)] - .5)
+                JPmeter += 2 * (float(route['q' + str(counter)]) - .5)
 
 
     EImeter += EItotal * 3
