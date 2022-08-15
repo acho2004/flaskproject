@@ -42,6 +42,7 @@ def update_testee_viewed_tag():
 
     db.execute(f'''UPDATE ptest SET new_tag_testee = 0 WHERE id = {user['data']}''')
     db.commit()
+    print("HELLO")
     response = Response(status=200)
     return response
 
