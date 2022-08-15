@@ -30,7 +30,7 @@ def show_self_test(title: str):
             (0, route['id'])
         )
         db.commit()
-        return render_template('viewselfresult.html', route=route, tester=tester, questions=questions)
+        return render_template('view_self_result.html', route=route, tester=tester, questions=questions)
     return redirect("/")
 
 
@@ -70,7 +70,7 @@ def display_self_results():
         ' FROM stest'
         ' ORDER BY created DESC'
     ).fetchall()
-    return render_template('/selfresults.html',
+    return render_template('/self_results.html',
                            selfassessments=list(map(lambda row: dict(row), selfassessments)))
 
 @bp.route('/results_by_me')
@@ -87,7 +87,7 @@ def display_peertests_by_me():
     testee = []
     for item in peerassessments:
         testee.append(db.execute('SELECT name FROM hunet_members WHERE emp_no = ?', (item['target_emp_no'],)).fetchone())
-    return render_template('/resultsbyme.html',
+    return render_template('/results_by_me.html',
                            peerassessments=list(map(lambda row: dict(row), peerassessments)), testee=testee)
 
 
@@ -105,7 +105,7 @@ def display_peertests_for_me():
     tester = []
     for item in peerassessments:
         tester.append(db.execute('SELECT name FROM hunet_members WHERE emp_no = ?', (item['author_emp_no'],)).fetchone())
-    return render_template('/resultsforme.html',
+    return render_template('/results_for_me.html',
                            peerassessments=list(map(lambda row: dict(row), peerassessments)), tester=tester)
 
 
@@ -161,7 +161,7 @@ def selftest():
             )
             db.commit()
             return redirect(url_for('index'))
-    return render_template('/stest.html', questions=questions)
+    return render_template('/self_test.html', questions=questions)
 
 
 @bp.route('/peer_test', methods=('GET', 'POST'))
@@ -260,7 +260,7 @@ def peertest():
 
             return redirect(url_for('index'))
 
-    return render_template('/ptest.html', deptlist=deptlist, people=people, questions=questions)
+    return render_template('/peer_test.html', deptlist=deptlist, people=people, questions=questions)
 
 
 @bp.route('/add_sample', methods=('GET', 'POST'))
@@ -307,7 +307,7 @@ def addsample():
                 mbti_grader(x, "self")[3], x)
         )
         db.commit()
-    return render_template('/addsample.html')
+    return render_template('/add_sample.html')
 
 
 @bp.route('/add_peer_sample', methods=('GET', 'POST'))
@@ -381,7 +381,7 @@ def add_peer_sample():
                 (t_emp_no,)
             )
             db.commit()
-    return render_template('/addsample_p.html')
+    return render_template('/add_peer_sample.html')
 
 
 def mbti_grader(pathway, target):
