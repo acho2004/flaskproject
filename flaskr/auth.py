@@ -41,8 +41,8 @@ def login():
 
     return render_template('login.html')
 
-@bp.route('/passchange', methods=('GET', 'POST'))
-def passchange():
+@bp.route('/change_password', methods=('GET', 'POST'))
+def change_password():
     if g.user is None:
         return redirect(url_for('auth.login'))
     if request.method == 'POST':
@@ -59,7 +59,7 @@ def passchange():
             )
             db.commit()
             return redirect('/')
-    return render_template('passchange.html')
+    return render_template('change_password.html')
 
 
 @bp.route('/logout')

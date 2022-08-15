@@ -34,7 +34,7 @@ def show_self_test(title: str):
     return redirect("/")
 
 
-@bp.route("/updatetestee", methods=['POST'])
+@bp.route("/update_testee", methods=['POST'])
 def update_testee_viewed_tag():
     """MARKS A PEER TEST AS VIEWED BY THE TEST RECEIVER"""
     db = get_db()
@@ -47,7 +47,7 @@ def update_testee_viewed_tag():
     return response
 
 
-@bp.route("/updatetester", methods=['POST'])
+@bp.route("/update_tester", methods=['POST'])
 def update_tester_viewed_tag():
     """MARKS A PEER TEST AS VIEWED BY THE TEST TAKER"""
     db = get_db()
@@ -59,7 +59,7 @@ def update_tester_viewed_tag():
     return response
 
 
-@bp.route('/selfresults')
+@bp.route('/self_results')
 def display_self_results():
     if g.user is None:
         return redirect(url_for('auth.login'))
@@ -73,7 +73,7 @@ def display_self_results():
     return render_template('/selfresults.html',
                            selfassessments=list(map(lambda row: dict(row), selfassessments)))
 
-@bp.route('/resultsbyme')
+@bp.route('/results_by_me')
 def display_peertests_by_me():
     if g.user is None:
         return redirect(url_for('auth.login'))
@@ -90,7 +90,8 @@ def display_peertests_by_me():
     return render_template('/resultsbyme.html',
                            peerassessments=list(map(lambda row: dict(row), peerassessments)), testee=testee)
 
-@bp.route('/resultsforme')
+
+@bp.route('/results_for_me')
 def display_peertests_for_me():
     if g.user is None:
         return redirect(url_for('auth.login'))
@@ -108,7 +109,7 @@ def display_peertests_for_me():
                            peerassessments=list(map(lambda row: dict(row), peerassessments)), tester=tester)
 
 
-@bp.route('/selftest', methods=('GET', 'POST'))
+@bp.route('/self_test', methods=('GET', 'POST'))
 @login_required
 def selftest():
     if g.user is None:
@@ -163,7 +164,7 @@ def selftest():
     return render_template('/stest.html', questions=questions)
 
 
-@bp.route('/peertest', methods=('GET', 'POST'))
+@bp.route('/peer_test', methods=('GET', 'POST'))
 @login_required
 def peertest():
     if g.user is None:
@@ -262,7 +263,7 @@ def peertest():
     return render_template('/ptest.html', deptlist=deptlist, people=people, questions=questions)
 
 
-@bp.route('/addsample', methods=('GET', 'POST'))
+@bp.route('/add_sample', methods=('GET', 'POST'))
 @login_required
 def addsample():
     if g.user is None:
@@ -309,9 +310,9 @@ def addsample():
     return render_template('/addsample.html')
 
 
-@bp.route('/addsample_p', methods=('GET', 'POST'))
+@bp.route('/add_peer_sample', methods=('GET', 'POST'))
 @login_required
-def addsample_p():
+def add_peer_sample():
     if g.user is None:
         return redirect(url_for('auth.login'))
     db = get_db()
