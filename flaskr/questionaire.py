@@ -1,4 +1,5 @@
-import random, string
+import random
+import string
 
 from flask import (
     Response, Blueprint, flash, g, redirect, render_template, request, url_for
@@ -74,7 +75,7 @@ def display_self_results():
                            selfassessments=list(map(lambda row: dict(row), selfassessments)))
 
 @bp.route('/results_by_me')
-def display_peertests_by_me():
+def display_peer_tests_by_me():
     if g.user is None:
         return redirect(url_for('auth.login'))
     db = get_db()
@@ -92,7 +93,7 @@ def display_peertests_by_me():
 
 
 @bp.route('/results_for_me')
-def display_peertests_for_me():
+def display_peer_tests_for_me():
     if g.user is None:
         return redirect(url_for('auth.login'))
     db = get_db()
@@ -111,7 +112,7 @@ def display_peertests_for_me():
 
 @bp.route('/self_test', methods=('GET', 'POST'))
 @login_required
-def selftest():
+def self_test():
     if g.user is None:
         return redirect(url_for('auth.login'))
     db = get_db()
@@ -166,7 +167,7 @@ def selftest():
 
 @bp.route('/peer_test', methods=('GET', 'POST'))
 @login_required
-def peertest():
+def peer_test():
     if g.user is None:
         return redirect(url_for('auth.login'))
     db = get_db()
@@ -265,7 +266,7 @@ def peertest():
 
 @bp.route('/add_sample', methods=('GET', 'POST'))
 @login_required
-def addsample():
+def add_sample():
     if g.user is None:
         return redirect(url_for('auth.login'))
     db = get_db()

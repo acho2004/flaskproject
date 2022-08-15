@@ -55,8 +55,8 @@
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href={{url_for('questionaire.display_self_results')}}>나 자신의 평가</a>
-                    <a class="collapse-item" href="{{url_for('questionaire.display_peertests_by_me')}}">너를 위해 봐준 시험들</a>
-                    <a class="collapse-item" href="{{url_for('questionaire.display_peertests_for_me')}}">나를 위해 봐준 시험들</a>
+                    <a class="collapse-item" href="{{url_for('questionaire.display_peer_tests_by_me')}}">너를 위해 봐준 시험들</a>
+                    <a class="collapse-item" href="{{url_for('questionaire.display_peer_tests_for_me')}}">나를 위해 봐준 시험들</a>
                 </div>
             </div>
         </li>
@@ -71,8 +71,8 @@
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                  data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="{{ url_for('questionaire.selftest') }}">나를 위한 시험지</a>
-                    <a class="collapse-item" href="{{ url_for('questionaire.peertest') }}">너를 위한 시험지</a>
+                    <a class="collapse-item" href="{{ url_for('questionaire.self_test') }}">나를 위한 시험지</a>
+                    <a class="collapse-item" href="{{ url_for('questionaire.peer_test') }}">너를 위한 시험지</a>
                 </div>
             </div>
         </li>
