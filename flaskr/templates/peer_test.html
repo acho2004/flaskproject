@@ -200,7 +200,11 @@
                                 </div>
                                 {% endif %}
                             {% else %}
-                                <input hidden name={{"q" + question['question_number']}} value="3">
+                                {% if question['question_worth'][0] == "D" %}
+                                    <input hidden name={{"q" + question['question_number']}} value=".5">
+                                {% else %}
+                                    <input hidden name={{"q" + question['question_number']}} value="3">
+                                {% endif %}
                             {% endif %}
                         {% else %}
                             <div class="card shadow mb-4">
