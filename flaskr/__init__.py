@@ -6,6 +6,7 @@ from flask import redirect
 from flask import url_for
 from pathlib import Path
 
+
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True, static_folder='./static/',static_url_path='')
@@ -28,7 +29,6 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-
     @app.route('/')
     def index():
         if g.user is None:
@@ -36,12 +36,12 @@ def create_app(test_config=None):
         path = Path("../../flaskr/static/output/" + g.user['emp_no'] + "_radarchart.png")
         imageExists = path.is_file()
         db = auth.get_db()
-        selfassessments = db.execute(
+        self_tests = db.execute(
             'SELECT author_emp_no, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP, new_tag'
             ' FROM stest WHERE author_emp_no = ?'
             ' ORDER BY created DESC', (g.user['emp_no'],)
         ).fetchall()
-        peerassessments = db.execute(
+        peer_tests = db.execute(
             'SELECT target_emp_no, guess_MBTI_EI, guess_MBTI_SN, guess_MBTI_TF, guess_MBTI_JP'
             ' FROM ptest WHERE target_emp_no = ?'
             ' ORDER BY created DESC', (g.user['emp_no'],)
@@ -53,22 +53,22 @@ def create_app(test_config=None):
         sumT = 0
         sumJ = 0
 
-        if len(selfassessments) == 0:
+        if len(self_tests) == 0:
             selfguess = "결과 없음"
         else:
-            selfguess = selfguess + "E" if selfassessments[0][1] > 2.5 else selfguess + "I"
-            selfguess = selfguess + "S" if selfassessments[0][2] > 2.5 else selfguess + "N"
-            selfguess = selfguess + "T" if selfassessments[0][3] > 2.5 else selfguess + "F"
-            selfguess = selfguess + "J" if selfassessments[0][4] > 2.5 else selfguess + "P"
+            selfguess = selfguess + "E" if self_tests[0][1] > 2.5 else selfguess + "I"
+            selfguess = selfguess + "S" if self_tests[0][2] > 2.5 else selfguess + "N"
+            selfguess = selfguess + "T" if self_tests[0][3] > 2.5 else selfguess + "F"
+            selfguess = selfguess + "J" if self_tests[0][4] > 2.5 else selfguess + "P"
 
-        if len(peerassessments) == 0:
+        if len(peer_tests) == 0:
             peerguess = "결과 없음"
         else:
             counter = 0
-            for item in peerassessments:
+            for item in peer_tests:
                 if counter == 5:
                     break
-                counter+=1
+                counter += 1
                 sumE += item['guess_MBTI_EI']
                 sumS += item['guess_MBTI_SN']
                 sumT += item['guess_MBTI_TF']
@@ -82,8 +82,7 @@ def create_app(test_config=None):
             peerguess = peerguess + "T" if sumT > 2.5 else peerguess + "F"
             peerguess = peerguess + "J" if sumJ > 2.5 else peerguess + "P"
 
-
-        return render_template('index.html', selfassessments=selfassessments, selfguess=selfguess, peerguess=peerguess, imageExists=imageExists)
+        return render_template('index.html', selfguess=selfguess, peerguess=peerguess, imageExists=imageExists)
 
     from . import db
     db.init_app(app)
