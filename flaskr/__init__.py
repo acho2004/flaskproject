@@ -94,6 +94,7 @@ def create_app(test_config=None):
     from . import questionaire
     app.register_blueprint(questionaire.bp)
 
-
+    from . import result_handler
+    app.register_blueprint(result_handler.bp)
 
     return app
