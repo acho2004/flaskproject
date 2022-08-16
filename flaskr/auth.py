@@ -34,7 +34,7 @@ def login():
             session.clear()
             session['user_id'] = user['id']
             if user['pchanged'] == 0:
-                return redirect(url_for('auth.passchange'))
+                return redirect(url_for('auth.change_password'))
             else:
                 return redirect('/')
 
