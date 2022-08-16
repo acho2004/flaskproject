@@ -1,6 +1,6 @@
 import random
 import string
-
+from notification import Curl
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
@@ -184,6 +184,17 @@ def peer_test():
                 (mbti_grader(x, "peer")[0], mbti_grader(x, "peer")[1], mbti_grader(x, "peer")[2], mbti_grader(x, "peer")[3], x)
             )
             db.commit()
+            try:
+                Curl().curl_request(
+                    url="https://h-support.hunet.name/api/webhook",
+                    request_type="POST",
+                    json_info={
+                        "targets": [t_emp_no],
+                        "message": "누군가 나의 MBTI를 평가해 줬네요! 아래의 링크를 통해서 확인해 보세요. \n https://mbti.hunet.name"
+                    }
+                )
+            except Exception as e:
+                print(e)
 
             return redirect(url_for('index'))
 
