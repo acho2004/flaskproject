@@ -91,8 +91,8 @@ def create_app(test_config=None):
     from . import auth
     app.register_blueprint(auth.bp)
 
-    from . import questionaire
-    app.register_blueprint(questionaire.bp)
+    from . import survey
+    app.register_blueprint(survey.bp)
 
     from . import result_handler
     app.register_blueprint(result_handler.bp)

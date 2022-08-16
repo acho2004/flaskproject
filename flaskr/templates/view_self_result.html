@@ -70,8 +70,8 @@
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                  data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="{{ url_for('questionaire.self_test') }}">나를 위한 시험지</a>
-                    <a class="collapse-item" href="{{ url_for('questionaire.peer_test') }}">너를 위한 시험지</a>
+                    <a class="collapse-item" href="{{ url_for('survey.self_test') }}">나를 위한 시험지</a>
+                    <a class="collapse-item" href="{{ url_for('survey.peer_test') }}">너를 위한 시험지</a>
                 </div>
             </div>
         </li>
@@ -132,7 +132,7 @@
                             {%- if route['guess_MBTI_JP']|float > 2.5 %}J{% else %}P{% endif -%}</h1>
                 </div>
 
-                <form style="padding: 15px" class="questionaire">
+                <form style="padding: 15px" class="survey">
                     {% for i in range (1,39) %}
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">

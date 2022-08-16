@@ -8,7 +8,7 @@ from flaskr.auth import login_required
 from flaskr.db import get_db
 
 
-bp = Blueprint('questionaire', __name__)
+bp = Blueprint('survey', __name__)
 
 
 @bp.route('/self_test', methods=('GET', 'POST'))
@@ -107,8 +107,6 @@ def peer_test():
 
         if t_emp_no == g.user['emp_no']:
             error = "자기 자신을 테스트 하시려면 '나를 위한 시험지' 를 사용해주세요."
-
-
 
         if error is not None:
             flash(error)
