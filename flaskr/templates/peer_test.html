@@ -151,51 +151,56 @@
                             <br>
                         </div>
                     </div>
-
+                    {% set q_number = [] %}
                     {% for question in questions %}
                         {% if question['self_test_question'] != "." %}
-                            {% if question['question_worth'][0] == "D" %}
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">객관식 질문 {{question['question_number']}}</h6>
-                                </div>
-                                <div class="card-body">
-                                    <p id={{"question" + question['question_number'] }}></p>
-                                    <div>
-                                        <input required type="radio" id={{"cAgree" + question['question_number'] }} name={{"q" + question['question_number']}}
-                                               value=0><label for={{"cAgree" + question['question_number'] }}>&nbsp; 1. &nbsp;</label>
-                                        <input required type="radio" id={{"cSAgree" + question['question_number'] }} name={{"q" + question['question_number']}}
-                                               value=1><label for={{"cSAgree" + question['question_number'] }}>&nbsp; 2. &nbsp;</label>
+                            {% if question['question_number']|int in chosen_questions %}
+                                {% set __ = q_number.append(1) %}
+                                {% if question['question_worth'][0] == "D" %}
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">객관식 질문 {{q_number|length|string}}</h6>
                                     </div>
-                                    <br>
+                                    <div class="card-body">
+                                        <p id={{"question" + question['question_number']}}></p>
+                                        <div>
+                                            <input required type="radio" id={{"cAgree" + question['question_number']}} name={{"q" + question['question_number']}}
+                                                   value=0><label for={{"cAgree" + question['question_number']}}>&nbsp; 1. &nbsp;</label>
+                                            <input required type="radio" id={{"cSAgree" + question['question_number']}} name={{"q" + question['question_number']}}
+                                                   value=1><label for={{"cSAgree" + question['question_number']}}>&nbsp; 2. &nbsp;</label>
+                                        </div>
+                                        <br>
+                                    </div>
                                 </div>
-                            </div>
+                                {% else %}
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">객관식 질문 {{q_number|length|string}}</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p id={{"question" + question['question_number']}}></p>
+                                        <div>
+                                            <input required type="radio" id={{"cStrAgree" + question['question_number']}} name={{"q" + question['question_number']}}
+                                                   value=0><label for={{"cStrAgree" + question['question_number']}}>&nbsp; 매우 동의 &nbsp;</label>
+                                            <input required type="radio" id={{"cAgree" + question['question_number']}} name={{"q" + question['question_number']}}
+                                                   value=1><label for={{"cAgree" + question['question_number']}}>&nbsp; 동의 &nbsp;</label>
+                                            <input required type="radio" id={{"cSAgree" + question['question_number']}} name={{"q" + question['question_number']}}
+                                                   value=2><label for={{"cSAgree" + question['question_number']}}>&nbsp; 약간 동의 &nbsp;</label>
+                                            <input required type="radio" id={{"cNANDA" + question['question_number']}} name={{"q" + question['question_number']}}
+                                                   value=3><label for={{"cNANDA" + question['question_number']}}>&nbsp; 중립 &nbsp;</label>
+                                            <input required type="radio" id={{"cSDAgree" + question['question_number']}} name={{"q" + question['question_number']}}
+                                                   value=4><label for={{"cSDAgree" + question['question_number']}}>&nbsp; 약간 부정 &nbsp;</label>
+                                            <input required type="radio" id={{"cDAgree" + question['question_number']}} name={{"q" + question['question_number']}}
+                                                   value=5><label for={{"cDAgree" + question['question_number']}}>&nbsp; 부정 &nbsp;</label>
+                                            <input required type="radio" id={{"cStrDAgree" + question['question_number']}} name={{"q" + question['question_number']}}
+                                                   value=6><label for={{"cStrDAgree" + question['question_number']}}>&nbsp; 매우 부정 </label>
+                                        </div>
+                                        <br>
+                                    </div>
+                                </div>
+                                {% endif %}
                             {% else %}
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">객관식 질문 {{question['question_number']}}</h6>
-                                </div>
-                                <div class="card-body">
-                                    <p id={{"question" + question['question_number']}}></p>
-                                    <div>
-                                        <input required type="radio" id={{"cStrAgree" + question['question_number']}} name={{"q" + question['question_number']}}
-                                               value=0><label for={{"cStrAgree" + question['question_number']}}>&nbsp; 매우 동의 &nbsp;</label>
-                                        <input required type="radio" id={{"cAgree" + question['question_number']}} name={{"q" + question['question_number']}}
-                                               value=1><label for={{"cAgree" + question['question_number']}}>&nbsp; 동의 &nbsp;</label>
-                                        <input required type="radio" id={{"cSAgree" + question['question_number']}} name={{"q" + question['question_number']}}
-                                               value=2><label for={{"cSAgree" + question['question_number']}}>&nbsp; 약간 동의 &nbsp;</label>
-                                        <input required type="radio" id={{"cNANDA" + question['question_number']}} name={{"q" + question['question_number']}}
-                                               value=3><label for={{"cNANDA" + question['question_number']}}>&nbsp; 중립 &nbsp;</label>
-                                        <input required type="radio" id={{"cSDAgree" + question['question_number']}} name={{"q" + question['question_number']}}
-                                               value=4><label for={{"cSDAgree" + question['question_number']}}>&nbsp; 약간 부정 &nbsp;</label>
-                                        <input required type="radio" id={{"cDAgree" + question['question_number']}} name={{"q" + question['question_number']}}
-                                               value=5><label for={{"cDAgree" + question['question_number']}}>&nbsp; 부정 &nbsp;</label>
-                                        <input required type="radio" id={{"cStrDAgree" + question['question_number']}} name={{"q" + question['question_number']}}
-                                               value=6><label for={{"cStrDAgree" + question['question_number']}}>&nbsp; 매우 부정 </label>
-                                    </div>
-                                    <br>
-                                </div>
-                            </div>
+                                <input hidden name={{"q" + question['question_number']}} value="3">
                             {% endif %}
                         {% else %}
                             <div class="card shadow mb-4">
@@ -300,18 +305,19 @@
             }else{
                 y = x1[0];
             }
+            {% set q_number = [] %}
             {% for question in questions %}
                 {% if question['self_test_question'] != "." %}
+                    {% if question['question_number']|int in chosen_questions %}
+                    {% set __ = q_number.append(1) %}
                     document.getElementById("{{"question" + question['question_number']}}").innerHTML = ("{{question['peer_test_question']}}").replaceAll("name", y);
+
+                    {% endif %}
                 {% else %}
                     document.getElementById("{{question['question_number']}}").innerHTML = ("{{question['peer_test_question']}}").replaceAll("name", y);
                 {% endif %}
             {% endfor %}
-            document.getElementById("question1").innerHTML = y + "님은 당일치기 여행을 할 때, 계획을 먼저 세우는 편이시다.";
-
-            document.getElementById("sresp1").innerHTML = y + "님은 어떤 유명인과 가장 닮았고 어떤 점이 가장 닮았나요?";
         }
-
 
 </script>
 </body>

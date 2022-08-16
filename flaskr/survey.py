@@ -71,6 +71,33 @@ def peer_test():
     if g.user is None:
         return redirect(url_for('auth.login'))
     db = get_db()
+    chosen_questions = []
+    eis = db.execute(
+        f'''SELECT question_number FROM questionlist WHERE question_worth LIKE 'E%' OR question_worth LIKE 'I%' ''').fetchall()
+    sns = db.execute(
+        f'''SELECT question_number FROM questionlist WHERE question_worth LIKE 'S%' OR question_worth LIKE 'N%' ''').fetchall()
+    tfs = db.execute(
+        f'''SELECT question_number FROM questionlist WHERE question_worth LIKE 'T%' OR question_worth LIKE 'F%' ''').fetchall()
+    jps = db.execute(
+        f'''SELECT question_number FROM questionlist WHERE question_worth LIKE 'J%' OR question_worth LIKE 'P%' ''').fetchall()
+    x = 0
+    while len(chosen_questions) < 16:
+        x = random.randint(1, 39)
+        if x in chosen_questions:
+            continue
+        if len(list(set(chosen_questions) & set(eis))) == 4 and x in eis:
+            continue
+        if len(list(set(chosen_questions) & set(sns))) == 4 and x in sns:
+            continue
+        if len(list(set(chosen_questions) & set(tfs))) == 4 and x in tfs:
+            continue
+        if len(list(set(chosen_questions) & set(jps))) == 4 and x in jps:
+            continue
+
+        chosen_questions.append(x)
+        print(x)
+
+
     questions = db.execute('SELECT * FROM questionlist').fetchall()
     people = db.execute(
         'SELECT name, emp_no, dept_name'
@@ -84,6 +111,7 @@ def peer_test():
     if request.method == 'POST':
         got_unique = False
         answers = []
+
         for i in range(1, 40):
             answers.append(request.form["q" + str(i)])
 
@@ -159,7 +187,7 @@ def peer_test():
 
             return redirect(url_for('index'))
 
-    return render_template('/peer_test.html', deptlist=deptlist, people=people, questions=questions)
+    return render_template('/peer_test.html', deptlist=deptlist, people=people, questions=questions, chosen_questions=chosen_questions)
 
 
 @bp.route('/add_sample', methods=('GET', 'POST'))
